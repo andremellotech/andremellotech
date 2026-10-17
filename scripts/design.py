@@ -200,4 +200,7 @@ for name in ['hero','about-pair','expertise','stack','contacts']:
 sheet.crop((0,0,1200,y)).save(ROOT/'PREVIA.png')
 print('Profile built: typography header, 12 tool badges, compact contact links and collapsible activity.')
 
+from github_layout import build_github_layout
+build_github_layout(ROOT)
+
 

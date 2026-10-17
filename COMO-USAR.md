@@ -33,3 +33,7 @@ Fontes dos ícones: https://api.iconify.design/logos/python.svg, https://api.ico
 HTML, CSS, JavaScript e Lua aparecem em Linguagens · Conhecimentos, conforme informado pelo usuário. Python permanece destacado em Dados & Automação. Os badges adicionais CSS, JavaScript e Lua mantêm os arquivos da referência mixzira, totalizando 12 badges.
 
 A revisão tipográfica usa Segoe UI e Segoe UI Semibold no Windows. O nome foi reduzido de 88 para 52 pixels na arte original; os títulos de apresentação usam 30 pixels, os de cards 25 e os de categorias 22. Os tamanhos exibidos no GitHub variam proporcionalmente à largura disponível. O retrato ocupa 36% da largura e o texto de apresentação 49%, para equilibrar as alturas. Os badges de tecnologias mantêm os 36 pixels de altura.
+
+## Composição contínua no GitHub
+
+O conteúdo principal é gerado em uma única imagem animada `assets/profile-card.gif`, com alternativa estática em `assets/profile-card.png`. Isso mantém o fundo, os espaços e os badges iguais à composição aprovada, mesmo quando o GitHub usa tema claro. Os dois recortes do rodapé continuam sendo links reais para LinkedIn e repositórios. `scripts/github_layout.py` gera essa composição e é chamado pelo gerador principal. A prévia HTML agora usa fundo externo claro, próximo ao GitHub, sem aplicar um fundo escuro artificial ao README. Os arquivos individuais dos badges permanecem disponíveis para edição, mas são incorporados ao painel no perfil. A versão em texto continua recolhível e acessível abaixo da arte.

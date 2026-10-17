@@ -1,46 +1,4 @@
-<div align="center">
-
-<img src="./assets/hero.png" width="100%" alt="André Mello — Dados, tecnologia e visão de negócio. Performance, análise, automação e modelagem financeira." />
-
-<br><br>
-
-<picture><source media="(prefers-reduced-motion: reduce)" srcset="./assets/andre-ascii.png"><img src="./assets/andre-ascii.gif" width="36%" alt="Retrato animado de André Mello em arte ASCII" /></picture>
-<img src="./assets/about.png" width="49%" alt="Sobre mim: foco em análise de performance, engenharia, automação e modelagem financeira." />
-
-<br><br>
-
-<img src="./assets/expertise.png" width="100%" alt="Áreas de atuação: Performance e Analytics; Engineering e Automation; Financial Modeling." />
-
-<br>
-
-<div align="left">
-<h3>Dados & Automação</h3>
-<p><img src="./assets/badges/powerbi.webp" height="36" alt="Power BI" /> <img src="./assets/badges/python.webp" height="36" alt="Python" /> <img src="./assets/badges/excel.webp" height="36" alt="Excel" /> <img src="./assets/badges/alteryx.webp" height="36" alt="Alteryx" /></p>
-<h3>Negócios & Apresentações</h3>
-<p><img src="./assets/badges/sap.webp" height="36" alt="SAP" /> <img src="./assets/badges/powerpoint.webp" height="36" alt="PowerPoint" /></p>
-<p><sub>Office 365 no trabalho com Excel e PowerPoint.</sub></p>
-<h3>Linguagens · Conhecimentos</h3>
-<p><img src="./assets/badges/HTML2.webp" height="36" alt="HTML" /> <img src="./assets/badges/CSS2.webp" height="36" alt="CSS" /> <img src="./assets/badges/JavaScript2.webp" height="36" alt="JavaScript" /> <img src="./assets/badges/Lua2.webp" height="36" alt="Lua" /></p>
-<h3>Versionamento & Projetos</h3>
-<p><img src="./assets/badges/GitHub.webp" height="36" alt="GitHub" /></p>
-<h3>Bancos de dados · Experiência anterior</h3>
-<p><img src="./assets/badges/MySQL.webp" height="36" alt="MySQL" /></p>
-<p><sub>MySQL aplicado ao desenvolvimento de servidores de Tibia e GTA V / FiveM.</sub></p>
-</div>
-
-<br>
-
-<h3>Contato & Projetos</h3>
-
-<p>Conheça meu trabalho e vamos conversar.</p>
-
-<p>
-<a href="https://www.linkedin.com/in/aamello/"><img src="./assets/link-linkedin.png" height="28" alt="LinkedIn — André Mello" /></a>
-&nbsp;
-<a href="https://github.com/andremellotech?tab=repositories"><img src="./assets/link-github.png" height="28" alt="GitHub — explorar meus repositórios" /></a>
-</p>
-
-</div>
+<p align="center"><picture><source media="(prefers-reduced-motion: reduce)" srcset="./assets/profile-card.png"><img src="./assets/profile-card.gif" width="100%" align="top" alt="André Mello — Dados, tecnologia e visão de negócio. Performance e Analytics; Engineering e Automation; Financial Modeling. Ferramentas: Power BI, Python, Excel, Alteryx, SAP e PowerPoint; conhecimentos em HTML, CSS, JavaScript e Lua; GitHub; experiência anterior em MySQL nos servidores de Tibia e GTA V / FiveM. Office 365 com Excel e PowerPoint. Apresentação completa na versão em texto abaixo." /></picture><a href="https://www.linkedin.com/in/aamello/"><img src="./assets/footer-linkedin.png" width="50%" align="top" alt="LinkedIn — André Mello" /></a><a href="https://github.com/andremellotech?tab=repositories"><img src="./assets/footer-github.png" width="50%" align="top" alt="GitHub — explorar meus repositórios" /></a></p>
 
 <details>
 <summary>Sobre mim — versão em texto</summary>
