@@ -4,7 +4,7 @@
 2. Envie o conteúdo desta pasta para a raiz do repositório. Preserve a pasta `assets` e substitua o README.md anterior.
 3. Confirme o commit. O README será exibido no perfil.
 
-Abra `previa.html` para ver a composição localmente. `PREVIA.png` oferece uma visão estática; o README mostra a composição estática como principal e permite abrir a versão animada.
+Abra `previa.html` para ver a composição localmente. `PREVIA.png` oferece uma visão estática; o README mostra a composição estática.
 
 ## Atualização
 
@@ -18,9 +18,9 @@ Para reconstruir localmente: instale `scripts/requirements.txt` e execute `pytho
 
 Combina a identidade animada do arquivo original com a organização de apresentação e ferramentas da referência mixzira. Os textos descrevem somente as áreas e ferramentas documentadas no material fornecido. Não foram acrescentados experiência, formação ou projetos não confirmados.
 
-O GitHub controla o layout externo e pode reduzir os painéis no celular. A prévia local aproxima o conteúdo, mas não reproduz a interface completa do GitHub. Há descrições alternativas nas imagens e uma apresentação em texto recolhível.
+O GitHub controla o layout externo e pode reduzir os painéis no celular. A prévia local aproxima o conteúdo, mas não reproduz a interface completa do GitHub. Há descrições alternativas nas imagens e links em texto.
 
-A capa usa uma apresentação tipográfica sem gráficos decorativos. A seção "Em construção" foi retirada. Os links de LinkedIn e repositórios usam badges retangulares compactos, em duas cores, seguindo a referência enviada. Métricas públicas e calendário de contribuições ficam integrados no painel, com a data do snapshot e seus valores em texto na seção recolhível. A prévia PNG mostra o conteúdo principal; abra previa.html para expandir as seções textuais.
+A capa usa uma apresentação tipográfica sem gráficos decorativos. A seção "Em construção" foi retirada. Os links de LinkedIn e repositórios usam badges retangulares compactos, em duas cores, seguindo a referência enviada. Métricas públicas e calendário de contribuições ficam integrados no painel, com a data do snapshot. A prévia PNG mostra o conteúdo principal.
 
 ## Tecnologias selecionadas
 
@@ -36,11 +36,11 @@ A revisão tipográfica usa Segoe UI e Segoe UI Semibold no Windows. O nome foi 
 
 ## Composição contínua no GitHub
 
-O conteúdo principal é gerado em `assets/profile-card.png`, com versão animada em `assets/profile-card.gif`. Isso mantém o fundo, os espaços e os badges iguais à composição aprovada, mesmo quando o GitHub usa tema claro. Os dois recortes do rodapé continuam sendo links reais para LinkedIn e repositórios. `scripts/github_layout.py` gera essa composição e é chamado pelo gerador principal. A prévia HTML usa fundo externo claro, próximo ao GitHub. Os arquivos individuais dos badges permanecem disponíveis para edição, mas são incorporados ao painel no perfil. A versão em texto continua recolhível e acessível abaixo da arte.
+O conteúdo principal é gerado em `assets/profile-card.png`, com versão animada em `assets/profile-card.gif`. Isso mantém o fundo, os espaços e os badges iguais à composição aprovada, mesmo quando o GitHub usa tema claro. Os dois recortes do rodapé continuam sendo links reais para LinkedIn e repositórios. `scripts/github_layout.py` gera essa composição e é chamado pelo gerador principal. A prévia HTML usa fundo externo claro, próximo ao GitHub. Os arquivos individuais dos badges permanecem disponíveis para edição, mas são incorporados ao painel no perfil. O perfil termina após os links de contato, sem seções recolhíveis.
 
 ## Imagens e compatibilidade com redes corporativas
 
-A versão principal agora usa PNG estático; a animação permanece opcional. As imagens são publicadas por HTTPS em https://andremellotech.github.io/andremellotech/assets/ e referenciadas por URLs absolutas no README, para passarem pelo proxy de imagens do GitHub, como as imagens externas da referência mixzira. Cada URL inclui uma versão calculada a partir do conteúdo, evitando que o cache mantenha um painel antigo após atualizações. Os links em texto e a versão textual continuam acessíveis sem carregar imagens.
+A versão principal usa PNG estático. As imagens são publicadas por HTTPS em https://andremellotech.github.io/andremellotech/assets/ e referenciadas por URLs absolutas no README, para passarem pelo proxy de imagens do GitHub, como as imagens externas da referência mixzira. Cada URL inclui uma versão calculada a partir do conteúdo, evitando que o cache mantenha um painel antigo após atualizações. Os links em texto continuam acessíveis sem carregar imagens.
 
 O workflow precisa de contents:write para salvar os dados e a arte, e de pages:write e id-token:write para publicar os arquivos no GitHub Pages. Em Settings → Pages, a origem deve ser GitHub Actions. A publicação das imagens acontece antes do commit que atualiza os links do README. Apenas os quatro arquivos públicos do painel/rodapé e sua prévia são enviados à hospedagem.
 
