@@ -6,7 +6,7 @@ ROOT=Path(__file__).resolve().parents[1]
 def prepare(root=ROOT):
     dest=root/'work/pages'
     (dest/'assets').mkdir(parents=True,exist_ok=True)
-    for name in ['profile-card.png','profile-card.gif','footer-linkedin.png','footer-github.png']:
+    for name in ['profile-card-light.png','profile-card-dark.png','footer-linkedin.png','footer-github.png']:
         shutil.copy2(root/'assets'/name,dest/'assets'/name)
     shutil.copy2(root/'previa.html',dest/'index.html')
     (dest/'.nojekyll').write_text('')

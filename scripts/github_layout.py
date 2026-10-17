@@ -1,90 +1,91 @@
-"""Keep the approved dark composition intact inside GitHub's README renderer."""
-from pathlib import Path
-from PIL import Image, ImageDraw, ImageFont
-import os
+"""Compose transparent PNGs and let GitHub select text colors for its theme."""
+from PIL import Image, ImageDraw, ImageColor
 import hashlib
-ASSET_HOST='https://andremellotech.github.io/andremellotech/assets/'
+from themes import THEMES, TRANSPARENT
 
-def image_url(root,name):
-    version=hashlib.sha256((root/'assets'/name).read_bytes()).hexdigest()[:12]
-    return ASSET_HOST+name+'?v='+version
+ASSET_HOST = 'https://andremellotech.github.io/andremellotech/assets/'
 
-BG='#080e1c'
-def build_github_layout(root):
-    a=root/'assets'
-    panels=[]
-    for name in ['hero','about-pair','expertise','stack','activity']:
-        if name=='about-pair':
-            panel=Image.new('RGB',(1200,550),BG)
-            panel.paste(Image.open(a/'andre-ascii.png').convert('RGB'),(84,0))
-            panel.paste(Image.open(a/'about.png'),(532,0))
-        else:panel=Image.open(a/(name+'.png')).convert('RGB')
-        panels.append(panel)
-    height=sum(p.height for p in panels)+28*len(panels)+102
-    main=Image.new('RGB',(1200,height),BG)
-    y=0
-    portrait_y=panels[0].height+28
-    for p in panels:main.paste(p,(0,y));y+=p.height+28
-    d=ImageDraw.Draw(main)
-    fonts=Path('C:/Windows/Fonts') if os.name=='nt' else Path('/usr/share/fonts/truetype/dejavu')
-    heading=ImageFont.truetype(str(fonts/('seguisb.ttf' if os.name=='nt' else 'DejaVuSans-Bold.ttf')),22)
-    body=ImageFont.truetype(str(fonts/('segoeui.ttf' if os.name=='nt' else 'DejaVuSans.ttf')),19)
-    for offset,text,f,color in [(12,'Contato & Projetos',heading,'#eff5ff'),(54,'Conheça meu trabalho e vamos conversar.',body,'#94a5c1')]:
-        d.text(((1200-d.textlength(text,font=f))/2,y+offset),text,font=f,fill=color)
-    main.save(a/'profile-card.png')
 
-    # One global palette keeps all non-animated text and panels pixel-stable.
-    palette=main.quantize(colors=256,dither=Image.Dither.NONE)
-    portrait=Image.open(a/'andre-ascii.gif')
-    frames=[];durations=[]
-    for i in range(portrait.n_frames):
-        portrait.seek(i)
-        frame=palette.copy()
-        avatar=portrait.convert('RGB').quantize(palette=palette,dither=Image.Dither.NONE)
-        frame.paste(avatar,(84,portrait_y))
-        frames.append(frame)
-        durations.append(portrait.info.get('duration',80))
-    frames[0].save(a/'profile-card.gif',save_all=True,append_images=frames[1:],
-                   loop=0,duration=durations,disposal=1,optimize=True)
+def image_url(root, name):
+    version = hashlib.sha256((root / 'assets' / name).read_bytes()).hexdigest()[:12]
+    return ASSET_HOST + name + '?v=' + version
 
-    footer=Image.new('RGB',(1200,84),BG)
-    for stem,side in [('link-linkedin',0),('link-github',1)]:
-        half=Image.new('RGB',(600,84),BG)
-        badge=Image.open(a/(stem+'.png')).convert('RGBA')
-        badge=badge.resize((round(badge.width/2),42),Image.Resampling.LANCZOS)
-        x=600-badge.width-8 if side==0 else 8
-        half.paste(badge,(x,12),badge)
-        half.save(a/('footer-linkedin.png' if side==0 else 'footer-github.png'))
-        footer.paste(half,(600*side,0))
-    preview=Image.new('RGB',(1200,height+84),BG)
-    preview.paste(main,(0,0));preview.paste(footer,(0,height));preview.save(root/'PREVIA.png')
 
-    alt=('André Mello — Dados, tecnologia e visão de negócio. Performance e Analytics; '
-         'Engineering e Automation; Financial Modeling. Ferramentas: Power BI, Python, Excel, '
-         'Alteryx, SAP e PowerPoint; conhecimentos em HTML, CSS, JavaScript e Lua; GitHub; '
-         'experiência anterior em MySQL nos servidores de Tibia e GTA V / FiveM. '
-         'Office 365 com Excel e PowerPoint. Atividade pública e calendário de contribuições atualizados automaticamente.')
-    # Adjacent inline images with align=top avoid paragraph and baseline gaps.
-    visual=('<p align="center"><img src="'+image_url(root,'profile-card.png')+'" '
-            'width="100%" align="top" alt="'+alt+'" />'
-            '<a href="https://www.linkedin.com/in/aamello/"><img src="'+image_url(root,'footer-linkedin.png')+'" '
-            'width="50%" align="top" alt="LinkedIn — André Mello" /></a>'
-            '<a href="https://github.com/andremellotech?tab=repositories"><img '
-            'src="'+image_url(root,'footer-github.png')+'" width="50%" align="top" '
-            'alt="GitHub — explorar meus repositórios" /></a></p>')
-    links=('<p align="center"><a href="https://www.linkedin.com/in/aamello/">LinkedIn</a> · '
-           '<a href="https://github.com/andremellotech?tab=repositories">Repositórios</a> · '
-           '<a href="https://github.com/andremellotech#contribution-activity">Atividade e contribuições</a></p>')
-    readme=visual+'\n\n'+links+'\n'
-    (root/'README.md').write_text(readme,encoding='utf-8')
-    html=('<!doctype html><html lang="pt-BR"><meta charset="utf-8">'
-          '<meta name="viewport" content="width=device-width,initial-scale=1">'
-          '<title>André Mello — prévia compatível com GitHub</title>'
-          '<style>body{background:#f6f8fa;color:#1f2328;margin:0;font:14px/1.5 system-ui}'
-          'main{max-width:900px;background:white;border:1px solid #d1d9e0;border-radius:6px;'
-          'padding:24px;margin:24px auto}p{margin:0 0 16px}img{max-width:100%;height:auto;'
-          'vertical-align:top}details{margin:12px 0}summary{cursor:pointer}'
-          'a{color:#0969da}@media(max-width:600px){main{padding:12px;margin:8px}}</style>'
-          '<main>'+readme.replace(ASSET_HOST,'./assets/')+'</main></html>')
-    (root/'previa.html').write_text(html,encoding='utf-8')
-    print('Continuous GitHub card:',len(frames),'frames,',(a/'profile-card.gif').stat().st_size,'bytes')
+def transparent_portrait(path, color):
+    original = Image.open(path).convert('RGB')
+    # Recover glyph opacity from the original uniform terminal background.
+    # Recoloring the glyphs avoids dark halos on light pages.
+    alpha = original.convert('L').point(lambda value: max(0, min(255, round((value - 19) * 1.9))))
+    portrait = Image.new('RGBA', original.size, ImageColor.getrgb(color) + (0,))
+    portrait.putalpha(alpha)
+    return portrait
+
+
+def build_github_layout(root, font):
+    assets = root / 'assets'
+    for theme, palette in THEMES.items():
+        panels = []
+        for name in ['hero', 'about-pair', 'expertise', 'stack', 'activity']:
+            if name == 'about-pair':
+                panel = Image.new('RGBA', (1200, 550), TRANSPARENT)
+                panel.alpha_composite(transparent_portrait(assets / 'andre-ascii.png', palette['portrait']), (84, 0))
+                panel.alpha_composite(Image.open(assets / f'about-{theme}.png'), (532, 0))
+            else:
+                panel = Image.open(assets / f'{name}-{theme}.png').convert('RGBA')
+            panels.append(panel)
+        height = sum(panel.height for panel in panels) + 28 * len(panels) + 102
+        main = Image.new('RGBA', (1200, height), TRANSPARENT)
+        y = 0
+        for panel in panels:
+            main.alpha_composite(panel, (0, y))
+            y += panel.height + 28
+        draw = ImageDraw.Draw(main)
+        for offset, text, size, bold, color in [
+            (12, 'Contato & Projetos', 22, True, palette['text']),
+            (54, 'Conheça meu trabalho e vamos conversar.', 19, False, palette['muted']),
+        ]:
+            face = font(size, bold)
+            draw.text(((1200 - draw.textlength(text, font=face)) / 2, y + offset), text, font=face, fill=color)
+        main.save(assets / f'profile-card-{theme}.png')
+
+    footer = Image.new('RGBA', (1200, 84), TRANSPARENT)
+    for stem, side in [('link-linkedin', 0), ('link-github', 1)]:
+        half = Image.new('RGBA', (600, 84), TRANSPARENT)
+        badge = Image.open(assets / f'{stem}.png').convert('RGBA')
+        badge = badge.resize((round(badge.width / 2), 42), Image.Resampling.LANCZOS)
+        x = 600 - badge.width - 8 if side == 0 else 8
+        half.alpha_composite(badge, (x, 12))
+        half.save(assets / ('footer-linkedin.png' if side == 0 else 'footer-github.png'))
+        footer.alpha_composite(half, (600 * side, 0))
+
+    for theme, background in [('light', '#ffffff'), ('dark', '#0d1117')]:
+        preview = Image.new('RGBA', (1200, height + 84), background)
+        preview.alpha_composite(Image.open(assets / f'profile-card-{theme}.png'))
+        preview.alpha_composite(footer, (0, height))
+        preview.convert('RGB').save(root / ('PREVIA.png' if theme == 'light' else 'PREVIA-ESCURO.png'))
+
+    alt = ('André Mello — Dados, tecnologia e visão de negócio. Performance e Analytics; '
+           'Engineering e Automation; Financial Modeling. Ferramentas: Power BI, Python, Excel, '
+           'Alteryx, SAP e PowerPoint; conhecimentos em HTML, CSS, JavaScript e Lua; GitHub; '
+           'experiência anterior em MySQL nos servidores de Tibia e GTA V / FiveM. '
+           'Office 365 com Excel e PowerPoint. Atividade pública e calendário de contribuições atualizados automaticamente.')
+    # No spaces between inline images: the contact halves keep their exact widths.
+    readme = ('<p align="center"><picture>'
+              '<source media="(prefers-color-scheme: dark)" srcset="' + image_url(root, 'profile-card-dark.png') + '" />'
+              '<source media="(prefers-color-scheme: light)" srcset="' + image_url(root, 'profile-card-light.png') + '" />'
+              '<img src="' + image_url(root, 'profile-card-light.png') + '" width="100%" align="top" alt="' + alt + '" />'
+              '</picture><a href="https://www.linkedin.com/in/aamello/"><img src="' + image_url(root, 'footer-linkedin.png') + '" '
+              'width="50%" align="top" alt="LinkedIn — André Mello" /></a>'
+              '<a href="https://github.com/andremellotech?tab=repositories"><img src="' + image_url(root, 'footer-github.png') + '" '
+              'width="50%" align="top" alt="GitHub — explorar meus repositórios" /></a></p>\n')
+    (root / 'README.md').write_text(readme, encoding='utf-8')
+    preview_html = ('<!doctype html><html lang="pt-BR"><meta charset="utf-8">'
+                    '<meta name="viewport" content="width=device-width,initial-scale=1">'
+                    '<title>André Mello — prévia adaptativa</title><style>'
+                    ':root{color-scheme:light dark}body{margin:0;background:light-dark(#f6f8fa,#010409);font:14px/1.5 system-ui}'
+                    'main{max-width:900px;background:light-dark(#fff,#0d1117);border:1px solid light-dark(#d1d9e0,#3d444d);'
+                    'border-radius:6px;padding:24px;margin:24px auto}p{margin:0}img{max-width:100%;height:auto;vertical-align:top}'
+                    '@media(max-width:600px){main{padding:12px;margin:8px}}</style><main>'
+                    + readme.replace(ASSET_HOST, './assets/') + '</main></html>')
+    (root / 'previa.html').write_text(preview_html, encoding='utf-8')
+    print('Transparent profile built for light and dark GitHub themes.')

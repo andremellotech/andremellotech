@@ -18,7 +18,7 @@ Para reconstruir localmente: instale `scripts/requirements.txt` e execute `pytho
 
 Combina a identidade animada do arquivo original com a organização de apresentação e ferramentas da referência mixzira. Os textos descrevem somente as áreas e ferramentas documentadas no material fornecido. Não foram acrescentados experiência, formação ou projetos não confirmados.
 
-O GitHub controla o layout externo e pode reduzir os painéis no celular. A prévia local aproxima o conteúdo, mas não reproduz a interface completa do GitHub. Há descrições alternativas nas imagens e links em texto.
+O GitHub controla o layout externo e pode reduzir os painéis no celular. A prévia local aproxima o conteúdo, mas não reproduz a interface completa do GitHub. Há descrições alternativas nas imagens. O contato usa somente os dois botões de LinkedIn e repositórios, sem links repetidos abaixo.
 
 A capa usa uma apresentação tipográfica sem gráficos decorativos. A seção "Em construção" foi retirada. Os links de LinkedIn e repositórios usam badges retangulares compactos, em duas cores, seguindo a referência enviada. Métricas públicas e calendário de contribuições ficam integrados no painel, com a data do snapshot. A prévia PNG mostra o conteúdo principal.
 
@@ -36,12 +36,14 @@ A revisão tipográfica usa Segoe UI e Segoe UI Semibold no Windows. O nome foi 
 
 ## Composição contínua no GitHub
 
-O conteúdo principal é gerado em `assets/profile-card.png`, com versão animada em `assets/profile-card.gif`. Isso mantém o fundo, os espaços e os badges iguais à composição aprovada, mesmo quando o GitHub usa tema claro. Os dois recortes do rodapé continuam sendo links reais para LinkedIn e repositórios. `scripts/github_layout.py` gera essa composição e é chamado pelo gerador principal. A prévia HTML usa fundo externo claro, próximo ao GitHub. Os arquivos individuais dos badges permanecem disponíveis para edição, mas são incorporados ao painel no perfil. O perfil termina após os links de contato, sem seções recolhíveis.
+O conteúdo principal usa `assets/profile-card-light.png` e `assets/profile-card-dark.png`, ambos com fundo transparente. O elemento HTML `picture` permite ao próprio GitHub selecionar a imagem com cores de texto adequadas ao tema. A transparência acompanha também os fundos dos temas escuro suave, de alto contraste e de acessibilidade, sem fixar uma cor de fundo no painel. Cards e retrato também não têm preenchimento de fundo. As cores estão em `scripts/themes.py`.
+
+Os dois recortes transparentes do rodapé continuam sendo links reais para LinkedIn e repositórios. `scripts/github_layout.py` gera essa composição e é chamado pelo gerador principal. A prévia HTML segue o tema do sistema. `PREVIA.png` mostra a versão clara e `PREVIA-ESCURO.png` a escura. Os arquivos individuais dos badges permanecem disponíveis para edição, mas são incorporados ao painel no perfil. O perfil termina após os botões de contato, sem seções recolhíveis ou links repetidos.
 
 ## Imagens e compatibilidade com redes corporativas
 
-A versão principal usa PNG estático. As imagens são publicadas por HTTPS em https://andremellotech.github.io/andremellotech/assets/ e referenciadas por URLs absolutas no README, para passarem pelo proxy de imagens do GitHub, como as imagens externas da referência mixzira. Cada URL inclui uma versão calculada a partir do conteúdo, evitando que o cache mantenha um painel antigo após atualizações. Os links em texto continuam acessíveis sem carregar imagens.
+A versão principal usa PNG estático com transparência nos dois temas. As imagens são publicadas por HTTPS em https://andremellotech.github.io/andremellotech/assets/ e referenciadas por URLs absolutas no README, para passarem pelo proxy de imagens do GitHub, como as imagens externas da referência mixzira. Cada URL inclui uma versão calculada a partir do conteúdo, evitando que o cache mantenha um painel antigo após atualizações.
 
 O workflow precisa de contents:write para salvar os dados e a arte, e de pages:write e id-token:write para publicar os arquivos no GitHub Pages. Em Settings → Pages, a origem deve ser GitHub Actions. A publicação das imagens acontece antes do commit que atualiza os links do README. Apenas os quatro arquivos públicos do painel/rodapé e sua prévia são enviados à hospedagem.
 
-A compatibilidade dentro da rede KPMG precisa ser validada nesse ambiente; não houve acesso a essa rede nem alteração das políticas corporativas.
+A versão anterior com essa mesma hospedagem e o proxy do GitHub foi confirmada por André como funcionando dentro da rede KPMG. A mudança de tema preserva esse fluxo de carregamento.
