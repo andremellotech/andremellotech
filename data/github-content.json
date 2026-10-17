@@ -3,25 +3,93 @@
     "login": "andremellotech",
     "name": "André Mello",
     "bio": "Performance & Analytics | Engineering, Automation & Financial Modeling | Power BI • SAP • Excel",
-    "public_repos": 1,
+    "public_repos": 7,
     "followers": 0,
-    "following": 1,
+    "following": 3,
     "created_at": "2021-04-07T20:02:16Z",
     "html_url": "https://github.com/andremellotech"
   },
   "repositories": [
     {
-      "name": "andremellotech",
-      "description": null,
-      "html_url": "https://github.com/andremellotech/andremellotech",
-      "language": null,
+      "name": "sap-project-financial-control-tower",
+      "description": "Painel de controle financeiro de projetos SAP por elemento PEP, com rastreabilidade do indicador ao documento de origem. Dados fictícios.",
+      "html_url": "https://github.com/andremellotech/sap-project-financial-control-tower",
+      "language": "HTML",
       "fork": false,
       "stargazers_count": 0,
       "forks_count": 0,
-      "pushed_at": "2026-10-13T16:42:50Z"
+      "pushed_at": "2026-10-17T13:19:26Z"
+    },
+    {
+      "name": "videowall-coe",
+      "description": "Painel de videowall do COE ",
+      "html_url": "https://github.com/andremellotech/videowall-coe",
+      "language": null,
+      "fork": true,
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "pushed_at": "2026-10-17T13:03:40Z"
+    },
+    {
+      "name": "sap-procurement-control-tower",
+      "description": "Painel de compras SAP para acompanhar requisições, pedidos, saldos a entregar e atrasos, com rastreabilidade por item. Python, SQL e JavaScript. Em desenvolvimento, com dados fictícios.",
+      "html_url": "https://github.com/andremellotech/sap-procurement-control-tower",
+      "language": "HTML",
+      "fork": false,
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "pushed_at": "2026-10-17T12:28:56Z"
+    },
+    {
+      "name": "mello-charts-desktop",
+      "description": "Suplemento gratuito para PowerPoint Windows: gráficos de build-up, cascata e comparação, editor local e importação Excel/CSV. Versão experimental.",
+      "html_url": "https://github.com/andremellotech/mello-charts-desktop",
+      "language": "C#",
+      "fork": false,
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "pushed_at": "2026-10-16T22:26:12Z"
+    },
+    {
+      "name": "finance-close-automation",
+      "description": null,
+      "html_url": "https://github.com/andremellotech/finance-close-automation",
+      "language": "Python",
+      "fork": false,
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "pushed_at": "2026-10-14T18:37:54Z"
+    },
+    {
+      "name": "financial-performance-analytics",
+      "description": null,
+      "html_url": "https://github.com/andremellotech/financial-performance-analytics",
+      "language": "HTML",
+      "fork": false,
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "pushed_at": "2026-10-14T01:50:44Z"
+    },
+    {
+      "name": "andremellotech",
+      "description": "Performance & Analytics · Engineering, Automation & Financial Modeling",
+      "html_url": "https://github.com/andremellotech/andremellotech",
+      "language": "Python",
+      "fork": false,
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "pushed_at": null
     }
   ],
-  "languages": {},
+  "languages": {
+    "HTML": 3434830,
+    "CSS": 334116,
+    "C#": 293175,
+    "Python": 256677,
+    "JavaScript": 220355,
+    "Power Query": 126511,
+    "PowerShell": 6544
+  },
   "languages_scope": "Até seis repositórios públicos atualizados mais recentemente",
-  "as_of": "2026-10-13"
+  "as_of": "2026-10-17"
 }
