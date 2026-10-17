@@ -201,6 +201,8 @@ sheet.crop((0,0,1200,y)).save(ROOT/'PREVIA.png')
 print('Profile built: typography header, 12 tool badges, compact contact links and collapsible activity.')
 
 from github_layout import build_github_layout
+from activity_panel import render_activity
+render_activity(ROOT,font)
 build_github_layout(ROOT)
 
 

@@ -2,12 +2,18 @@
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 import os
+import hashlib
+ASSET_HOST='https://andremellotech.github.io/andremellotech/assets/'
+
+def image_url(root,name):
+    version=hashlib.sha256((root/'assets'/name).read_bytes()).hexdigest()[:12]
+    return ASSET_HOST+name+'?v='+version
 
 BG='#080e1c'
 def build_github_layout(root):
     a=root/'assets'
     panels=[]
-    for name in ['hero','about-pair','expertise','stack']:
+    for name in ['hero','about-pair','expertise','stack','activity']:
         if name=='about-pair':
             panel=Image.new('RGB',(1200,550),BG)
             panel.paste(Image.open(a/'andre-ascii.png').convert('RGB'),(84,0))
@@ -55,21 +61,40 @@ def build_github_layout(root):
 
     old=(root/'README.md').read_text(encoding='utf-8')
     details=old[old.index('<details>'):]
+    # Expose numeric values in text as well as in the visual calendar.
+    from activity_panel import contribution_summary
+    import json
+    summary=contribution_summary(json.loads((root/'data/github-content.json').read_text(encoding='utf-8')),
+                                 json.loads((root/'data/contributions.json').read_text(encoding='utf-8')))
+    cut=details.find('<details>',len('<details>'))
+    if cut!=-1:details=details[:cut]
+    details+=('<details><summary>Dados e fonte do painel de atividade</summary>'
+              '<p>Dados visíveis no perfil público de @andremellotech. Snapshot: '+summary['as_of']+'.</p>'
+              '<ul>'+''.join('<li>'+label+': '+str(summary[key])+'</li>' for label,key in
+                  [('Repositórios públicos','repositories'),('Contribuições no período','total'),
+                   ('Dias ativos','active_days'),('Sequência atual em dias','current_streak'),
+                   ('Maior sequência em dias','longest_streak')])+'</ul>'
+              '<p><a href="https://github.com/andremellotech#contribution-activity">Abrir atividade e calendário no GitHub</a></p>'
+              '<p>Consulta automática a cada 30 minutos; o agendamento do GitHub Actions pode sofrer atrasos.</p></details>')
     alt=('André Mello — Dados, tecnologia e visão de negócio. Performance e Analytics; '
          'Engineering e Automation; Financial Modeling. Ferramentas: Power BI, Python, Excel, '
          'Alteryx, SAP e PowerPoint; conhecimentos em HTML, CSS, JavaScript e Lua; GitHub; '
          'experiência anterior em MySQL nos servidores de Tibia e GTA V / FiveM. '
          'Office 365 com Excel e PowerPoint. Apresentação completa na versão em texto abaixo.')
     # Adjacent inline images with align=top avoid paragraph and baseline gaps.
-    visual=('<p align="center"><picture><source media="(prefers-reduced-motion: reduce)" '
-            'srcset="./assets/profile-card.png"><img src="./assets/profile-card.gif" '
-            'width="100%" align="top" alt="'+alt+'" /></picture>'
-            '<a href="https://www.linkedin.com/in/aamello/"><img src="./assets/footer-linkedin.png" '
+    visual=('<p align="center"><img src="'+image_url(root,'profile-card.png')+'" '
+            'width="100%" align="top" alt="'+alt+'" />'
+            '<a href="https://www.linkedin.com/in/aamello/"><img src="'+image_url(root,'footer-linkedin.png')+'" '
             'width="50%" align="top" alt="LinkedIn — André Mello" /></a>'
             '<a href="https://github.com/andremellotech?tab=repositories"><img '
-            'src="./assets/footer-github.png" width="50%" align="top" '
+            'src="'+image_url(root,'footer-github.png')+'" width="50%" align="top" '
             'alt="GitHub — explorar meus repositórios" /></a></p>')
-    readme=visual+'\n\n'+details
+    links=('<p align="center"><a href="https://www.linkedin.com/in/aamello/">LinkedIn</a> · '
+           '<a href="https://github.com/andremellotech?tab=repositories">Repositórios</a> · '
+           '<a href="https://github.com/andremellotech#contribution-activity">Atividade e contribuições</a></p>')
+    animation=('<details><summary>Ver versão animada</summary><img src="'+image_url(root,'profile-card.gif')+'" '
+               'width="100%" alt="Versão animada do painel de André Mello; a versão principal usa imagem estática." /></details>')
+    readme=visual+'\n\n'+links+'\n\n'+details+'\n\n'+animation
     (root/'README.md').write_text(readme,encoding='utf-8')
     html=('<!doctype html><html lang="pt-BR"><meta charset="utf-8">'
           '<meta name="viewport" content="width=device-width,initial-scale=1">'
@@ -79,6 +104,6 @@ def build_github_layout(root):
           'padding:24px;margin:24px auto}p{margin:0 0 16px}img{max-width:100%;height:auto;'
           'vertical-align:top}details{margin:12px 0}summary{cursor:pointer}'
           'a{color:#0969da}@media(max-width:600px){main{padding:12px;margin:8px}}</style>'
-          '<main>'+readme+'</main></html>')
+          '<main>'+readme.replace(ASSET_HOST,'./assets/')+'</main></html>')
     (root/'previa.html').write_text(html,encoding='utf-8')
     print('Continuous GitHub card:',len(frames),'frames,',(a/'profile-card.gif').stat().st_size,'bytes')

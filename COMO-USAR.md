@@ -4,13 +4,13 @@
 2. Envie o conteúdo desta pasta para a raiz do repositório. Preserve a pasta `assets` e substitua o README.md anterior.
 3. Confirme o commit. O README será exibido no perfil.
 
-Abra `previa.html` para ver a composição localmente. `PREVIA.png` oferece uma visão estática; no README o retrato usa o GIF original.
+Abra `previa.html` para ver a composição localmente. `PREVIA.png` oferece uma visão estática; o README mostra a composição estática como principal e permite abrir a versão animada.
 
 ## Atualização
 
-O workflow incluído consulta os dados públicos diariamente e reconstrói as imagens. Ative GitHub Actions no repositório. O workflow precisa de permissão de escrita em Contents para salvar os dados e a arte. Também pode ser executado manualmente pela aba Actions.
+O workflow consulta os dados públicos nos minutos 13 e 43 de cada hora e também após alterações na branch main deste repositório. O agendamento do GitHub Actions pode atrasar. Alterações em outros repositórios são detectadas na próxima consulta. A publicação só é reconstruída quando há mudanças nos dados ou na arte. Também pode ser executado manualmente pela aba Actions.
 
-Os dados iniciais são do ZIP original, de 13/10/2026. A data aparece no painel. O primeiro workflow bem-sucedido atualiza os números.
+As métricas e o calendário usam o perfil público de andremellotech. O painel exibe a data e o intervalo consultados. Falhas na coleta interrompem a publicação e preservam o último painel válido.
 
 Para reconstruir localmente: instale `scripts/requirements.txt` e execute `python scripts/design.py`. Os textos e cores ficam nesse arquivo. As fontes são Segoe UI no Windows e DejaVu Sans no Linux.
 
@@ -20,7 +20,7 @@ Combina a identidade animada do arquivo original com a organização de apresent
 
 O GitHub controla o layout externo e pode reduzir os painéis no celular. A prévia local aproxima o conteúdo, mas não reproduz a interface completa do GitHub. Há descrições alternativas nas imagens e uma apresentação em texto recolhível.
 
-A capa usa uma apresentação tipográfica sem gráficos decorativos. A seção "Em construção" foi retirada. Os links de LinkedIn e repositórios usam badges retangulares compactos, em duas cores, seguindo a referência enviada. As métricas públicas ficam em uma seção recolhível ao final do README, com a data do snapshot indicada. A prévia PNG mostra o conteúdo principal, com as seções recolhíveis fechadas; abra previa.html para expandi-las.
+A capa usa uma apresentação tipográfica sem gráficos decorativos. A seção "Em construção" foi retirada. Os links de LinkedIn e repositórios usam badges retangulares compactos, em duas cores, seguindo a referência enviada. Métricas públicas e calendário de contribuições ficam integrados no painel, com a data do snapshot e seus valores em texto na seção recolhível. A prévia PNG mostra o conteúdo principal; abra previa.html para expandir as seções textuais.
 
 ## Tecnologias selecionadas
 
@@ -36,4 +36,12 @@ A revisão tipográfica usa Segoe UI e Segoe UI Semibold no Windows. O nome foi 
 
 ## Composição contínua no GitHub
 
-O conteúdo principal é gerado em uma única imagem animada `assets/profile-card.gif`, com alternativa estática em `assets/profile-card.png`. Isso mantém o fundo, os espaços e os badges iguais à composição aprovada, mesmo quando o GitHub usa tema claro. Os dois recortes do rodapé continuam sendo links reais para LinkedIn e repositórios. `scripts/github_layout.py` gera essa composição e é chamado pelo gerador principal. A prévia HTML agora usa fundo externo claro, próximo ao GitHub, sem aplicar um fundo escuro artificial ao README. Os arquivos individuais dos badges permanecem disponíveis para edição, mas são incorporados ao painel no perfil. A versão em texto continua recolhível e acessível abaixo da arte.
+O conteúdo principal é gerado em `assets/profile-card.png`, com versão animada em `assets/profile-card.gif`. Isso mantém o fundo, os espaços e os badges iguais à composição aprovada, mesmo quando o GitHub usa tema claro. Os dois recortes do rodapé continuam sendo links reais para LinkedIn e repositórios. `scripts/github_layout.py` gera essa composição e é chamado pelo gerador principal. A prévia HTML usa fundo externo claro, próximo ao GitHub. Os arquivos individuais dos badges permanecem disponíveis para edição, mas são incorporados ao painel no perfil. A versão em texto continua recolhível e acessível abaixo da arte.
+
+## Imagens e compatibilidade com redes corporativas
+
+A versão principal agora usa PNG estático; a animação permanece opcional. As imagens são publicadas por HTTPS em https://andremellotech.github.io/andremellotech/assets/ e referenciadas por URLs absolutas no README, para passarem pelo proxy de imagens do GitHub, como as imagens externas da referência mixzira. Cada URL inclui uma versão calculada a partir do conteúdo, evitando que o cache mantenha um painel antigo após atualizações. Os links em texto e a versão textual continuam acessíveis sem carregar imagens.
+
+O workflow precisa de contents:write para salvar os dados e a arte, e de pages:write e id-token:write para publicar os arquivos no GitHub Pages. Em Settings → Pages, a origem deve ser GitHub Actions. A publicação das imagens acontece antes do commit que atualiza os links do README. Apenas os quatro arquivos públicos do painel/rodapé e sua prévia são enviados à hospedagem.
+
+A compatibilidade dentro da rede KPMG precisa ser validada nesse ambiente; não houve acesso a essa rede nem alteração das políticas corporativas.

@@ -16,8 +16,11 @@ def normalize_content(user:dict,repos:list,languages:dict)->dict:
         if repo.get('private'): continue
         if not repo.get('name') or not repo.get('html_url','').startswith('https://github.com/'):
             raise ValueError('Invalid repository response')
-        public.append({k:repo.get(k) for k in ['name','description','html_url','language','fork','stargazers_count','forks_count','pushed_at']})
-    public.sort(key=lambda r:r.get('pushed_at') or '',reverse=True)
+        entry={k:repo.get(k) for k in ['name','description','html_url','language','fork','stargazers_count','forks_count','pushed_at']}
+        # Generated artwork changes this timestamp; it is not a new project update.
+        if repo['name'].lower()==user['login'].lower():entry['pushed_at']=None
+        public.append(entry)
+    public.sort(key=lambda r:(r.get('pushed_at') or '',r['name']),reverse=True)
     totals={}
     for repo in public[:6]:
         for lang,count in languages.get(repo['name'],{}).items():
@@ -48,7 +51,7 @@ def main():
         repos.extend(batch)
         url=response.links.get('next',{}).get('url')
     langs={}
-    for repo in repos[:6]:
+    for repo in [r for r in repos if r.get('name','').lower()!=username.lower()][:6]:
         langs[repo['name']]=get(f'https://api.github.com/repos/{username}/{repo["name"]}/languages').json()
     data=normalize_content(user,repos,langs)
     data['as_of']=datetime.now(timezone.utc).date().isoformat()
