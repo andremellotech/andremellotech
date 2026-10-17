@@ -10,7 +10,7 @@ Abra `previa.html` para ver a composição localmente. `PREVIA.png` oferece uma 
 
 O workflow consulta os dados públicos nos minutos 13 e 43 de cada hora e também após alterações na branch main deste repositório. O agendamento do GitHub Actions pode atrasar. Alterações em outros repositórios são detectadas na próxima consulta. A publicação só é reconstruída quando há mudanças nos dados ou na arte. Também pode ser executado manualmente pela aba Actions.
 
-As métricas e o calendário usam o perfil público de andremellotech. O painel exibe a data e o intervalo consultados. Falhas na coleta interrompem a publicação e preservam o último painel válido.
+As métricas e o calendário usam o perfil público de andremellotech. A data, o intervalo consultado e os dias ativos continuam sendo coletados nos arquivos de dados, mas as duas linhas explicativas abaixo do calendário ficam ocultas no painel. A consulta automática a cada 30 minutos permanece ativa. Falhas na coleta interrompem a publicação e preservam o último painel válido.
 
 Para reconstruir localmente: instale `scripts/requirements.txt` e execute `python scripts/design.py`. Os textos e cores ficam nesse arquivo. As fontes são Segoe UI no Windows e DejaVu Sans no Linux.
 
@@ -20,7 +20,7 @@ Combina a identidade animada do arquivo original com a organização de apresent
 
 O GitHub controla o layout externo e pode reduzir os painéis no celular. A prévia local aproxima o conteúdo, mas não reproduz a interface completa do GitHub. Há descrições alternativas nas imagens. O contato usa somente os dois botões de LinkedIn e repositórios, sem links repetidos abaixo.
 
-A capa usa uma apresentação tipográfica sem gráficos decorativos. A seção "Em construção" foi retirada. Os links de LinkedIn e repositórios usam badges retangulares compactos, em duas cores, seguindo a referência enviada. Métricas públicas e calendário de contribuições ficam integrados no painel, com a data do snapshot. A prévia PNG mostra o conteúdo principal.
+A capa usa uma apresentação tipográfica sem gráficos decorativos. A seção "Em construção" foi retirada. Os links de LinkedIn e repositórios usam badges retangulares compactos, em duas cores, seguindo a referência enviada. Métricas públicas e calendário de contribuições ficam integrados no painel. A prévia PNG mostra o conteúdo principal.
 
 ## Tecnologias selecionadas
 

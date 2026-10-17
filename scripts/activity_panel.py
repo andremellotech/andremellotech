@@ -27,7 +27,7 @@ def render_activity(root,font,palette=None):
     calendar=json.loads((root/'data/contributions.json').read_text(encoding='utf-8'))
     summary=contribution_summary(content,calendar)
     cells=week_grid(calendar['days'])
-    im=Image.new('RGBA',(1200,420),TRANSPARENT);d=ImageDraw.Draw(im)
+    im=Image.new('RGBA',(1200,384),TRANSPARENT);d=ImageDraw.Draw(im)
     def text(x,y,value,size=18,color=None,bold=False):d.text((x,y),str(value),font=font(size,bold),fill=color or white)
     text(30,16,'04 / ATIVIDADE & CONTRIBUIÇÕES',15,accent)
     metrics=[(summary['repositories'],'REPOSITÓRIOS PÚBLICOS'),
@@ -49,10 +49,8 @@ def render_activity(root,font,palette=None):
         x=x0+c['column']*step;y=y0+c['row']*step
         d.rounded_rectangle((x,y,x+size-1,y+size-1),radius=3,fill=colors[c['level']])
     for row,label in [(1,'Seg'),(3,'Qua'),(5,'Sex')]:text(x0-42,y0+row*step,label,12,muted)
-    text(30,355,f"{summary['active_days']} dias ativos · {cells[0]['date']} a {cells[-1]['date']}",14,muted)
     text(929,355,'Menos',12,muted)
     for i,color in enumerate(colors):d.rounded_rectangle((976+i*20,357,991+i*20,372),radius=3,fill=color)
     text(1085,355,'Mais',12,muted)
-    text(30,391,'Dados do perfil público · '+summary['as_of']+' · Consulta automática a cada 30 min',14,muted)
     im.save(root/'assets'/('activity-'+palette['name']+'.png'))
     return summary
