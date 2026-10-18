@@ -11,6 +11,16 @@
   },
   "repositories": [
     {
+      "name": "financial-performance-analytics",
+      "description": "Caso de análise financeira com dados fictícios: orçado × realizado, build-up, motivadores e projeção de fechamento (EAC) em Power BI, Excel e Python, com prévia navegável.",
+      "html_url": "https://github.com/andremellotech/financial-performance-analytics",
+      "language": "HTML",
+      "fork": false,
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "pushed_at": "2026-10-18T16:56:45Z"
+    },
+    {
       "name": "finance-close-automation",
       "description": "Rotina de fechamento mensal em Python: importa CSV/Excel, valida, concilia com controles independentes e exporta base aprovada, pendências e rastreabilidade. Dados fictícios.",
       "html_url": "https://github.com/andremellotech/finance-close-automation",
@@ -59,16 +69,6 @@
       "stargazers_count": 0,
       "forks_count": 0,
       "pushed_at": "2026-10-16T22:26:12Z"
-    },
-    {
-      "name": "financial-performance-analytics",
-      "description": null,
-      "html_url": "https://github.com/andremellotech/financial-performance-analytics",
-      "language": "HTML",
-      "fork": false,
-      "stargazers_count": 0,
-      "forks_count": 0,
-      "pushed_at": "2026-10-14T01:50:44Z"
     },
     {
       "name": "andremellotech",
