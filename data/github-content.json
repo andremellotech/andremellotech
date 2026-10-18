@@ -11,6 +11,16 @@
   },
   "repositories": [
     {
+      "name": "finance-close-automation",
+      "description": "Rotina de fechamento mensal em Python: importa CSV/Excel, valida, concilia com controles independentes e exporta base aprovada, pendências e rastreabilidade. Dados fictícios.",
+      "html_url": "https://github.com/andremellotech/finance-close-automation",
+      "language": "Python",
+      "fork": false,
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "pushed_at": "2026-10-18T15:29:03Z"
+    },
+    {
       "name": "sap-project-financial-control-tower",
       "description": "Painel de controle financeiro de projetos SAP por elemento PEP, com rastreabilidade do indicador ao documento de origem. Dados fictícios.",
       "html_url": "https://github.com/andremellotech/sap-project-financial-control-tower",
@@ -49,16 +59,6 @@
       "stargazers_count": 0,
       "forks_count": 0,
       "pushed_at": "2026-10-16T22:26:12Z"
-    },
-    {
-      "name": "finance-close-automation",
-      "description": null,
-      "html_url": "https://github.com/andremellotech/finance-close-automation",
-      "language": "Python",
-      "fork": false,
-      "stargazers_count": 0,
-      "forks_count": 0,
-      "pushed_at": "2026-10-14T18:37:54Z"
     },
     {
       "name": "financial-performance-analytics",
