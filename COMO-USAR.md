@@ -12,6 +12,10 @@ O workflow consulta os dados públicos a cada 5 minutos (minutos 2, 7, 12 e assi
 
 O painel no README é uma imagem estática atualizada automaticamente, sem execução de JavaScript. Uma página já aberta precisa ser recarregada para mostrar uma imagem nova. O próprio GitHub pode levar até 24 horas para contabilizar contribuições; a coleta reproduz os dados publicados por ele e não antecipa esse processamento. Imagens exportadas ou mostradas na conversa são capturas estáticas.
 
+Cada execução deixa um resumo na aba Actions com horário da consulta, resultado, total coletado e situação da publicação. Quando a coleta encontra os mesmos dados, as etapas de publicação aparecem como dispensadas (skipped); isso é esperado e não indica falha. Solicitações GET são repetidas até três vezes após erros temporários de conexão, limite de requisições ou respostas 5xx. Erros permanentes continuam interrompendo a execução e ficam visíveis nos logs. A leitura usa a branch main mais recente e o token continua limitado às permissões já existentes.
+
+Para atualizar manualmente: abra Actions → Atualizar perfil visual → Run workflow → main → Run workflow. A execução manual aguarda 90 segundos antes da coleta para dar tempo ao gráfico do GitHub processar alterações recentes; esse prazo não garante que todo processamento do GitHub já tenha terminado.
+
 As métricas e o calendário usam o perfil público de andremellotech. A data, o intervalo consultado e os dias ativos continuam sendo coletados nos arquivos de dados, mas as duas linhas explicativas abaixo do calendário ficam ocultas no painel. A consulta automática a cada 5 minutos permanece ativa. Falhas na coleta interrompem a publicação e preservam o último painel válido.
 
 O calendário e os destaques dessa seção usam as paletas verdes do calendário nativo do GitHub, com versões próprias para tema claro e escuro. Os níveis de intensidade são os mesmos retornados pelo calendário público, sem reinterpretar as faixas de contagem.

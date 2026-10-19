@@ -5,8 +5,8 @@ import re
 from collections import defaultdict
 from datetime import date, timedelta, datetime, timezone
 from pathlib import Path
-import requests
 from bs4 import BeautifulSoup
+from github_http import github_session
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -70,8 +70,8 @@ def main():
     profile = json.loads((ROOT / 'profile.json').read_text(encoding='utf-8-sig'))
     username = profile['username']
     if not re.fullmatch(r'[A-Za-z0-9-]+', username): raise ValueError('Invalid username')
-    response = requests.get(f'https://github.com/users/{username}/contributions', timeout=30,
-                            headers={'User-Agent':'profile-art/1.0'})
+    with github_session() as session:
+        response = session.get(f'https://github.com/users/{username}/contributions', timeout=30)
     response.raise_for_status()
     today = datetime.now(timezone.utc).date()
     days = [d for d in parse_contributions(response.text) if date.fromisoformat(d['date']) <= today]

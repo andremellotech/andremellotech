@@ -4,7 +4,7 @@ import os
 import re
 from datetime import datetime, timezone
 from pathlib import Path
-import requests
+from github_http import github_session
 ROOT=Path(__file__).resolve().parents[1]
 
 def normalize_content(user:dict,repos:list,languages:dict)->dict:
@@ -33,7 +33,7 @@ def normalize_content(user:dict,repos:list,languages:dict)->dict:
 def main():
     username=json.loads((ROOT/'profile.json').read_text(encoding='utf-8-sig'))['username']
     if not re.fullmatch(r'[A-Za-z0-9-]+',username): raise ValueError('Invalid username')
-    session=requests.Session()
+    session=github_session()
     session.headers.update({'Accept':'application/vnd.github+json','User-Agent':'andremellotech-profile','X-GitHub-Api-Version':'2022-11-28'})
     token=os.getenv('GITHUB_TOKEN')
     if token: session.headers['Authorization']=f'Bearer {token}'

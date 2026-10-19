@@ -14,7 +14,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   update:
-    if: github.actor != 'github-actions[bot]'
+    if: github.event_name != 'push' || github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     environment:
@@ -22,6 +22,8 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
@@ -29,8 +31,14 @@ jobs:
           cache-dependency-path: scripts/requirements.txt
       - run: pip install -r scripts/requirements.txt
       - run: python -m unittest discover -s tests -v
-      - run: python scripts/fetch_contributions.py
-      - run: python scripts/fetch_github_content.py
+      - name: Aguardar o gráfico do GitHub atualizar
+        if: github.event_name == 'workflow_dispatch'
+        run: sleep 90
+      - name: Coletar contribuições públicas
+        id: calendar
+        run: python scripts/fetch_contributions.py
+      - name: Coletar dados públicos dos repositórios
+        run: python scripts/fetch_github_content.py
         env:
           GITHUB_TOKEN: ${{ github.token }}
       - run: python scripts/design.py
@@ -64,3 +72,12 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git commit -m 'chore: atualizar dados públicos do perfil [skip ci]'
           git push
+      - name: Resumo da atualização
+        if: always()
+        env:
+          PROFILE_RUN_STATUS: ${{ job.status }}
+          PROFILE_EVENT: ${{ github.event_name }}
+          PROFILE_CHANGED: ${{ steps.changed.outputs.changed }}
+          PROFILE_CALENDAR_STATUS: ${{ steps.calendar.outcome }}
+          PROFILE_DEPLOY_STATUS: ${{ steps.deployment.outcome }}
+        run: python scripts/run_summary.py
