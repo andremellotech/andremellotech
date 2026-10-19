@@ -38,8 +38,9 @@ class ThemeRendering(unittest.TestCase):
             self.assertEqual(links, ['https://www.linkedin.com/in/aamello/',
                                      'https://github.com/andremellotech?tab=repositories'])
             self.assertFalse(any(tag == 'details' for tag, _ in parsed.tags))
-            self.assertTrue(any('prefers-reduced-motion: reduce' in s.get('media', '') for s in sources),
-                            'Reduced motion must select a still portrait')
+            portrait_sources = [s for s in sources if 'profile-about-' in s.get('srcset', '')]
+            self.assertTrue(all('.gif?' in s['srcset'] for s in portrait_sources),
+                            'The requested animation must remain selected on this reduced-motion computer')
             for theme in ['light', 'dark']:
                 animation = root / f'assets/profile-about-{theme}.gif'
                 self.assertTrue(animation.exists(), 'The portrait must animate on the profile itself')

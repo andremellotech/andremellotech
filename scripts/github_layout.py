@@ -66,11 +66,6 @@ def animated_about(assets, theme, palette, about):
 
 def themed_picture(root, stem, alt, animated=False):
     sources = []
-    if animated:
-        for theme in ['dark', 'light']:
-            sources.append('<source media="(prefers-reduced-motion: reduce) and '
-                           f'(prefers-color-scheme: {theme})" srcset="'
-                           + image_url(root, f'{stem}-{theme}.png') + '" />')
     extension = 'gif' if animated else 'png'
     for theme in ['dark', 'light']:
         sources.append(f'<source media="(prefers-color-scheme: {theme})" srcset="'
