@@ -20,7 +20,7 @@ Para atualizar manualmente: abra Actions → Atualizar perfil visual → Run wor
 
 As métricas e o calendário usam o perfil público de andremellotech. A data, o intervalo consultado e os dias ativos continuam sendo coletados nos arquivos de dados, mas as duas linhas explicativas abaixo do calendário ficam ocultas no painel. A consulta automática a cada 5 minutos permanece ativa. Falhas na coleta interrompem a publicação e preservam o último painel válido.
 
-O calendário usa as paletas verdes nativas do GitHub, com versões próprias para tema claro e escuro. O mesmo verde orienta os títulos, subtítulos, números de seção e destaques de todo o painel. Textos corridos usam tons neutros de bom contraste e os selos preservam as cores das ferramentas. Os níveis de intensidade são os mesmos retornados pelo calendário público, sem reinterpretar as faixas de contagem.
+Títulos, subtítulos, números de seção, métricas e botões de contato usam uma paleta neutra: grafite no tema claro e branco suave no escuro, com textos de apoio em cinza. A hierarquia vem dos tamanhos, pesos e espaçamentos. As cores ficam concentradas nos selos das ferramentas e no calendário, que conserva as paletas verdes nativas do GitHub. Os níveis de intensidade são os mesmos retornados pelo calendário público, sem reinterpretar as faixas de contagem.
 
 Para reconstruir localmente: instale `scripts/requirements.txt` e execute `python scripts/design.py`. Os textos e cores ficam nesse arquivo. As fontes são Segoe UI no Windows e DejaVu Sans no Linux.
 

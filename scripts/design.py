@@ -116,7 +116,7 @@ def link_badge(stem, label, value, color):
     badge = Image.new('RGBA', (left + right, 28 * scale), TRANSPARENT)
     draw = ImageDraw.Draw(badge)
     draw.rounded_rectangle((0, 0, left + right - 1, 28 * scale - 1), radius=4 * scale, fill=color)
-    draw.rectangle((0, 0, left - 1, 28 * scale - 1), fill='#424d5d')
+    draw.rectangle((0, 0, left - 1, 28 * scale - 1), fill='#59636e')
     mask = Image.new('L', badge.size)
     ImageDraw.Draw(mask).rounded_rectangle((0, 0, left + right - 1, 28 * scale - 1), radius=4 * scale, fill=255)
     badge.putalpha(mask)
@@ -131,6 +131,6 @@ if __name__ == '__main__':
     A.mkdir(exist_ok=True)
     for name, palette in THEMES.items():
         render_theme(name, palette)
-    link_badge('link-linkedin', 'LinkedIn', 'André Mello', '#0a66c2')
-    link_badge('link-github', 'GitHub', 'Repositórios', '#116329')
+    link_badge('link-linkedin', 'LinkedIn', 'André Mello', '#3d444d')
+    link_badge('link-github', 'GitHub', 'Repositórios', '#3d444d')
     build_github_layout(ROOT, font)

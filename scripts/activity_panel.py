@@ -22,7 +22,7 @@ def week_grid(days):
 def render_activity(root,font,palette=None):
     palette=palette or THEMES['dark']
     colors=palette['calendar']
-    white,muted,accent=palette['text'],palette['muted'],colors[-1]
+    white,muted,accent=palette['text'],palette['muted'],palette['accent']
     content=json.loads((root/'data/github-content.json').read_text(encoding='utf-8'))
     calendar=json.loads((root/'data/contributions.json').read_text(encoding='utf-8'))
     summary=contribution_summary(content,calendar)
@@ -35,7 +35,7 @@ def render_activity(root,font,palette=None):
              (summary['current_streak'],'SEQUÊNCIA ATUAL / DIAS'),
              (summary['longest_streak'],'MAIOR SEQUÊNCIA / DIAS')]
     for i,(value,label) in enumerate(metrics):
-        x=30+i*294;text(x,60,value,35,accent if i==1 else white,True);text(x,110,label,13,muted)
+        x=30+i*294;text(x,60,value,35,white,True);text(x,110,label,13,muted)
     d.line((30,150,1170,150),fill=palette['line'])
     columns=max(c['column'] for c in cells)+1;step=19;size=16
     x0=(1200-(columns*step-3))//2;y0=205
