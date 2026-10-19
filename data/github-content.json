@@ -3,8 +3,8 @@
     "login": "andremellotech",
     "name": "André Mello",
     "bio": "Performance & Analytics | Engineering, Automation & Financial Modeling | Power BI • SAP • Excel",
-    "public_repos": 8,
-    "followers": 0,
+    "public_repos": 7,
+    "followers": 1,
     "following": 1,
     "created_at": "2021-04-07T20:02:16Z",
     "html_url": "https://github.com/andremellotech"
@@ -18,7 +18,7 @@
       "fork": false,
       "stargazers_count": 0,
       "forks_count": 0,
-      "pushed_at": "2026-10-19T17:46:11Z"
+      "pushed_at": "2026-10-19T20:34:24Z"
     },
     {
       "name": "financial-performance-analytics",
@@ -49,16 +49,6 @@
       "stargazers_count": 0,
       "forks_count": 0,
       "pushed_at": "2026-10-17T13:19:26Z"
-    },
-    {
-      "name": "videowall-coe",
-      "description": "Painel de videowall do COE ",
-      "html_url": "https://github.com/andremellotech/videowall-coe",
-      "language": null,
-      "fork": true,
-      "stargazers_count": 0,
-      "forks_count": 0,
-      "pushed_at": "2026-10-17T13:03:40Z"
     },
     {
       "name": "sap-procurement-control-tower",
@@ -92,12 +82,14 @@
     }
   ],
   "languages": {
-    "HTML": 3435277,
-    "CSS": 354641,
-    "Python": 260344,
-    "JavaScript": 220355,
+    "HTML": 2788288,
+    "C#": 293175,
+    "Python": 262743,
     "Power Query": 126511,
-    "TypeScript": 58851
+    "TypeScript": 76025,
+    "JavaScript": 20943,
+    "CSS": 20881,
+    "PowerShell": 6544
   },
   "languages_scope": "Até seis repositórios públicos atualizados mais recentemente",
   "as_of": "2026-10-19"
