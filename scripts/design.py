@@ -29,6 +29,7 @@ BADGE_GROUPS = [
 
 
 def render_theme(name, palette):
+    section_color = palette['calendar'][-1]
     def canvas(w, h):
         image = Image.new('RGBA', (w, h), TRANSPARENT)
         return image, ImageDraw.Draw(image)
@@ -52,7 +53,7 @@ def render_theme(name, palette):
     save(im, 'hero')
 
     im, d = canvas(590, 550)
-    txt(d, 30, 42, '01 / SOBRE MIM', 15, palette['accent'])
+    txt(d, 30, 42, '01 / SOBRE MIM', 15, section_color)
     txt(d, 30, 92, 'Entre dados,', 30, bold=True)
     txt(d, 30, 132, 'tecnologia e negócios.', 30, palette['blue'], True)
     for i, line in enumerate(['Meu foco conecta análise de performance,',
@@ -67,7 +68,7 @@ def render_theme(name, palette):
     save(im, 'about')
 
     im, d = canvas(1200, 264)
-    txt(d, 30, 18, '02 / ÁREAS DE ATUAÇÃO', 15, palette['accent'])
+    txt(d, 30, 18, '02 / ÁREAS DE ATUAÇÃO', 15, section_color)
     cards = [('01', 'Performance', '& Analytics', ['Indicadores e análise', 'para apoiar decisões.']),
              ('02', 'Engineering', '& Automation', ['Processos e tecnologia', 'para ganhar eficiência.']),
              ('03', 'Financial', 'Modeling', ['Modelos e cenários', 'para dar contexto aos números.'])]
@@ -82,7 +83,7 @@ def render_theme(name, palette):
     save(im, 'expertise')
 
     im, d = canvas(1200, 716)
-    txt(d, 30, 12, '03 / TECNOLOGIAS & FERRAMENTAS', 15, palette['accent'])
+    txt(d, 30, 12, '03 / TECNOLOGIAS & FERRAMENTAS', 15, section_color)
     for group, (heading, items) in enumerate(BADGE_GROUPS):
         y = 58 + group * 111
         txt(d, 30, y, heading, 22, bold=True)
