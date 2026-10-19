@@ -3,13 +3,23 @@
     "login": "andremellotech",
     "name": "André Mello",
     "bio": "Performance & Analytics | Engineering, Automation & Financial Modeling | Power BI • SAP • Excel",
-    "public_repos": 7,
+    "public_repos": 8,
     "followers": 0,
     "following": 1,
     "created_at": "2021-04-07T20:02:16Z",
     "html_url": "https://github.com/andremellotech"
   },
   "repositories": [
+    {
+      "name": "ja-vem-sp",
+      "description": null,
+      "html_url": "https://github.com/andremellotech/ja-vem-sp",
+      "language": "TypeScript",
+      "fork": false,
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "pushed_at": "2026-10-19T17:46:11Z"
+    },
     {
       "name": "financial-performance-analytics",
       "description": "Caso de análise financeira com dados fictícios: orçado × realizado, build-up, motivadores e projeção de fechamento (EAC) em Power BI, Excel e Python, com prévia navegável.",
@@ -82,13 +92,12 @@
     }
   ],
   "languages": {
-    "HTML": 3434830,
-    "CSS": 334116,
-    "C#": 293175,
-    "Python": 256677,
+    "HTML": 3435277,
+    "CSS": 354641,
+    "Python": 260344,
     "JavaScript": 220355,
     "Power Query": 126511,
-    "PowerShell": 6544
+    "TypeScript": 58851
   },
   "languages_scope": "Até seis repositórios públicos atualizados mais recentemente",
   "as_of": "2026-10-19"
