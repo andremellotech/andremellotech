@@ -32,6 +32,8 @@ Fontes dos ícones: https://api.iconify.design/logos/python.svg, https://api.ico
 
 HTML, CSS, JavaScript e Lua aparecem em Linguagens · Conhecimentos, conforme informado pelo usuário. Python permanece destacado em Dados & Automação. Os badges adicionais CSS, JavaScript e Lua mantêm os arquivos da referência mixzira, totalizando 12 badges.
 
+No tema claro, os badges recebem uma base escura opaca dentro da cápsula para manter o contraste dos nomes brancos e dos ícones. As bordas coloridas e a transparência fora das cápsulas são preservadas. No tema escuro, os badges originais continuam sendo usados.
+
 A revisão tipográfica usa Segoe UI e Segoe UI Semibold no Windows. O nome foi reduzido de 88 para 52 pixels na arte original; os títulos de apresentação usam 30 pixels, os de cards 25 e os de categorias 22. Os tamanhos exibidos no GitHub variam proporcionalmente à largura disponível. O retrato ocupa 36% da largura e o texto de apresentação 49%, para equilibrar as alturas. Os badges de tecnologias mantêm os 36 pixels de altura.
 
 ## Composição contínua no GitHub

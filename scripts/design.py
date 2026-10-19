@@ -90,6 +90,14 @@ def render_theme(name, palette):
         x = 30
         for stem, label in items:
             badge = Image.open(A / 'badges' / f'{stem}.webp').convert('RGBA')
+            if name == 'light':
+                # White labels need an opaque base instead of blending into the page.
+                # Derive the capsule edge from its alpha so the exterior stays transparent.
+                mask = badge.getchannel('A').point(lambda alpha: min(255, round(alpha * 2.5)))
+                base = Image.new('RGBA', badge.size, '#0d1117')
+                base.putalpha(mask)
+                base.alpha_composite(badge)
+                badge = base
             badge = badge.resize((round(badge.width * 1.25), 45), Image.Resampling.LANCZOS)
             im.alpha_composite(badge, (x, y + 51))
             x += badge.width + 6
