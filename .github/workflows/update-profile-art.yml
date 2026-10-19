@@ -3,7 +3,7 @@ on:
   push:
     branches: [main]
   schedule:
-    - cron: '13,43 * * * *'
+    - cron: '2-57/5 * * * *'
   workflow_dispatch:
 permissions:
   contents: write
@@ -29,9 +29,6 @@ jobs:
           cache-dependency-path: scripts/requirements.txt
       - run: pip install -r scripts/requirements.txt
       - run: python -m unittest discover -s tests -v
-      - name: Aguardar o gráfico do GitHub atualizar
-        if: github.event_name == 'workflow_dispatch'
-        run: sleep 90
       - run: python scripts/fetch_contributions.py
       - run: python scripts/fetch_github_content.py
         env:

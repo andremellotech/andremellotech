@@ -21,8 +21,8 @@ def week_grid(days):
 
 def render_activity(root,font,palette=None):
     palette=palette or THEMES['dark']
-    white,muted,accent=palette['text'],palette['muted'],palette['accent']
     colors=palette['calendar']
+    white,muted,accent=palette['text'],palette['muted'],colors[-1]
     content=json.loads((root/'data/github-content.json').read_text(encoding='utf-8'))
     calendar=json.loads((root/'data/contributions.json').read_text(encoding='utf-8'))
     summary=contribution_summary(content,calendar)

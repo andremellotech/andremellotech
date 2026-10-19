@@ -8,9 +8,13 @@ Abra `previa.html` para ver a composição localmente. `PREVIA.png` oferece uma 
 
 ## Atualização
 
-O workflow consulta os dados públicos nos minutos 13 e 43 de cada hora e também após alterações na branch main deste repositório. O agendamento do GitHub Actions pode atrasar. Alterações em outros repositórios são detectadas na próxima consulta. A publicação só é reconstruída quando há mudanças nos dados ou na arte. Também pode ser executado manualmente pela aba Actions.
+O workflow consulta os dados públicos a cada 5 minutos (minutos 2, 7, 12 e assim por diante) e também após alterações na branch main deste repositório. Esse é o menor intervalo de agendamento do GitHub Actions. O agendamento pode atrasar ou perder execuções durante períodos de alta demanda; portanto, o intervalo não é uma garantia de prazo. Alterações em outros repositórios são detectadas na próxima consulta. A publicação só é reconstruída quando há mudanças nos dados ou na arte. Também pode ser executado manualmente pela aba Actions.
 
-As métricas e o calendário usam o perfil público de andremellotech. A data, o intervalo consultado e os dias ativos continuam sendo coletados nos arquivos de dados, mas as duas linhas explicativas abaixo do calendário ficam ocultas no painel. A consulta automática a cada 30 minutos permanece ativa. Falhas na coleta interrompem a publicação e preservam o último painel válido.
+O painel no README é uma imagem estática atualizada automaticamente, sem execução de JavaScript. Uma página já aberta precisa ser recarregada para mostrar uma imagem nova. O próprio GitHub pode levar até 24 horas para contabilizar contribuições; a coleta reproduz os dados publicados por ele e não antecipa esse processamento. Imagens exportadas ou mostradas na conversa são capturas estáticas.
+
+As métricas e o calendário usam o perfil público de andremellotech. A data, o intervalo consultado e os dias ativos continuam sendo coletados nos arquivos de dados, mas as duas linhas explicativas abaixo do calendário ficam ocultas no painel. A consulta automática a cada 5 minutos permanece ativa. Falhas na coleta interrompem a publicação e preservam o último painel válido.
+
+O calendário e os destaques dessa seção usam as paletas verdes do calendário nativo do GitHub, com versões próprias para tema claro e escuro. Os níveis de intensidade são os mesmos retornados pelo calendário público, sem reinterpretar as faixas de contagem.
 
 Para reconstruir localmente: instale `scripts/requirements.txt` e execute `python scripts/design.py`. Os textos e cores ficam nesse arquivo. As fontes são Segoe UI no Windows e DejaVu Sans no Linux.
 
