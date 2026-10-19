@@ -4,13 +4,13 @@
 2. Envie o conteúdo desta pasta para a raiz do repositório. Preserve a pasta `assets` e substitua o README.md anterior.
 3. Confirme o commit. O README será exibido no perfil.
 
-Abra `previa.html` para ver a composição localmente. `PREVIA.png` oferece uma visão estática; o README mostra a composição estática.
+Abra `previa.html` para ver a composição localmente. `PREVIA.png` oferece uma visão estática; o README e a prévia HTML mostram o retrato animado.
 
 ## Atualização
 
 O workflow consulta os dados públicos a cada 5 minutos (minutos 2, 7, 12 e assim por diante) e também após alterações na branch main deste repositório. Esse é o menor intervalo de agendamento do GitHub Actions. O agendamento pode atrasar ou perder execuções durante períodos de alta demanda; portanto, o intervalo não é uma garantia de prazo. Alterações em outros repositórios são detectadas na próxima consulta. A publicação só é reconstruída quando há mudanças nos dados ou na arte. Também pode ser executado manualmente pela aba Actions.
 
-O painel no README é uma imagem estática atualizada automaticamente, sem execução de JavaScript. Uma página já aberta precisa ser recarregada para mostrar uma imagem nova. O próprio GitHub pode levar até 24 horas para contabilizar contribuições; a coleta reproduz os dados publicados por ele e não antecipa esse processamento. Imagens exportadas ou mostradas na conversa são capturas estáticas.
+O painel no README usa imagens atualizadas automaticamente, sem execução de JavaScript. Apenas o retrato tem animação; os números exibidos não mudam dentro de uma página já aberta. É necessário recarregar a página para mostrar dados novos. O próprio GitHub pode levar até 24 horas para contabilizar contribuições; a coleta reproduz os dados publicados por ele e não antecipa esse processamento. Imagens exportadas ou mostradas na conversa são capturas estáticas.
 
 Cada execução deixa um resumo na aba Actions com horário da consulta, resultado, total coletado e situação da publicação. Quando a coleta encontra os mesmos dados, as etapas de publicação aparecem como dispensadas (skipped); isso é esperado e não indica falha. Solicitações GET são repetidas até três vezes após erros temporários de conexão, limite de requisições ou respostas 5xx. Erros permanentes continuam interrompendo a execução e ficam visíveis nos logs. A leitura usa a branch main mais recente e o token continua limitado às permissões já existentes.
 
@@ -20,7 +20,7 @@ Para atualizar manualmente: abra Actions → Atualizar perfil visual → Run wor
 
 As métricas e o calendário usam o perfil público de andremellotech. A data, o intervalo consultado e os dias ativos continuam sendo coletados nos arquivos de dados, mas as duas linhas explicativas abaixo do calendário ficam ocultas no painel. A consulta automática a cada 5 minutos permanece ativa. Falhas na coleta interrompem a publicação e preservam o último painel válido.
 
-O calendário, os destaques de atividade e os títulos numerados das seções 01 a 04 usam as paletas verdes do calendário nativo do GitHub, com versões próprias para tema claro e escuro. Os níveis de intensidade são os mesmos retornados pelo calendário público, sem reinterpretar as faixas de contagem.
+O calendário usa as paletas verdes nativas do GitHub, com versões próprias para tema claro e escuro. O mesmo verde orienta os títulos, subtítulos, números de seção e destaques de todo o painel. Textos corridos usam tons neutros de bom contraste e os selos preservam as cores das ferramentas. Os níveis de intensidade são os mesmos retornados pelo calendário público, sem reinterpretar as faixas de contagem.
 
 Para reconstruir localmente: instale `scripts/requirements.txt` e execute `python scripts/design.py`. Os textos e cores ficam nesse arquivo. As fontes são Segoe UI no Windows e DejaVu Sans no Linux.
 
@@ -48,14 +48,16 @@ A revisão tipográfica usa Segoe UI e Segoe UI Semibold no Windows. O nome foi 
 
 ## Composição contínua no GitHub
 
-O conteúdo principal usa `assets/profile-card-light.png` e `assets/profile-card-dark.png`, ambos com fundo transparente. O elemento HTML `picture` permite ao próprio GitHub selecionar a imagem com cores de texto adequadas ao tema. A transparência acompanha também os fundos dos temas escuro suave, de alto contraste e de acessibilidade, sem fixar uma cor de fundo no painel. Cards e retrato também não têm preenchimento de fundo. As cores estão em `scripts/themes.py`.
+O conteúdo principal usa três blocos adjacentes em cada tema: `profile-header-*.png`, `profile-about-*.gif` e `profile-body-*.png`. Eles conservam as dimensões e o alinhamento da composição contínua. O elemento HTML `picture` permite ao próprio GitHub selecionar as cores adequadas ao tema. Espaços vazios, cards e retrato mantêm transparência, acompanhando o fundo da página. As cores estão centralizadas em `scripts/themes.py`.
+
+A animação reaproveita os quadros e tempos de `assets/andre-ascii.gif`. O texto é gravado uma vez no GIF e somente o retângulo do retrato muda nos quadros seguintes. Assim, as ferramentas e o restante do painel continuam em PNG sem perda de nitidez. Quando o navegador indica preferência por movimento reduzido, o bloco seleciona `profile-about-*.png`. Os arquivos completos `profile-card-light.png` e `profile-card-dark.png` continuam disponíveis para exportação estática.
 
 Os dois recortes transparentes do rodapé continuam sendo links reais para LinkedIn e repositórios. `scripts/github_layout.py` gera essa composição e é chamado pelo gerador principal. A prévia HTML segue o tema do sistema. `PREVIA.png` mostra a versão clara e `PREVIA-ESCURO.png` a escura. Os arquivos individuais dos badges permanecem disponíveis para edição, mas são incorporados ao painel no perfil. O perfil termina após os botões de contato, sem seções recolhíveis ou links repetidos.
 
 ## Imagens e compatibilidade com redes corporativas
 
-A versão principal usa PNG estático com transparência nos dois temas. As imagens são publicadas por HTTPS em https://andremellotech.github.io/andremellotech/assets/ e referenciadas por URLs absolutas no README, para passarem pelo proxy de imagens do GitHub, como as imagens externas da referência mixzira. Cada URL inclui uma versão calculada a partir do conteúdo, evitando que o cache mantenha um painel antigo após atualizações.
+A versão principal usa PNG e GIF com transparência nos dois temas. As imagens são publicadas por HTTPS em https://andremellotech.github.io/andremellotech/assets/ e referenciadas por URLs absolutas no README, para passarem pelo proxy de imagens do GitHub, como as imagens externas da referência mixzira. Cada URL inclui uma versão calculada a partir do conteúdo, evitando que o cache mantenha um painel antigo após atualizações. A animação não depende de JavaScript, vídeos, SVG animado ou novos serviços externos.
 
-O workflow precisa de contents:write para salvar os dados e a arte, e de pages:write e id-token:write para publicar os arquivos no GitHub Pages. Em Settings → Pages, a origem deve ser GitHub Actions. A publicação das imagens acontece antes do commit que atualiza os links do README. Apenas os quatro arquivos públicos do painel/rodapé e sua prévia são enviados à hospedagem.
+O workflow precisa de contents:write para salvar os dados e a arte, e de pages:write e id-token:write para publicar os arquivos no GitHub Pages. Em Settings → Pages, a origem deve ser GitHub Actions. A publicação das imagens acontece antes do commit que atualiza os links do README. Apenas as imagens públicas do painel/rodapé e sua prévia são enviadas à hospedagem; os testes verificam que cada imagem referenciada está incluída.
 
-A versão anterior com essa mesma hospedagem e o proxy do GitHub foi confirmada por André como funcionando dentro da rede KPMG. A mudança de tema preserva esse fluxo de carregamento.
+A versão anterior com essa mesma hospedagem e o proxy do GitHub foi confirmada por André como funcionando dentro da rede KPMG. As mudanças de tema e a animação preservam esse fluxo de carregamento.

@@ -2,7 +2,8 @@
 from pathlib import Path
 from html.parser import HTMLParser
 import shutil, subprocess, sys, tempfile, unittest
-from PIL import Image
+from PIL import Image, ImageSequence
+import hashlib
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -37,6 +38,25 @@ class ThemeRendering(unittest.TestCase):
             self.assertEqual(links, ['https://www.linkedin.com/in/aamello/',
                                      'https://github.com/andremellotech?tab=repositories'])
             self.assertFalse(any(tag == 'details' for tag, _ in parsed.tags))
+            self.assertTrue(any('prefers-reduced-motion: reduce' in s.get('media', '') for s in sources),
+                            'Reduced motion must select a still portrait')
+            for theme in ['light', 'dark']:
+                animation = root / f'assets/profile-about-{theme}.gif'
+                self.assertTrue(animation.exists(), 'The portrait must animate on the profile itself')
+                with Image.open(animation) as gif:
+                    self.assertGreater(gif.n_frames, 1)
+                    self.assertEqual(gif.info.get('loop'), 0, 'The animation must repeat')
+                    first = gif.convert('RGBA')
+                    self.assertEqual(first.getpixel((0, 0))[3], 0, 'No rectangular background')
+                    portraits, text = set(), set()
+                    for frame in ImageSequence.Iterator(gif):
+                        rgba = frame.convert('RGBA')
+                        portraits.add(hashlib.sha256(rgba.crop((84, 0, 514, 550)).tobytes()).hexdigest())
+                        text.add(hashlib.sha256(rgba.crop((532, 0, 1200, 550)).tobytes()).hexdigest())
+                    self.assertGreater(len(portraits), 1, 'The portrait must move')
+                    self.assertEqual(len(text), 1, 'Text must stay stable')
+                self.assertLess(animation.stat().st_size, 2_000_000, 'Keep the corporate proxy payload small')
+                self.assertTrue(any(f'profile-about-{theme}.gif' in s.get('srcset', '') for s in sources))
             images = []
             for theme in ['light', 'dark']:
                 path = root / f'assets/profile-card-{theme}.png'

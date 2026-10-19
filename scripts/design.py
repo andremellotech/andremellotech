@@ -29,7 +29,7 @@ BADGE_GROUPS = [
 
 
 def render_theme(name, palette):
-    section_color = palette['calendar'][-1]
+    section_color = palette['accent']
     def canvas(w, h):
         image = Image.new('RGBA', (w, h), TRANSPARENT)
         return image, ImageDraw.Draw(image)
@@ -48,14 +48,14 @@ def render_theme(name, palette):
     centered(22, '@ANDREMELLOTECH', 15, palette['accent'])
     centered(52, 'André Mello', 52, bold=True)
     centered(119, 'Dados, tecnologia e visão de negócio.', 24)
-    d.line((520, 166, 680, 166), fill=palette['blue'])
+    d.line((520, 166, 680, 166), fill=palette['accent'])
     centered(189, 'PERFORMANCE & ANALYTICS  /  AUTOMATION  /  FINANCIAL MODELING', 15, palette['muted'])
     save(im, 'hero')
 
     im, d = canvas(590, 550)
     txt(d, 30, 42, '01 / SOBRE MIM', 15, section_color)
-    txt(d, 30, 92, 'Entre dados,', 30, bold=True)
-    txt(d, 30, 132, 'tecnologia e negócios.', 30, palette['blue'], True)
+    txt(d, 30, 92, 'Entre dados,', 30, palette['accent'], True)
+    txt(d, 30, 132, 'tecnologia e negócios.', 30, palette['accent'], True)
     for i, line in enumerate(['Meu foco conecta análise de performance,',
                               'engenharia, automação e modelagem financeira.',
                               'Uso dados e tecnologia para apoiar decisões',
@@ -76,8 +76,8 @@ def render_theme(name, palette):
         x = 12 + i * 400
         d.rounded_rectangle((x, 59, x + 376, 250), radius=20, outline=palette['line'])
         txt(d, x + 24, 76, num, 15, palette['accent'])
-        txt(d, x + 24, 109, title, 25, bold=True)
-        txt(d, x + 24, 140, subtitle, 25, palette['blue'], True)
+        txt(d, x + 24, 109, title, 25, palette['accent'], True)
+        txt(d, x + 24, 140, subtitle, 25, palette['accent'], True)
         for j, line in enumerate(lines):
             txt(d, x + 24, 187 + j * 24, line, 18, palette['muted'])
     save(im, 'expertise')
@@ -86,7 +86,7 @@ def render_theme(name, palette):
     txt(d, 30, 12, '03 / TECNOLOGIAS & FERRAMENTAS', 15, section_color)
     for group, (heading, items) in enumerate(BADGE_GROUPS):
         y = 58 + group * 111
-        txt(d, 30, y, heading, 22, bold=True)
+        txt(d, 30, y, heading, 22, palette['accent'], True)
         d.line((30, y + 37, 1170, y + 37), fill=palette['line'])
         x = 30
         for stem, label in items:
@@ -132,5 +132,5 @@ if __name__ == '__main__':
     for name, palette in THEMES.items():
         render_theme(name, palette)
     link_badge('link-linkedin', 'LinkedIn', 'André Mello', '#0a66c2')
-    link_badge('link-github', 'GitHub', 'Repositórios', '#237d70')
+    link_badge('link-github', 'GitHub', 'Repositórios', '#116329')
     build_github_layout(ROOT, font)
