@@ -18,7 +18,7 @@
       "fork": false,
       "stargazers_count": 0,
       "forks_count": 0,
-      "pushed_at": "2026-10-19T20:34:24Z"
+      "pushed_at": "2026-10-20T01:49:42Z"
     },
     {
       "name": "financial-performance-analytics",
@@ -84,11 +84,11 @@
   "languages": {
     "HTML": 2788288,
     "C#": 293175,
-    "Python": 262743,
+    "Python": 271070,
+    "TypeScript": 198658,
     "Power Query": 126511,
-    "TypeScript": 76025,
+    "CSS": 38909,
     "JavaScript": 20943,
-    "CSS": 20881,
     "PowerShell": 6544
   },
   "languages_scope": "Até seis repositórios públicos atualizados mais recentemente",
