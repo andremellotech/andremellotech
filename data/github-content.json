@@ -14,11 +14,11 @@
       "name": "ja-vem-sp",
       "description": null,
       "html_url": "https://github.com/andremellotech/ja-vem-sp",
-      "language": "TypeScript",
+      "language": "HTML",
       "fork": false,
       "stargazers_count": 0,
       "forks_count": 0,
-      "pushed_at": "2026-10-20T01:49:42Z"
+      "pushed_at": "2026-10-20T13:45:23Z"
     },
     {
       "name": "financial-performance-analytics",
@@ -82,12 +82,12 @@
     }
   ],
   "languages": {
-    "HTML": 2788288,
+    "HTML": 3501332,
     "C#": 293175,
     "Python": 271070,
-    "TypeScript": 198658,
+    "TypeScript": 206049,
     "Power Query": 126511,
-    "CSS": 38909,
+    "CSS": 39049,
     "JavaScript": 20943,
     "PowerShell": 6544
   },
