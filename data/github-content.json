@@ -18,7 +18,7 @@
       "fork": false,
       "stargazers_count": 0,
       "forks_count": 0,
-      "pushed_at": "2026-10-21T00:30:31Z"
+      "pushed_at": "2026-10-21T13:54:10Z"
     },
     {
       "name": "financial-performance-analytics",
@@ -82,12 +82,12 @@
     }
   ],
   "languages": {
-    "HTML": 3501413,
+    "HTML": 3508269,
+    "TypeScript": 303620,
     "C#": 293175,
     "Python": 278386,
-    "TypeScript": 273391,
     "Power Query": 126511,
-    "CSS": 42607,
+    "CSS": 46818,
     "JavaScript": 20943,
     "PowerShell": 6544
   },
