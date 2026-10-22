@@ -106,11 +106,14 @@ def build_github_layout(root, font):
             y += panel.height + 28
         draw = ImageDraw.Draw(main)
         for offset, text, size, bold, color in [
-            (12, 'Contato & Projetos', 22, True, palette['accent']),
+            (12, 'Contato & Projetos', 26, True, palette['brand']),
             (54, 'Conheça meu trabalho e vamos conversar.', 19, False, palette['muted']),
         ]:
             face = font(size, bold)
             draw.text(((1200 - draw.textlength(text, font=face)) / 2, y + offset), text, font=face, fill=color)
+        draw.line((550, y, 602, y), fill=palette['brand'], width=3)
+        draw.line((602, y, 632, y), fill=palette['cyan'], width=3)
+        draw.line((632, y, 650, y), fill=palette['copper'], width=3)
         main.save(assets / f'profile-card-{theme}.png')
         # These adjoining slices preserve the original layout and avoid quantizing
         # every text line and technology badge into a full-page GIF.
@@ -120,18 +123,18 @@ def build_github_layout(root, font):
         main.crop((0, body_y, 1200, height)).save(assets / f'profile-body-{theme}.png')
         animated_about(assets, theme, palette, Image.open(assets / f'about-{theme}.png').convert('RGBA'))
 
-    footer = Image.new('RGBA', (1200, 84), TRANSPARENT)
+    footer = Image.new('RGBA', (1200, 120), TRANSPARENT)
     for stem, side in [('link-linkedin', 0), ('link-github', 1)]:
-        half = Image.new('RGBA', (600, 84), TRANSPARENT)
+        half = Image.new('RGBA', (600, 120), TRANSPARENT)
         badge = Image.open(assets / f'{stem}.png').convert('RGBA')
-        badge = badge.resize((round(badge.width / 2), 42), Image.Resampling.LANCZOS)
-        x = 600 - badge.width - 8 if side == 0 else 8
+        badge = badge.resize((round(badge.width / 2), round(badge.height / 2)), Image.Resampling.LANCZOS)
+        x = 600 - badge.width - 12 if side == 0 else 12
         half.alpha_composite(badge, (x, 12))
         half.save(assets / ('footer-linkedin.png' if side == 0 else 'footer-github.png'))
         footer.alpha_composite(half, (600 * side, 0))
 
     for theme, background in [('light', '#ffffff'), ('dark', '#0d1117')]:
-        preview = Image.new('RGBA', (1200, height + 84), background)
+        preview = Image.new('RGBA', (1200, height + footer.height), background)
         preview.alpha_composite(Image.open(assets / f'profile-card-{theme}.png'))
         preview.alpha_composite(footer, (0, height))
         preview.convert('RGB').save(root / ('PREVIA.png' if theme == 'light' else 'PREVIA-ESCURO.png'))

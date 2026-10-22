@@ -36,7 +36,8 @@ def render_activity(root,font,palette=None):
              (summary['current_streak'],'SEQUÊNCIA ATUAL / DIAS'),
              (summary['longest_streak'],'MAIOR SEQUÊNCIA / DIAS')]
     for i,(value,label) in enumerate(metrics):
-        x=30+i*294;text(x,60,value,35,white,True);text(x,110,label,13,muted)
+        color=[white,palette['brand'],palette['cyan'],palette['copper']][i]
+        x=30+i*294;text(x,60,value,35,color,True);text(x,110,label,13,muted)
         if i:
             d.line((x-20,68,x-20,128),fill=palette['line'])
     d.line((30,150,1170,150),fill=palette['line'])

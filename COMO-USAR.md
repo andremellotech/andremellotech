@@ -20,17 +20,17 @@ Para atualizar manualmente: abra Actions → Atualizar perfil visual → Run wor
 
 As métricas e o calendário usam o perfil público de andremellotech. A data, o intervalo consultado e os dias ativos continuam sendo coletados nos arquivos de dados, mas as duas linhas explicativas abaixo do calendário ficam ocultas no painel. A consulta automática a cada 5 minutos permanece ativa. Falhas na coleta interrompem a publicação e preservam o último painel válido.
 
-Títulos, subtítulos e métricas usam uma base neutra: grafite no tema claro e branco suave no escuro, com textos de apoio em cinza. Azul profundo e aço aparecem somente no monograma AM, ícones lineares, números de seção, conectores e detalhes de acabamento. Os selos preservam as cores das ferramentas e o calendário conserva as paletas verdes nativas do GitHub. Os níveis de intensidade são os mesmos retornados pelo calendário público, sem reinterpretar as faixas de contagem.
+A assinatura AM usa azul profundo, ciano-petróleo e cobre. As áreas de dados, engenharia e negócios recebem cores e superfícies coordenadas; o texto corrido continua neutro para preservar a leitura. O nome, o retrato ASCII, os conectores e os marcadores participam da mesma identidade. Os selos preservam as cores das ferramentas e o calendário conserva as paletas verdes nativas do GitHub. Os níveis de intensidade são os mesmos retornados pelo calendário público, sem reinterpretar as faixas de contagem.
 
 Para reconstruir localmente: instale `scripts/requirements.txt` e execute `python scripts/design.py`. Os textos ficam nesse arquivo, as cores em `scripts/themes.py` e os elementos de identidade compartilhados em `scripts/branding.py`. As fontes são Segoe UI no Windows e DejaVu Sans no Linux.
 
 ## Direção visual
 
-Combina a identidade animada original com uma apresentação editorial voltada a dados, consultoria, tecnologia e engenharia. O monograma AM abre o perfil; enquadramentos discretos, ícones lineares e o fluxo dado → análise → decisão conectam as seções. A identidade usa linhas finas, espaço em branco e títulos neutros. Os textos descrevem somente as áreas e ferramentas documentadas no material fornecido. Não foram acrescentados experiência, formação ou projetos não confirmados.
+Combina a identidade animada original com uma apresentação voltada a dados, consultoria, tecnologia e engenharia. O monograma AM é construído com traços geométricos conectados dentro de um símbolo com recortes diagonais. O mesmo recorte reaparece nos cards, no enquadramento do retrato e nos botões. Um prisma de planos e conexões representa arquitetura de dados, sem eixos quantitativos ou indicadores inventados. O fluxo dado → análise → decisão conecta as seções. Os textos descrevem somente as áreas e ferramentas documentadas no material fornecido. Não foram acrescentados experiência, formação ou projetos não confirmados.
 
 O GitHub controla o layout externo e pode reduzir os painéis no celular. A prévia local aproxima o conteúdo, mas não reproduz a interface completa do GitHub. Há descrições alternativas nas imagens. O contato usa somente os dois botões de LinkedIn e repositórios, sem links repetidos abaixo.
 
-A capa usa uma apresentação tipográfica sem gráficos decorativos. A seção "Em construção" foi retirada. Os links de LinkedIn e repositórios usam badges retangulares compactos, em duas cores, seguindo a referência enviada. Métricas públicas e calendário de contribuições ficam integrados no painel. A prévia PNG mostra o conteúdo principal.
+A capa combina o nome com a assinatura geométrica e o prisma de dados. A seção "Em construção" permanece retirada. LinkedIn e GitHub usam botões amplos, com ícones, setas de abertura e degradês próprios: azul no LinkedIn e azul-petróleo no GitHub. Cada botão mede 420 × 88 pixels na composição, com origem em imagem de resolução dupla. A marca GitHub é reaproveitada do badge já existente. Métricas públicas e calendário de contribuições ficam integrados no painel. A prévia PNG mostra o conteúdo principal.
 
 ## Tecnologias selecionadas
 
@@ -48,7 +48,7 @@ A revisão tipográfica usa Segoe UI e Segoe UI Semibold no Windows. O nome usa 
 
 ## Composição contínua no GitHub
 
-O conteúdo principal usa três blocos adjacentes em cada tema: `profile-header-*.png`, `profile-about-*.gif` e `profile-body-*.png`. Eles conservam as dimensões e o alinhamento da composição contínua. O elemento HTML `picture` permite ao próprio GitHub selecionar as cores adequadas ao tema. Espaços vazios, cards e retrato mantêm transparência, acompanhando o fundo da página. As cores estão centralizadas em `scripts/themes.py`.
+O conteúdo principal usa três blocos adjacentes em cada tema: `profile-header-*.png`, `profile-about-*.gif` e `profile-body-*.png`. Eles conservam o alinhamento da composição contínua. O elemento HTML `picture` permite ao próprio GitHub selecionar as cores adequadas ao tema. O fundo externo e os espaços vazios mantêm transparência; os cards têm superfícies coordenadas com o tema claro ou escuro. As cores estão centralizadas em `scripts/themes.py`.
 
 A animação reaproveita o rosto e os tempos de `assets/andre-ascii.gif`. Quadros consecutivos iguais são combinados sem encurtar a duração original. O GIF usa uma paleta compartilhada de 32 cores; o texto é gravado uma vez e somente o retângulo do retrato muda nos quadros seguintes. Assim, as ferramentas e o restante do painel continuam em PNG sem perda de nitidez. Os testes verificam repetição, movimento, texto estável, transparência, duração e arquivos abaixo de 1 MB. A seleção por tema mantém o GIF solicitado mesmo quando o sistema indica movimento reduzido, sem modificar configurações do computador. As versões paradas `profile-about-*.png` e os arquivos completos `profile-card-light.png` e `profile-card-dark.png` continuam disponíveis para exportação estática.
 
