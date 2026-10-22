@@ -56,7 +56,12 @@ class ThemeRendering(unittest.TestCase):
                         text.add(hashlib.sha256(rgba.crop((532, 0, 1200, 550)).tobytes()).hexdigest())
                     self.assertGreater(len(portraits), 1, 'The portrait must move')
                     self.assertEqual(len(text), 1, 'Text must stay stable')
-                self.assertLess(animation.stat().st_size, 2_000_000, 'Keep the corporate proxy payload small')
+                    gif.seek(0)
+                    duration = sum(frame.info.get('duration', 100) for frame in ImageSequence.Iterator(gif))
+                with Image.open(root / 'assets/andre-ascii.gif') as original:
+                    source_duration = sum(frame.info.get('duration', 100) for frame in ImageSequence.Iterator(original))
+                self.assertAlmostEqual(duration, source_duration, delta=20, msg='Preserve the original animation pace')
+                self.assertLess(animation.stat().st_size, 1_000_000, 'Keep the corporate proxy payload below 1 MB')
                 self.assertTrue(any(f'profile-about-{theme}.gif' in s.get('srcset', '') for s in sources))
             images = []
             for theme in ['light', 'dark']:

@@ -2,6 +2,7 @@
 from PIL import Image, ImageDraw, ImageColor, ImageSequence, GifImagePlugin
 import hashlib
 from themes import THEMES, TRANSPARENT
+from branding import portrait_corners
 
 ASSET_HOST = 'https://andremellotech.github.io/andremellotech/assets/'
 
@@ -16,6 +17,10 @@ def transparent_portrait(source, color):
     # Recover glyph opacity from the original uniform terminal background.
     # Recoloring the glyphs avoids dark halos on light pages.
     alpha = original.convert('L').point(lambda value: max(0, min(255, round((value - 19) * 1.9))))
+    # Keep the animated face while removing the old terminal chrome and microcopy.
+    face = alpha.crop((55, 72, 375, 480)).resize((352, 449), Image.Resampling.LANCZOS)
+    alpha = Image.new('L', original.size)
+    alpha.paste(face, (39, 42))
     portrait = Image.new('RGBA', original.size, ImageColor.getrgb(color) + (0,))
     portrait.putalpha(alpha)
     return portrait
@@ -30,6 +35,7 @@ def animated_about(assets, theme, palette, about):
             frame = Image.new('RGBA', (1200, 578), TRANSPARENT)
             frame.alpha_composite(transparent_portrait(source, palette['portrait']), (84, 0))
             frame.alpha_composite(about, (532, 0))
+            portrait_corners(frame, palette)
             if shared_palette is None:
                 frame.save(assets / f'profile-about-{theme}.png')
             # GIF has binary transparency. Matte only the antialiased glyph edges,
@@ -38,12 +44,16 @@ def animated_about(assets, theme, palette, about):
             matte.alpha_composite(frame)
             rgb = matte.convert('RGB')
             if shared_palette is None:
-                shared_palette = rgb.quantize(colors=255, dither=Image.Dither.NONE)
+                shared_palette = rgb.quantize(colors=32, dither=Image.Dither.NONE)
             indexed = rgb.quantize(palette=shared_palette, dither=Image.Dither.NONE)
             indexed.paste(255, mask=frame.getchannel('A').point(lambda alpha: 255 if alpha == 0 else 0))
             indexed.info['transparency'] = 255
-            frames.append(indexed)
-            durations.append(source.info.get('duration', 100))
+            duration = source.info.get('duration', 100)
+            if frames and indexed.tobytes() == frames[-1].tobytes():
+                durations[-1] += duration
+            else:
+                frames.append(indexed)
+                durations.append(duration)
     # Write the fixed text once, then send only the small portrait rectangle.
     # A transparent clearing frame removes the initial portrait without erasing
     # the text. Each later portrait clears its own rectangle before the next one.
@@ -84,6 +94,7 @@ def build_github_layout(root, font):
                 panel = Image.new('RGBA', (1200, 550), TRANSPARENT)
                 panel.alpha_composite(transparent_portrait(assets / 'andre-ascii.png', palette['portrait']), (84, 0))
                 panel.alpha_composite(Image.open(assets / f'about-{theme}.png'), (532, 0))
+                portrait_corners(panel, palette)
             else:
                 panel = Image.open(assets / f'{name}-{theme}.png').convert('RGBA')
             panels.append(panel)
@@ -125,8 +136,8 @@ def build_github_layout(root, font):
         preview.alpha_composite(footer, (0, height))
         preview.convert('RGB').save(root / ('PREVIA.png' if theme == 'light' else 'PREVIA-ESCURO.png'))
 
-    alt = ('André Mello — Dados, tecnologia e visão de negócio. Performance e Analytics; '
-           'Engineering e Automation; Financial Modeling. Ferramentas: Power BI, Python, Excel, '
+    alt = ('André Mello — Dados, tecnologia e visão de negócio. Data e Analytics; '
+           'Tecnologia e Engenharia; Negócios e Modelagem Financeira. Ferramentas: Power BI, Python, Excel, '
            'Alteryx, SAP e PowerPoint; conhecimentos em HTML, CSS, JavaScript e Lua; GitHub; '
            'experiência anterior em MySQL nos servidores de Tibia e GTA V / FiveM. '
            'Office 365 com Excel e PowerPoint. Atividade pública e calendário de contribuições atualizados automaticamente.')

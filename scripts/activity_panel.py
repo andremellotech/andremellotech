@@ -5,6 +5,7 @@ import json
 from PIL import Image,ImageDraw
 from fetch_contributions import derive_stats
 from themes import THEMES, TRANSPARENT
+from branding import section_heading
 
 def contribution_summary(content,calendar):
     days=calendar['days']
@@ -29,13 +30,15 @@ def render_activity(root,font,palette=None):
     cells=week_grid(calendar['days'])
     im=Image.new('RGBA',(1200,384),TRANSPARENT);d=ImageDraw.Draw(im)
     def text(x,y,value,size=18,color=None,bold=False):d.text((x,y),str(value),font=font(size,bold),fill=color or white)
-    text(30,16,'04 / ATIVIDADE & CONTRIBUIÇÕES',15,accent)
+    section_heading(d,palette,font,'04','ATIVIDADE & CONTRIBUIÇÕES',12)
     metrics=[(summary['repositories'],'REPOSITÓRIOS PÚBLICOS'),
              (summary['total'],'CONTRIBUIÇÕES NO PERÍODO'),
              (summary['current_streak'],'SEQUÊNCIA ATUAL / DIAS'),
              (summary['longest_streak'],'MAIOR SEQUÊNCIA / DIAS')]
     for i,(value,label) in enumerate(metrics):
         x=30+i*294;text(x,60,value,35,white,True);text(x,110,label,13,muted)
+        if i:
+            d.line((x-20,68,x-20,128),fill=palette['line'])
     d.line((30,150,1170,150),fill=palette['line'])
     columns=max(c['column'] for c in cells)+1;step=19;size=16
     x0=(1200-(columns*step-3))//2;y0=205
