@@ -1,7 +1,7 @@
 """Exercise the shipped generator and the exact files deployed to Pages."""
 from pathlib import Path
 from html.parser import HTMLParser
-import json, shutil, subprocess, sys, tempfile, unittest
+import shutil, subprocess, sys, tempfile, unittest
 from PIL import Image, ImageSequence
 import hashlib
 
@@ -19,7 +19,7 @@ class Elements(HTMLParser):
 
 
 class ThemeRendering(unittest.TestCase):
-    def test_generated_profile_keeps_working_project_links_and_theme_aware_assets(self):
+    def test_profile_has_only_contact_links_and_theme_aware_assets(self):
         scratch = ROOT / 'work/theme-tests'
         scratch.mkdir(parents=True, exist_ok=True)
         with tempfile.TemporaryDirectory(dir=scratch) as folder:
@@ -27,7 +27,6 @@ class ThemeRendering(unittest.TestCase):
             shutil.copytree(ROOT / 'scripts', root / 'scripts', ignore=shutil.ignore_patterns('__pycache__'))
             shutil.copytree(ROOT / 'data', root / 'data')
             shutil.copytree(ROOT / 'assets/badges', root / 'assets/badges')
-            shutil.copytree(ROOT / 'assets/project-previews', root / 'assets/project-previews')
             for name in ['andre-ascii.png', 'andre-ascii.gif']:
                 shutil.copy2(ROOT / 'assets' / name, root / 'assets' / name)
             subprocess.run([sys.executable, str(root / 'scripts/design.py')], check=True, capture_output=True)
@@ -36,11 +35,10 @@ class ThemeRendering(unittest.TestCase):
             self.assertTrue(any('prefers-color-scheme: dark' in s.get('media', '') for s in sources),
                             'The GitHub theme must choose the matching text colors')
             links = [attrs['href'] for tag, attrs in parsed.tags if tag == 'a']
-            self.assertEqual(links, ['https://github.com/andremellotech/financial-performance-analytics',
-                                     'https://github.com/andremellotech/finance-close-automation',
-                                     'https://github.com/andremellotech/sap-project-financial-control-tower',
-                                     'https://www.linkedin.com/in/aamello/',
+            self.assertEqual(links, ['https://www.linkedin.com/in/aamello/',
                                      'https://github.com/andremellotech?tab=repositories'])
+            self.assertFalse(any('profile-project' in (a.get('src', '') + a.get('srcset', ''))
+                                 for _, a in parsed.tags), 'Do not show repository image cards')
             self.assertFalse(any(tag == 'details' for tag, _ in parsed.tags))
             portrait_sources = [s for s in sources if 'profile-about-' in s.get('srcset', '')]
             self.assertTrue(all('.gif?' in s['srcset'] for s in portrait_sources),
@@ -88,24 +86,6 @@ class ThemeRendering(unittest.TestCase):
                     self.assertTrue(url.startswith('https://andremellotech.github.io/andremellotech/assets/'))
                     name = url.split('/')[-1].split('?')[0]
                     self.assertTrue((root / 'work/pages/assets' / name).exists(), f'{name} must deploy before the README')
-
-            # A removed/private/foreign repository must not retain a project link.
-            content_path = root / 'data/github-content.json'
-            content = json.loads(content_path.read_text(encoding='utf-8'))
-            content['repositories'] = [r for r in content['repositories'] if r['name'] != 'financial-performance-analytics']
-            for repository in content['repositories']:
-                if repository['name'] == 'finance-close-automation':
-                    repository['private'] = True
-                if repository['name'] == 'sap-project-financial-control-tower':
-                    repository['html_url'] = 'https://github.com/someone-else/sap-project-financial-control-tower'
-            content_path.write_text(json.dumps(content), encoding='utf-8')
-            subprocess.run([sys.executable, str(root / 'scripts/design.py')], check=True, capture_output=True)
-            unavailable = Elements((root / 'README.md').read_text(encoding='utf-8'))
-            self.assertEqual([a['href'] for tag, a in unavailable.tags if tag == 'a'],
-                             ['https://www.linkedin.com/in/aamello/',
-                              'https://github.com/andremellotech?tab=repositories'])
-            self.assertFalse(any('profile-project' in (a.get('src', '') + a.get('srcset', ''))
-                                 for _, a in unavailable.tags), 'Hide the gallery when no selected public project remains')
 
 
 if __name__ == '__main__':

@@ -5,8 +5,7 @@ import os
 from themes import THEMES, TRANSPARENT
 from activity_panel import render_activity
 from github_layout import build_github_layout
-from branding import section_heading, monogram, chamfered_card
-from portfolio import render_projects
+from branding import section_heading, monogram, chamfered_card, banner_background
 
 ROOT = Path(__file__).resolve().parents[1]
 A = ROOT / 'assets'
@@ -42,25 +41,18 @@ def render_theme(name, palette):
         image.save(A / f'{stem}-{name}.png')
 
     im, d = canvas(1200, 224)
-    monogram(d, palette, font)
-    txt(d, 118, 23, 'ANDREMELLOTECH', 14, palette['muted'], True)
-    txt(d, 115, 47, 'André', 44, bold=True)
-    txt(d, 127 + d.textlength('André', font=font(44, True)), 47, 'Mello', 44, palette['text'], True)
-    for y, label, size, color, bold in [
-        (30, 'DATA & ANALYTICS', 18, palette['accent'], True),
-        (59, 'CONSULTORIA · TECNOLOGIA · ENGENHARIA', 14, palette['muted'], False),
-    ]:
-        txt(d, 1170 - d.textlength(label, font=font(size, bold)), y, label, size, color, bold)
-    txt(d, 30, 126, 'Análise financeira e automação com visão de negócio.', 25)
-    txt(d, 30, 179, 'POWER BI  /  PYTHON  /  SAP  /  EXCEL', 14, palette['muted'])
-    d.line((30, 218, 1170, 218), fill=palette['line'])
-    d.line((30, 218, 130, 218), fill=palette['brand'], width=2)
+    banner_background(im)
+    monogram(d, palette, font, 38, 39)
+    txt(d, 124, 31, 'ANDREMELLOTECH', 14, '#b6c7d8', True)
+    txt(d, 121, 54, 'André Mello', 44, 'white', True)
+    txt(d, 122, 115, 'Data & Analytics', 27, '#e5edf5', True)
+    txt(d, 122, 163, 'CONSULTORIA · TECNOLOGIA · ENGENHARIA', 15, '#b6c7d8')
     save(im, 'hero')
 
     im, d = canvas(590, 550)
-    section_heading(d, palette, font, '01', 'SOBRE MIM', 40)
-    txt(d, 30, 89, 'Análise, automação', 36, palette['text'], True)
-    txt(d, 30, 132, 'e visão de negócio.', 36, palette['text'], True)
+    section_heading(d, palette, font, '01', 'Sobre mim', 40)
+    txt(d, 30, 89, 'Dados, tecnologia', 34, palette['text'], True)
+    txt(d, 30, 132, 'e visão de negócio.', 34, palette['text'], True)
     d.line((30, 187, 107, 187), fill=palette['brand_line'], width=2)
     for i, line in enumerate(['Meu foco está em análise de performance,',
                               'automação e modelagem financeira.',
@@ -80,19 +72,17 @@ def render_theme(name, palette):
             d.line((x + 166, 469, x + 170, 473, x + 166, 477), fill=palette['muted'])
     save(im, 'about')
 
-    render_projects(ROOT, palette, font)
-
-    im, d = canvas(1200, 570)
-    section_heading(d, palette, font, '03', 'TECNOLOGIAS & FERRAMENTAS', 12)
+    im, d = canvas(1200, 500)
+    section_heading(d, palette, font, '03', 'Tecnologias & ferramentas', 12)
     for group, (heading, items) in enumerate(BADGE_GROUPS):
         if group == 4:
-            left, y, right = 30, 408, 1170
+            left, y, right = 30, 378, 1170
             heading = 'Banco de dados'
         else:
-            left, y, right = (30 if group % 2 == 0 else 612), 60 + (group // 2) * 174, (588 if group % 2 == 0 else 1170)
+            left, y, right = (30 if group % 2 == 0 else 612), 60 + (group // 2) * 158, (588 if group % 2 == 0 else 1170)
         color = palette['accent']
-        chamfered_card(d, (left, y, right, y + (140 if group == 4 else 150)),
-                       palette['surface'], palette['line'], 14)
+        d.rounded_rectangle((left, y, right, y + (104 if group == 4 else 140)),
+                            radius=12, fill=palette['surface'], outline=palette['line'])
         txt(d, left + 20, y + 17, heading, 20, color, True)
         x = left + 20
         for stem, label in items:
@@ -106,14 +96,14 @@ def render_theme(name, palette):
                 base.alpha_composite(badge)
                 badge = base
             badge = badge.resize((round(badge.width * 1.2), 43), Image.Resampling.LANCZOS)
-            im.alpha_composite(badge, (x, y + 65))
+            im.alpha_composite(badge, (x, y + 55))
             x += badge.width + 6
         if group == 1:
-            txt(d, left + 20, y + 122, 'Office 365 com Excel e PowerPoint.', 15, palette['muted'])
+            txt(d, left + 20, y + 111, 'Office 365 com Excel e PowerPoint.', 15, palette['muted'])
         if group == 4:
             label = 'EXPERIÊNCIA ANTERIOR'
             txt(d, 1150 - d.textlength(label, font=font(13)), y + 22, label, 13, palette['muted'])
-            txt(d, 220, y + 79, 'MySQL nos servidores de Tibia e GTA V / FiveM.', 17, palette['muted'])
+            txt(d, 220, y + 65, 'MySQL nos servidores de Tibia e GTA V / FiveM.', 17, palette['muted'])
     save(im, 'stack')
     render_activity(ROOT, font, palette)
 

@@ -3,7 +3,6 @@ from PIL import Image, ImageDraw, ImageColor, ImageSequence, GifImagePlugin
 import hashlib
 from themes import THEMES, TRANSPARENT
 from branding import portrait_corners
-from portfolio import selected_projects
 
 ASSET_HOST = 'https://andremellotech.github.io/andremellotech/assets/'
 
@@ -88,10 +87,9 @@ def themed_picture(root, stem, alt, animated=False, width='100%'):
 
 def build_github_layout(root, font):
     assets = root / 'assets'
-    projects = selected_projects(root)
     for theme, palette in THEMES.items():
         panels = []
-        names = ['hero', 'about-pair'] + (['projects'] if projects else []) + ['stack', 'activity']
+        names = ['hero', 'about-pair', 'activity', 'stack']
         for name in names:
             if name == 'about-pair':
                 panel = Image.new('RGBA', (1200, 550), TRANSPARENT)
@@ -120,16 +118,6 @@ def build_github_layout(root, font):
         # every text line and technology badge into a full-page GIF.
         about_y = panels[0].height + 28
         body_y = about_y + panels[1].height + 28
-        if projects:
-            project_panel = panels[2]
-            project_panel.crop((0, 0, 1200, 80)).save(assets / f'profile-projects-heading-{theme}.png')
-            tiles = Image.new('RGBA', (1200, project_panel.height - 80 + 28), TRANSPARENT)
-            tiles.alpha_composite(project_panel.crop((0, 80, 1200, project_panel.height)))
-            tile_width = 1200 // len(projects)
-            for index in range(len(projects)):
-                tiles.crop((index * tile_width, 0, (index + 1) * tile_width, tiles.height)).save(
-                    assets / f'profile-project-{index + 1}-{theme}.png')
-            body_y += project_panel.height + 28
         main.crop((0, 0, 1200, about_y)).save(assets / f'profile-header-{theme}.png')
         main.crop((0, body_y, 1200, height)).save(assets / f'profile-body-{theme}.png')
         animated_about(assets, theme, palette, Image.open(assets / f'about-{theme}.png').convert('RGBA'))
@@ -156,18 +144,9 @@ def build_github_layout(root, font):
            'experiência anterior em MySQL nos servidores de Tibia e GTA V / FiveM. '
            'Office 365 com Excel e PowerPoint. Atividade pública e calendário de contribuições atualizados automaticamente.')
     # No spaces between inline images: the contact halves keep their exact widths.
-    project_markup = ''
-    if projects:
-        project_markup = themed_picture(root, 'profile-projects-heading', 'Projetos em destaque — casos de portfólio com dados fictícios.')
-        for index, project in enumerate(projects):
-            alt_project = project['title'] + '. ' + ' '.join(project['lines']) + ' ' + project['tools'] + '. Prévia web com dados fictícios.'
-            project_markup += ('<a href="' + project['url'] + '">'
-                               + themed_picture(root, f'profile-project-{index + 1}', alt_project,
-                                                width=f'{100 / len(projects):.6f}%') + '</a>')
     readme = ('<p align="center">'
               + themed_picture(root, 'profile-header', 'André Mello — Análise financeira e automação com visão de negócio.')
               + themed_picture(root, 'profile-about', 'Sobre mim — retrato ASCII animado de André Mello.', animated=True)
-              + project_markup
               + themed_picture(root, 'profile-body', alt)
               + '<a href="https://www.linkedin.com/in/aamello/"><img src="' + image_url(root, 'footer-linkedin.png') + '" '
               'width="50%" align="top" alt="LinkedIn — André Mello" /></a>'

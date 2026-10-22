@@ -5,7 +5,7 @@ import json
 from PIL import Image,ImageDraw
 from fetch_contributions import derive_stats
 from themes import THEMES, TRANSPARENT
-from branding import section_heading
+from branding import section_heading, metric_icon
 
 def contribution_summary(content,calendar):
     days=calendar['days']
@@ -28,33 +28,37 @@ def render_activity(root,font,palette=None):
     calendar=json.loads((root/'data/contributions.json').read_text(encoding='utf-8'))
     summary=contribution_summary(content,calendar)
     cells=week_grid(calendar['days'])
-    im=Image.new('RGBA',(1200,384),TRANSPARENT);d=ImageDraw.Draw(im)
+    im=Image.new('RGBA',(1200,444),TRANSPARENT);d=ImageDraw.Draw(im)
     def text(x,y,value,size=18,color=None,bold=False):d.text((x,y),str(value),font=font(size,bold),fill=color or white)
-    section_heading(d,palette,font,'04','ATIVIDADE & CONTRIBUIÇÕES',12)
+    section_heading(d,palette,font,'02','Atividade & contribuições',12)
     metrics=[(summary['repositories'],'REPOSITÓRIOS PÚBLICOS'),
              (summary['total'],'CONTRIBUIÇÕES NO PERÍODO'),
              (summary['current_streak'],'SEQUÊNCIA ATUAL / DIAS'),
              (summary['longest_streak'],'MAIOR SEQUÊNCIA / DIAS')]
     for i,(value,label) in enumerate(metrics):
         color=white
-        x=30+i*294;text(x,60,value,35,color,True);text(x,110,label,13,muted)
-        if i:
-            d.line((x-20,68,x-20,128),fill=palette['line'])
-    d.line((30,150,1170,150),fill=palette['line'])
+        x=12+i*300
+        d.rounded_rectangle((x,60,x+276,168),radius=12,fill=palette['surface'],outline=palette['line'])
+        text(x+20,75,value,39,color,True);text(x+20,134,label,12,muted)
+        metric_icon(d,x+231,82,i,palette['muted'])
+    d.rounded_rectangle((12,188,1188,432),radius=12,fill=palette['matte'],outline=palette['line'])
     columns=max(c['column'] for c in cells)+1;step=19;size=16
-    x0=(1200-(columns*step-3))//2;y0=205
+    x0=(1200-(columns*step-3))//2;y0=243
     months=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez']
-    prev=None
+    prev=None;starts=[]
     for c in cells:
         day=date.fromisoformat(c['date']);key=day.strftime('%Y-%m')
         if key!=prev:
             label=months[day.month-1]
-            text(x0+c['column']*step,172,label,13,muted);prev=key
+            starts.append((x0+c['column']*step,label));prev=key
         x=x0+c['column']*step;y=y0+c['row']*step
         d.rounded_rectangle((x,y,x+size-1,y+size-1),radius=3,fill=colors[c['level']])
     for row,label in [(1,'Seg'),(3,'Qua'),(5,'Sex')]:text(x0-42,y0+row*step,label,12,muted)
-    text(929,355,'Menos',12,muted)
-    for i,color in enumerate(colors):d.rounded_rectangle((976+i*20,357,991+i*20,372),radius=3,fill=color)
-    text(1085,355,'Mais',12,muted)
+    for index,(x,label) in enumerate(starts):
+        if index+1<len(starts) and starts[index+1][0]-x<35:continue
+        text(x,211,label,13,muted)
+    text(929,403,'Menos',12,muted)
+    for i,color in enumerate(colors):d.rounded_rectangle((976+i*20,405,991+i*20,420),radius=3,fill=color)
+    text(1085,403,'Mais',12,muted)
     im.save(root/'assets'/('activity-'+palette['name']+'.png'))
     return summary

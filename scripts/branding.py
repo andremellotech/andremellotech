@@ -5,7 +5,39 @@ from PIL import ImageDraw
 def section_heading(draw, palette, font, number, title, y=16):
     draw.polygon([(35, y), (57, y), (57, y + 18), (52, y + 23), (30, y + 23), (30, y + 5)], fill='#294b70')
     draw.text((35, y + 3), number, font=font(12, mono=True), fill='white')
-    draw.text((70, y + 2), title, font=font(15, True), fill=palette['accent'])
+    draw.text((70, y - 1), title, font=font(20, True), fill=palette['accent'])
+
+
+def banner_background(image):
+    """A single navy banner with a quiet routing pattern, without invented data."""
+    draw = ImageDraw.Draw(image)
+    draw.rounded_rectangle((12, 8, 1188, 216), radius=18, fill='#102338')
+    for index in range(9):
+        shift = index * 22
+        draw.line((810 + shift, 196, 890 + shift, 116, 1160, 116 - shift // 2),
+                  fill='#203b54', width=1)
+    draw.line((850, 194, 938, 106, 1150, 106), fill='#3e5d78', width=2)
+    draw.line((938, 106, 994, 50, 1150, 50), fill='#294961', width=2)
+    for x, y in [(938, 106), (994, 50), (1150, 106)]:
+        draw.ellipse((x - 3, y - 3, x + 3, y + 3), fill='#718ba2')
+
+
+def metric_icon(draw, x, y, kind, color):
+    if kind == 0:
+        draw.line((x, y + 5, x, y + 22, x + 25, y + 22, x + 25, y + 5,
+                   x + 11, y + 5, x + 8, y + 1, x, y + 1, x, y + 5), fill=color, width=2)
+    elif kind == 1:
+        for dx in [0, 9, 18]:
+            for dy in [0, 9, 18]:
+                draw.rounded_rectangle((x + dx, y + dy, x + dx + 5, y + dy + 5), radius=1, outline=color)
+    elif kind == 2:
+        draw.rounded_rectangle((x, y + 3, x + 24, y + 24), radius=3, outline=color, width=2)
+        draw.line((x, y + 9, x + 24, y + 9), fill=color, width=2)
+        draw.line((x + 6, y, x + 6, y + 6), fill=color, width=2)
+        draw.line((x + 18, y, x + 18, y + 6), fill=color, width=2)
+    else:
+        draw.line((x + 2, y + 25, x + 2, y, x + 23, y + 3, x + 20, y + 14,
+                   x + 2, y + 11), fill=color, width=2)
 
 
 def monogram(draw, palette, font, x=30, y=25):
