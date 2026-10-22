@@ -5,7 +5,8 @@ import os
 from themes import THEMES, TRANSPARENT
 from activity_panel import render_activity
 from github_layout import build_github_layout
-from branding import section_heading, monogram, domain_icon, chamfered_card
+from branding import section_heading, monogram, chamfered_card
+from portfolio import render_projects
 
 ROOT = Path(__file__).resolve().parents[1]
 A = ROOT / 'assets'
@@ -50,21 +51,21 @@ def render_theme(name, palette):
         (59, 'CONSULTORIA · TECNOLOGIA · ENGENHARIA', 14, palette['muted'], False),
     ]:
         txt(d, 1170 - d.textlength(label, font=font(size, bold)), y, label, size, color, bold)
-    txt(d, 30, 126, 'Dados, tecnologia e visão de negócio.', 25)
-    txt(d, 30, 179, 'PERFORMANCE & ANALYTICS  /  AUTOMATION  /  FINANCIAL MODELING', 14, palette['muted'])
+    txt(d, 30, 126, 'Análise financeira e automação com visão de negócio.', 25)
+    txt(d, 30, 179, 'POWER BI  /  PYTHON  /  SAP  /  EXCEL', 14, palette['muted'])
     d.line((30, 218, 1170, 218), fill=palette['line'])
     d.line((30, 218, 130, 218), fill=palette['brand'], width=2)
     save(im, 'hero')
 
     im, d = canvas(590, 550)
     section_heading(d, palette, font, '01', 'SOBRE MIM', 40)
-    txt(d, 30, 89, 'Da análise', 36, palette['text'], True)
-    txt(d, 30, 132, 'à decisão.', 36, palette['text'], True)
+    txt(d, 30, 89, 'Análise, automação', 36, palette['text'], True)
+    txt(d, 30, 132, 'e visão de negócio.', 36, palette['text'], True)
     d.line((30, 187, 107, 187), fill=palette['brand_line'], width=2)
-    for i, line in enumerate(['Meu foco conecta análise de performance,',
-                              'engenharia, automação e modelagem financeira.',
-                              'Uso dados e tecnologia para apoiar decisões',
-                              'e melhorar processos.']):
+    for i, line in enumerate(['Meu foco está em análise de performance,',
+                              'automação e modelagem financeira.',
+                              'Uso dados e tecnologia para organizar',
+                              'informações e apoiar decisões.']):
         txt(d, 30, 209 + i * 31, line, 21, palette['muted'])
     d.line((30, 370, 550, 370), fill=palette['line'])
     txt(d, 30, 402, 'CLAREZA NA ANÁLISE. EFICIÊNCIA NA EXECUÇÃO.', 14, palette['muted'])
@@ -79,22 +80,7 @@ def render_theme(name, palette):
             d.line((x + 166, 469, x + 170, 473, x + 166, 477), fill=palette['muted'])
     save(im, 'about')
 
-    im, d = canvas(1200, 264)
-    section_heading(d, palette, font, '02', 'ÁREAS DE ATUAÇÃO', 12)
-    cards = [('01', 'Data &', 'Analytics', ['Indicadores e análise', 'para apoiar decisões.']),
-             ('02', 'Technology &', 'Engineering', ['Processos e tecnologia', 'para ganhar eficiência.']),
-             ('03', 'Business &', 'Financial Modeling', ['Modelos e cenários', 'para dar contexto aos números.'])]
-    for i, (num, title, subtitle, lines) in enumerate(cards):
-        x = 12 + i * 400
-        color = palette['text']
-        chamfered_card(d, (x, 59, x + 376, 250), palette['surface'], palette['line'], 18)
-        domain_icon(d, palette, i, x + 24, 76)
-        txt(d, x + 329, 76, num, 13, palette['muted'])
-        txt(d, x + 24, 115, title, 23, palette['text'], True)
-        txt(d, x + 24, 145, subtitle, 23, color, True)
-        for j, line in enumerate(lines):
-            txt(d, x + 24, 187 + j * 24, line, 18, palette['muted'])
-    save(im, 'expertise')
+    render_projects(ROOT, palette, font)
 
     im, d = canvas(1200, 570)
     section_heading(d, palette, font, '03', 'TECNOLOGIAS & FERRAMENTAS', 12)
