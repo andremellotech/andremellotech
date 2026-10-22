@@ -106,14 +106,12 @@ def build_github_layout(root, font):
             y += panel.height + 28
         draw = ImageDraw.Draw(main)
         for offset, text, size, bold, color in [
-            (12, 'Contato & Projetos', 26, True, palette['brand']),
+            (12, 'Contato & Projetos', 26, True, palette['text']),
             (54, 'Conheça meu trabalho e vamos conversar.', 19, False, palette['muted']),
         ]:
             face = font(size, bold)
             draw.text(((1200 - draw.textlength(text, font=face)) / 2, y + offset), text, font=face, fill=color)
-        draw.line((550, y, 602, y), fill=palette['brand'], width=3)
-        draw.line((602, y, 632, y), fill=palette['cyan'], width=3)
-        draw.line((632, y, 650, y), fill=palette['copper'], width=3)
+        draw.line((564, y, 636, y), fill=palette['brand_line'], width=2)
         main.save(assets / f'profile-card-{theme}.png')
         # These adjoining slices preserve the original layout and avoid quantizing
         # every text line and technology badge into a full-page GIF.

@@ -1,14 +1,12 @@
 """Readable colors over GitHub's own light, dark and dimmed backgrounds."""
 TRANSPARENT = (0, 0, 0, 0)
 THEMES = {
-    'light': dict(name='light', text='#182b43', muted='#52677c',
-                  accent='#223b58', line='#d4e0ec', portrait='#165e94', matte='#ffffff',
-                  brand='#1f5fb5', brand_line='#8eb3d6', cyan='#076f7d', copper='#9b562b',
-                  surfaces=['#f0f6ff', '#eef9f9', '#fcf5ee'],
+    'light': dict(name='light', text='#1f2328', muted='#59636e',
+                  accent='#273c50', line='#d1d9e0', portrait='#294b70', matte='#ffffff',
+                  brand='#294b70', brand_line='#a6b7c8', surface='#f6f8fa',
                   calendar=['#eff2f5', '#aceebb', '#4ac26b', '#2da44e', '#116329']),
-    'dark': dict(name='dark', text='#edf4ff', muted='#a6b8ce',
-                 accent='#d3e3f6', line='#294159', portrait='#75b8e9', matte='#0d1117',
-                 brand='#77b5ff', brand_line='#416e97', cyan='#44d3d3', copper='#e2ad7c',
-                 surfaces=['#101f31', '#0d262d', '#2b221e'],
+    'dark': dict(name='dark', text='#f0f6fc', muted='#9198a1',
+                 accent='#d0dae5', line='#30363d', portrait='#a7bdd3', matte='#0d1117',
+                 brand='#a7c3df', brand_line='#52677d', surface='#151b23',
                  calendar=['#151b23', '#033a16', '#196c2e', '#2ea043', '#56d364']),
 }
