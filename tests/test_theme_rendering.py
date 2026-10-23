@@ -53,10 +53,12 @@ class ThemeRendering(unittest.TestCase):
             self.assertFalse(any('profile-project' in (a.get('src', '') + a.get('srcset', ''))
                                  for _, a in parsed.tags), 'Do not show repository image cards')
             self.assertFalse(any(tag == 'details' for tag, _ in parsed.tags))
-            # Career and technologies lead the profile; live GitHub statistics follow.
+            # The profile leads with live GitHub activity, not a duplicate resume.
             panels = [a['src'] for tag, a in parsed.tags if tag == 'img' and a.get('width') == '100%']
             self.assertEqual([url.split('/')[-1].split('-light.')[0] for url in panels],
-                             ['profile-intro', 'professional', 'stack', 'status', 'contribution-snake'])
+                             ['profile-intro', 'status', 'contribution-snake', 'stack'])
+            for resume_text in ['KPMG', '660 milhões', 'UFPR', 'Mestre em Administração', 'FAPESP']:
+                self.assertNotIn(resume_text, readme_text, 'Career details belong on LinkedIn')
             for english in ['Total Contributions', 'Current Streak', 'Longest Streak', 'Present', 'Data & Analytics', 'MSc.']:
                 self.assertNotIn(english, readme_text)
             portrait_sources = [s for s in sources if 'profile-intro-' in s.get('srcset', '')]
@@ -102,7 +104,10 @@ class ThemeRendering(unittest.TestCase):
                 with Image.open(path) as im:
                     self.assertEqual(im.mode, 'RGBA')
                     self.assertEqual(im.getpixel((0, 0))[3], 0, 'Page background must remain visible')
-                    self.assertEqual(im.getpixel((600, 410))[3], 0, 'Section spacing must stay transparent')
+                    with Image.open(root/f'assets/intro-background-{theme}.png') as intro:
+                        self.assertEqual(intro.size, (1200, 304), 'Keep the introduction compact')
+                        self.assertEqual(im.getpixel((600, intro.height+14))[3], 0,
+                                         'Section spacing must stay transparent')
                     images.append(im.copy())
             self.assertEqual(images[0].size, images[1].size)
             self.assertNotEqual(images[0].tobytes(), images[1].tobytes(), 'Text must adapt to the selected theme')
@@ -115,20 +120,22 @@ class ThemeRendering(unittest.TestCase):
             with Image.open(root / 'assets/status-light.png') as im:
                 self.assertEqual(im.size, (1200, 640))
             for theme in ['light', 'dark']:
-                with Image.open(root / f'assets/professional-{theme}.png') as im:
+                with Image.open(root / f'assets/stack-{theme}.png') as im:
                     self.assertEqual(im.mode, 'RGBA')
+                    self.assertEqual(im.size, (1200, 568), 'The stack excludes the academic resume')
                     self.assertEqual(im.getpixel((0, 0))[3], 0)
             subprocess.run([sys.executable, str(root / 'scripts/prepare_pages.py')], check=True, capture_output=True)
             english = Elements((root/'README.en-US.md').read_text(encoding='utf-8'))
             self.assertEqual([a['href'] for tag, a in english.tags if tag == 'a'], links,
                              'English must return to the Portuguese profile and keep contact links')
             english_panels = [a['src'] for tag, a in english.tags if tag == 'img' and a.get('width') == '100%']
-            self.assertEqual(len(english_panels), 5)
+            self.assertEqual(len(english_panels), 4)
             self.assertTrue(all('-en-US-' in url for url in english_panels),
                             'English needs translated pictures, not only an English heading')
             english_readme = (root/'README.en-US.md').read_text(encoding='utf-8')
-            self.assertIn('Civil Engineer', english_readme)
-            self.assertIn('Experience and results', english_readme)
+            self.assertIn('Data and automation in practice.', english_readme)
+            self.assertNotIn('Experience and results', english_readme)
+            self.assertNotIn('KPMG', english_readme)
             self.assertNotIn('Tecnologias e formação', english_readme)
             for theme in ['light', 'dark']:
                 for stem in ['profile-intro', 'contribution-snake']:

@@ -5,7 +5,7 @@ from html import escape
 from themes import THEMES, TRANSPARENT
 from intro_panel import PORTRAIT_AT, PORTRAIT_SIZE
 from profile_i18n import (DEFAULT, tr, localized, readme_name, preview_name, preview_image,
-                          INTRO_ALT, PROFESSIONAL_ALT, TECHNOLOGY_ALT, STATUS_ALT)
+                          INTRO_ALT, TECHNOLOGY_ALT, STATUS_ALT)
 
 ASSET_HOST = 'https://andremellotech.github.io/andremellotech/assets/'
 
@@ -20,9 +20,10 @@ def transparent_portrait(source, color):
     # Recover glyph opacity from the original uniform terminal background.
     # Recoloring the glyphs avoids dark halos on light pages.
     alpha = original.convert('L').point(lambda value: max(0, min(255, round((value - 19) * 1.9))))
-    face = alpha.crop((55, 72, 375, 480)).resize((232, 296), Image.Resampling.LANCZOS)
+    face_size = (round(PORTRAIT_SIZE[0]*.8), round(PORTRAIT_SIZE[1]*.813))
+    face = alpha.crop((55, 72, 375, 480)).resize(face_size, Image.Resampling.LANCZOS)
     alpha = Image.new('L', PORTRAIT_SIZE)
-    alpha.paste(face, (29, 34))
+    alpha.paste(face, (round(PORTRAIT_SIZE[0]*.1), round(PORTRAIT_SIZE[1]*.093)))
     portrait = Image.new('RGBA', PORTRAIT_SIZE, ImageColor.getrgb(color) + (0,))
     portrait.putalpha(alpha)
     return portrait
@@ -93,12 +94,13 @@ def build_github_layout(root, font, locale=DEFAULT):
     assets = root / 'assets'
     for theme, palette in THEMES.items():
         panels = []
-        for name in ['intro', 'professional', 'stack', 'status', 'activity']:
+        for name in ['intro', 'status', 'contribution-snake', 'stack']:
             if name == 'intro':
                 panel = Image.open(assets / f'{localized("intro-background",locale)}-{theme}.png').convert('RGBA')
                 panel.alpha_composite(transparent_portrait(assets / 'andre-ascii.png', palette['portrait']), PORTRAIT_AT)
             else:
-                panel = Image.open(assets / f'{localized(name,locale)}-{theme}.png').convert('RGBA')
+                extension = 'gif' if name == 'contribution-snake' else 'png'
+                panel = Image.open(assets / f'{localized(name,locale)}-{theme}.{extension}').convert('RGBA')
             panels.append(panel)
         height = sum(panel.height for panel in panels) + 28 * len(panels)
         main = Image.new('RGBA', (1200, height), TRANSPARENT)
@@ -129,11 +131,10 @@ def build_github_layout(root, font, locale=DEFAULT):
              '<a href="mailto:andremello@outlook.com">'
              + badge_img(root, 'badge-email', tr(locale, 'E-mail — andremello@outlook.com')) + '</a></p>')
     status = '<p align="center">' + themed_picture(root, localized('status',locale), alt) + '</p>'
-    professional = '<p align="center">' + themed_picture(root, localized('professional',locale), PROFESSIONAL_ALT[locale]) + '</p>'
     snake = '<p align="center">' + themed_picture(root, localized('contribution-snake',locale),
              tr(locale, 'Cobrinha animada percorrendo as contribuições públicas reais de André Mello.'), animated=True) + '</p>'
     tools = '<p align="center">' + themed_picture(root, localized('stack',locale), TECHNOLOGY_ALT[locale]) + '</p>'
-    top = '\n\n'.join([language_links, intro, links, professional, tools, status, snake])
+    top = '\n\n'.join([language_links, intro, links, status, snake, tools])
     readme = preview_body = top
     (root / readme_name(locale)).write_text(readme, encoding='utf-8')
     preview_html = ('<!doctype html><html lang="' + locale + '"><meta charset="utf-8">'

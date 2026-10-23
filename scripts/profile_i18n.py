@@ -3,6 +3,12 @@ DEFAULT = 'pt-BR'
 LOCALES = (DEFAULT, 'en-US')
 
 EN = {
+    'DADOS · AUTOMAÇÃO · ENGENHARIA': 'DATA · AUTOMATION · ENGINEERING',
+    'Dados e automação na prática.': 'Data and automation in practice.',
+    'Projetos de análise de dados, integrações e engenharia.': 'Data analytics, integration and engineering projects.',
+    'Tecnologias e ferramentas': 'Technology and tools',
+    'Sistemas e colaboração': 'Systems and collaboration',
+    'Linguagens · conhecimentos': 'Languages · working knowledge',
     'CONSULTORIA · ENGENHARIA · DADOS': 'CONSULTING · ENGINEERING · DATA',
     'Engenharia, dados e governança.': 'Engineering, data and governance.',
     'Da estratégia à execução.': 'From strategy to execution.',
@@ -100,11 +106,10 @@ def preview_image(theme, locale=DEFAULT):
 
 
 INTRO_ALT = {
-    DEFAULT: 'André Mello — Consultoria, engenharia e dados. Engenharia, dados e governança. Da estratégia à execução. '
-             'Portfólio, PMO e automação com foco em resultados. Consultor na KPMG Brasil, com mais de 6 anos de experiência. '
-             'Engenheiro Civil e Mestre em Administração. Retrato ASCII animado.',
-    'en-US': 'André Mello — Consulting, engineering and data. From strategy to execution. Portfolio governance, PMO and automation. '
-             'Consultant at KPMG Brasil with 6+ years of experience. Civil Engineer and MSc in Administration. Animated ASCII portrait.',
+    DEFAULT: 'André Mello — Dados, automação e engenharia. Dados e automação na prática. '
+             'Projetos de análise de dados, integrações e engenharia. Retrato ASCII animado.',
+    'en-US': 'André Mello — Data, automation and engineering. Data and automation in practice. '
+             'Data analytics, integration and engineering projects. Animated ASCII portrait.',
 }
 PROFESSIONAL_ALT = {
     DEFAULT: 'Atuação e resultados informados por André: governança de R$ 660 milhões em ativos físicos; aumento de 25% na eficiência operacional; '
@@ -115,14 +120,12 @@ PROFESSIONAL_ALT = {
              'engineering and contracts with CAPEX up to BRL 125 million, data analytics and automation.',
 }
 TECHNOLOGY_ALT = {
-    DEFAULT: 'Tecnologias e formação: Power BI, Python, Excel, Alteryx, SAP, Power Automate, Oracle Cloud e PowerPoint; Office 365, HTML, CSS, JavaScript e Lua; '
-             'GitHub e experiência anterior em MySQL. Engenharia Elétrica em curso na São Judas Tadeu; Engenharia de Segurança do Trabalho em curso na UFPR; '
-             'pós-graduação em Construção Civil na FAVENI. Pesquisa com bolsas FAPESP e CAPES, artigo na Brazilian Administration Review, '
-             'destaque profissional KPMG FY25 e destaque REIAd em 2023 e 2024.',
-    'en-US': 'Technology and education: Power BI, Python, Excel, Alteryx, SAP, Power Automate, Oracle Cloud and PowerPoint; Office 365, HTML, CSS, JavaScript and Lua; '
-             'GitHub and previous MySQL experience. Electrical Engineering studies at São Judas Tadeu; Occupational Safety Engineering studies at UFPR; '
-             'postgraduate studies in Civil Construction at FAVENI. Former FAPESP and CAPES scholarship holder, article in Brazilian Administration Review, '
-             'KPMG Professional Distinction FY25 and REIAd recognition in 2023 and 2024.',
+    DEFAULT: 'Tecnologias e ferramentas: Power BI, Python, Excel, Alteryx, Power Automate e Oracle Cloud; '
+             'SAP, PowerPoint e GitHub; conhecimentos de HTML, CSS, JavaScript e Lua; '
+             'experiência anterior em MySQL para servidores de Tibia e GTA V / FiveM.',
+    'en-US': 'Technology and tools: Power BI, Python, Excel, Alteryx, Power Automate and Oracle Cloud; '
+             'SAP, PowerPoint and GitHub; working knowledge of HTML, CSS, JavaScript and Lua; '
+             'previous MySQL experience with Tibia and GTA V / FiveM servers.',
 }
 STATUS_ALT = {
     DEFAULT: 'Presença no GitHub: repositórios públicos, estrelas, registros de alterações, propostas de alteração, ocorrências e seguidores; '

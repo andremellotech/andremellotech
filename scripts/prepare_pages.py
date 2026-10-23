@@ -14,7 +14,7 @@ def prepare(root=ROOT):
         for theme in ['light', 'dark']:
             images.append(f'{localized("profile-card",locale)}-{theme}.png')
             images.extend(f'{localized(stem,locale)}-{theme}.{extension}' for stem, extension in
-                          [('profile-intro', 'png'), ('profile-intro', 'gif'), ('professional', 'png'), ('status', 'png'),
+                          [('profile-intro', 'png'), ('profile-intro', 'gif'), ('status', 'png'),
                            ('contribution-snake', 'gif'), ('stack', 'png')])
     for name in images:
         shutil.copy2(root/'assets'/name,dest/'assets'/name)

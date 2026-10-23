@@ -4,21 +4,21 @@ O README de `andremellotech/andremellotech` apresenta o perfil com dados públic
 
 ## Identidade e organização
 
-O topo oferece dois botões: Português (Brasil) e English (US). O português abre o perfil principal; o inglês abre `README.en-US.md` no próprio GitHub, com caminho de volta. O GitHub não permite executar JavaScript para trocar o conteúdo do README na mesma tela. Ambas as versões são geradas pelo mesmo workflow e pelos mesmos JSONs de dados, incluindo as imagens e datas; o usuário não precisa atualizar uma versão separadamente. Os valores monetários da versão inglesa permanecem em reais (BRL), sem conversão de moeda.
+O topo oferece dois botões: Português (Brasil) e English (US). O português abre o perfil principal; o inglês abre `README.en-US.md` no próprio GitHub, com caminho de volta. O GitHub não permite executar JavaScript para trocar o conteúdo do README na mesma tela. Ambas as versões são geradas pelo mesmo workflow e pelos mesmos JSONs de dados, incluindo as imagens e datas; o usuário não precisa atualizar uma versão separadamente.
 
 `scripts/profile_i18n.py` centraliza a tradução; `language_buttons.py` desenha os botões localmente. A versão inglesa mantém a escala visual, o retrato, os temas e a cobrinha oficiais. Textos novos precisam de tradução explícita, evitando uma edição inglesa parcialmente em português.
 
-A abertura tem 1200 × 400 pixels, com nome de 40 pixels, textos neutros e retrato em uma moldura de desenho técnico adaptada ao tema. O fundo externo é transparente. Os contatos aparecem abaixo, em badges locais de 22 pixels exibidos: somente o ícone e o identificador (André Mello, @andremellotech e andremello@outlook.com), sem repetir o nome da plataforma. O botão de e-mail abre o aplicativo de mensagens com o destinatário preenchido, sem enviar automaticamente. Os títulos das seções não têm numeração.
+A abertura tem 1200 × 304 pixels, com nome de 40 pixels, textos neutros e retrato em uma moldura de desenho técnico adaptada ao tema. O fundo externo é transparente. Os contatos aparecem abaixo, em badges locais de 22 pixels exibidos: somente o ícone e o identificador (André Mello, @andremellotech e andremello@outlook.com), sem repetir o nome da plataforma. O botão de e-mail abre o aplicativo de mensagens com o destinatário preenchido, sem enviar automaticamente. Os títulos das seções não têm numeração.
 
-O texto de abertura conecta engenharia, dados, governança e execução. Apresenta a atuação como consultor na KPMG Brasil e a formação em Engenharia Civil e Mestrado em Administração. Todos os textos e datas da apresentação estão em português; nomes próprios de tecnologias, empresas e periódicos são preservados.
+O foco é o GitHub: dados, automação, integrações e engenharia em código. A abertura não repete cargo, formação ou resultados profissionais do LinkedIn. Os textos e datas têm versões em português e inglês dos EUA; nomes próprios de tecnologias são preservados.
 
-A ordem é: apresentação; contatos; atuação e resultados; tecnologias e formação; presença no GitHub; atividade e contribuições com a cobrinha. A seção **Projetos em destaque foi removida**, inclusive da prévia. O botão GitHub continua levando aos repositórios.
+A ordem é: apresentação curta; contatos; presença no GitHub; atividade e contribuições com a cobrinha; tecnologias e ferramentas. Não há cartões de projetos. O botão GitHub continua levando aos repositórios.
 
-O conteúdo profissional é o informado por André em 22/10/2026: portfólio de R$ 660 milhões em ativos físicos, aumento de 25% na eficiência operacional, eliminação de 240 horas anuais de retrabalho, equipes de até 80 profissionais e contratos com CAPEX de até R$ 125 milhões. Esses resultados de carreira não são indicadores do GitHub e têm manutenção editorial em `scripts/professional_panel.py`.
+Os blocos de resultados de carreira, formação acadêmica e reconhecimentos foram retirados a pedido de André. O LinkedIn permanece acessível pelo botão de contato. O módulo antigo `professional_panel.py` não é executado nem incluído no perfil ou no novo staging do Pages.
 
-Power BI, Python, Excel, Alteryx, SAP, Power Automate, Oracle Cloud, PowerPoint e GitHub refletem o uso informado. HTML, CSS, JavaScript e Lua são conhecimentos; MySQL é experiência anterior em servidores de Tibia e GTA V/FiveM. Formação em curso e pesquisa aparecem em um bloco secundário. Nenhum nível de proficiência foi inventado.
+Power BI, Python, Excel, Alteryx, SAP, Power Automate, Oracle Cloud, PowerPoint e GitHub refletem o uso informado. HTML, CSS, JavaScript e Lua são conhecimentos; MySQL é experiência anterior em servidores de Tibia e GTA V/FiveM. Nenhum nível de proficiência foi inventado.
 
-`scripts/branding.py` centraliza margens de 24 pixels e a escala tipográfica: nome 40, chamada 32, títulos de seção 26, títulos de cartões 22, corpo 20, apoio 18 e indicadores 36 pixels. As artes têm 1200 pixels de largura e reduzem juntas no README. Os badges de tecnologias têm 48 pixels na arte, preservando suas cores.
+`scripts/branding.py` centraliza margens de 24 pixels e a escala tipográfica: nome 40, chamada 32, títulos de seção 26, títulos de cartões 22, corpo 20, apoio 18 e indicadores 36 pixels. As artes têm 1200 pixels de largura e reduzem juntas no README. Todos os badges de tecnologias seguem o mesmo padrão neutro: altura 48, fonte 20, ícone alinhado e borda fina. As cores ficam nos símbolos; as superfícies e os textos acompanham o tema. Os símbolos são desenhados localmente, com GitHub e Alteryx derivados da arte local existente, sem consultas a serviços externos.
 
 As referências são [Solon](https://github.com/solonz), para o cartão compacto de linguagens e o indicador com chama, e [Mateus Hoffman](https://github.com/MateusHoffman), para a cobrinha. Os dados são sempre de André.
 
@@ -72,7 +72,7 @@ Todos os PNGs e GIFs do README ficam em `https://andremellotech.github.io/andrem
 
 O HTML picture escolhe o tema. O fundo externo é transparente; o painel do retrato e os cards têm suas próprias superfícies. A animação do retrato conserva a duração original, com texto fixo e somente a região do rosto mudando. O compositor da cobrinha escreve retângulos de diferença entre frames. A nova versão precisa ser conferida por André na rede interna da KPMG; não foi testada dentro dessa rede.
 
-`scripts/prepare_pages.py` seleciona 33 imagens para os dois idiomas, as prévias HTML e `.nojekyll`. A prévia inglesa fica em `/en-US/`. Código, dados e GIFs fonte não são hospedados no Pages. As imagens são publicadas antes de o bot atualizar os links dos dois READMEs.
+`scripts/prepare_pages.py` seleciona 29 imagens para os dois idiomas, as prévias HTML e `.nojekyll`. A prévia inglesa fica em `/en-US/`. Código, dados e GIFs fonte não são hospedados no Pages. As imagens são publicadas antes de o bot atualizar os links dos dois READMEs.
 
 ## Edição e verificação
 
@@ -80,6 +80,6 @@ Instale `scripts/requirements.txt`. A ordem no workflow é: testes; calendário 
 
 `previa.html` inclui a apresentação, contatos e os painéis sem projetos. `PREVIA.png` e `PREVIA-ESCURO.png` são composições estáticas: não mostram movimento nem os contatos nativos do README.
 
-A apresentação fica em `scripts/intro_panel.py`; atuação e resultados em `scripts/professional_panel.py`; tecnologias e formação em `scripts/technology_panel.py`; estatísticas em `scripts/status_panel.py`; temas em `scripts/themes.py`; composição em `scripts/github_layout.py`. As fontes são Segoe UI no Windows e DejaVu Sans no Ubuntu. O workflow usa Ubuntu 24.04 e Python 3.11; as Actions são fixadas por SHA.
+A apresentação fica em `scripts/intro_panel.py`; tecnologias e ferramentas em `scripts/technology_panel.py`; estatísticas em `scripts/status_panel.py`; temas em `scripts/themes.py`; composição em `scripts/github_layout.py`. As fontes são Segoe UI no Windows e DejaVu Sans no Ubuntu. O workflow usa Ubuntu 24.04 e Python 3.11; as Actions são fixadas por SHA.
 
 Execute `python -m unittest discover -s tests -v`. Os testes cobrem dados públicos, falhas HTTP, prevenção de ciclos, histórico completo entre anos e cache, recusa de histórico incompleto, adaptação fiel dos frames da cobrinha, fontes ausentes, temas, estabilidade dos textos e inclusão dos arquivos selecionados no staging.

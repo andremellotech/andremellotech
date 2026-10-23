@@ -7,7 +7,6 @@ from activity_panel import render_activity
 from status_panel import render_status
 from badges import render_badge
 from intro_panel import render_intro
-from professional_panel import render_professional
 from technology_panel import render_technology
 from contribution_snake import render_snake
 import json
@@ -30,7 +29,6 @@ def font(size, bold=False, mono=False):
 
 def render_theme(name, palette, locale=DEFAULT):
     render_intro(font, palette, locale=locale).save(A / f'{localized("intro-background",locale)}-{name}.png')
-    render_professional(ROOT, font, palette, locale)
     render_technology(ROOT, font, palette, locale)
     render_status(ROOT, font, palette, locale)
     render_activity(ROOT, font, palette, locale)
