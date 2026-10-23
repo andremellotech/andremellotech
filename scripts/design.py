@@ -12,6 +12,8 @@ from technology_panel import render_technology
 from contribution_snake import render_snake
 import json
 from github_layout import build_github_layout
+from language_buttons import render_language_buttons
+from profile_i18n import DEFAULT, LOCALES, localized
 
 ROOT = Path(__file__).resolve().parents[1]
 A = ROOT / 'assets'
@@ -26,13 +28,13 @@ def font(size, bold=False, mono=False):
     return ImageFont.truetype(str(base / name), size)
 
 
-def render_theme(name, palette):
-    render_intro(font, palette).save(A / f'intro-background-{name}.png')
-    render_professional(ROOT, font, palette)
-    render_technology(ROOT, font, palette)
-    render_status(ROOT, font, palette)
-    render_activity(ROOT, font, palette)
-    render_snake(ROOT, palette)
+def render_theme(name, palette, locale=DEFAULT):
+    render_intro(font, palette, locale=locale).save(A / f'{localized("intro-background",locale)}-{name}.png')
+    render_professional(ROOT, font, palette, locale)
+    render_technology(ROOT, font, palette, locale)
+    render_status(ROOT, font, palette, locale)
+    render_activity(ROOT, font, palette, locale)
+    render_snake(ROOT, palette, locale)
 
 
 def render_badges():
@@ -48,7 +50,10 @@ def render_badges():
 
 if __name__ == '__main__':
     A.mkdir(exist_ok=True)
-    for name, palette in THEMES.items():
-        render_theme(name, palette)
+    for locale in LOCALES:
+        for name, palette in THEMES.items():
+            render_theme(name, palette, locale)
     render_badges()
-    build_github_layout(ROOT, font)
+    render_language_buttons(A, font)
+    for locale in LOCALES:
+        build_github_layout(ROOT, font, locale)

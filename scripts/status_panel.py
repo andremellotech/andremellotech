@@ -6,6 +6,7 @@ from PIL import Image, ImageDraw
 from themes import TRANSPARENT
 from branding import TYPE, section_heading, metric_icon
 from fetch_contributions import derive_stats
+from profile_i18n import DEFAULT, tr, localized
 
 # GitHub Linguist colors, verified against its languages.yml.
 LANGUAGE_COLORS = {'HTML':'#e34c26', 'TypeScript':'#3178c6', 'C#':'#7355dd',
@@ -56,17 +57,21 @@ def _ring(image, center, radius, ratio, track, color, width=8):
     image.alpha_composite(layer, (center[0] - layer.width // 2, center[1] - layer.height // 2))
 
 
-def _fmt(value):
-    return '—' if value is None else f'{value:,}'.replace(',', '.')
+def _fmt(value, locale=DEFAULT):
+    if value is None:
+        return '—'
+    return f'{value:,}'.replace(',', '.') if locale == DEFAULT else f'{value:,}'
 
 
-def language_legend(rows, total, measure):
+def language_legend(rows, total, measure, locale=DEFAULT):
     """Reserve the share column and keep readable type for long language names."""
     entries = []
     for index, (name, value) in enumerate(rows):
-        share = f'{value / (total or 1) * 100:.1f}%'.replace('.', ',')
+        share = f'{value / (total or 1) * 100:.1f}%'
+        if locale == DEFAULT:
+            share = share.replace('.', ',')
         available = 1156 - 762 - 18 - 12 - measure(share)
-        label = name
+        label = tr(locale, name) if name == 'Outras' else name
         if measure(label) > available:
             while label and measure(label.rstrip() + '…') > available:
                 label = label[:-1]
@@ -76,18 +81,21 @@ def language_legend(rows, total, measure):
     return entries
 
 
-def streak_date_labels(summary, as_of):
-    months = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez']
+def streak_date_labels(summary, as_of, locale=DEFAULT):
+    months = (['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'] if locale == DEFAULT
+              else ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'])
     def day_label(value):
         value = date.fromisoformat(value)
-        return f'{value.day} {months[value.month-1]}' + (f' {value.year}' if value.year != as_of.year else '')
+        if locale == DEFAULT:
+            return f'{value.day} {months[value.month-1]}' + (f' {value.year}' if value.year != as_of.year else '')
+        return f'{months[value.month-1]} {value.day}' + (f', {value.year}' if value.year != as_of.year else '')
     def interval(value):
         if not value:
             return '—'
         start, end = day_label(value['start']), day_label(value['end'])
         return start if start == end else start + ' — ' + end
     first = summary.get('first_contribution')
-    return {'total':day_label(first)+' — atual' if first else '—',
+    return {'total':day_label(first)+(' — atual' if locale == DEFAULT else ' — present') if first else '—',
             'current':interval(summary.get('current_streak_range')),
             'longest':interval(summary.get('longest_streak_range'))}
 
@@ -127,22 +135,22 @@ def _flame(image, cx, y, color, background, scale=1):
     image.alpha_composite(layer.resize((width,height), Image.Resampling.LANCZOS), (cx-round(12*k),y))
 
 
-def render_status(root, font, palette):
+def render_status(root, font, palette, locale=DEFAULT):
     content = json.loads((root / 'data/github-content.json').read_text(encoding='utf-8'))
     history = json.loads((root/'data/contributions-history.json').read_text(encoding='utf-8'))
     summary = derive_stats(history['days'], date.fromisoformat(history['as_of']))
-    dates = streak_date_labels(summary, date.fromisoformat(history['as_of']))
+    dates = streak_date_labels(summary, date.fromisoformat(history['as_of']), locale)
     stats = content.get('stats', {})
     text, muted, accent, brand = palette['text'], palette['muted'], palette['accent'], palette['brand']
     blue = palette['brand']
     fire = '#fb8c00'
     im = Image.new('RGBA', (1200, HEIGHT), TRANSPARENT)
     d = ImageDraw.Draw(im)
-    section_heading(d, palette, font, 'Presença no GitHub', 12)
+    section_heading(d, palette, font, tr(locale, 'Presença no GitHub'), 12)
     card = dict(radius=12, fill=palette['matte'], outline=palette['line'])
 
     d.rounded_rectangle((24, 76, 718, 332), **card)
-    d.text((44, 92), 'Atividade pública', font=font(TYPE['card'], True), fill=blue)
+    d.text((44, 92), tr(locale, 'Atividade pública'), font=font(TYPE['card'], True), fill=blue)
     tiles = [('repos', 'Repositórios públicos', content['user']['public_repos']),
              ('stars', 'Estrelas recebidas', stats.get('stars')),
              ('commits', 'Alterações registradas', stats.get('commits')),
@@ -152,12 +160,12 @@ def render_status(root, font, palette):
     for i, (kind, label, value) in enumerate(tiles):
         x, y = 44 + (i % 2) * 338, 140 + (i // 2) * 64
         _icon(d, kind, x, y + 6, blue)
-        d.text((x + 40, y), label, font=font(TYPE['meta']), fill=muted)
-        d.text((x + 40, y + 22), _fmt(value), font=font(30, True), fill=text)
+        d.text((x + 40, y), tr(locale, label), font=font(TYPE['meta']), fill=muted)
+        d.text((x + 40, y + 22), _fmt(value, locale), font=font(30, True), fill=text)
 
     d.rounded_rectangle((742, 76, 1176, 332), **card)
-    d.text((762, 92), 'Linguagens nos repositórios', font=font(TYPE['card'], True), fill=blue)
-    d.text((762, 128), 'Distribuição por bytes de código', font=font(TYPE['meta']), fill=muted)
+    d.text((762, 92), tr(locale, 'Linguagens nos repositórios'), font=font(TYPE['card'], True), fill=blue)
+    d.text((762, 128), tr(locale, 'Distribuição por bytes de código'), font=font(TYPE['meta']), fill=muted)
     languages = content.get('languages', {})
     total = sum(languages.values()) or 1
     rows = list(languages.items())[:5]
@@ -179,7 +187,7 @@ def render_status(root, font, palette):
     im.alpha_composite(rail, (762,168))
     legend_face = font(TYPE['meta'])
     measure = lambda value: d.textlength(value, font=legend_face)
-    for item in language_legend(rows, total, measure):
+    for item in language_legend(rows, total, measure, locale):
         x, y = item['x'], item['y']
         d.ellipse((x,y+5,x+10,y+15), fill=LANGUAGE_COLORS.get(item['source'],palette['muted']))
         d.text((x+18, y), item['name'], font=legend_face, fill=text)
@@ -188,11 +196,11 @@ def render_status(root, font, palette):
     d.rounded_rectangle((24, 356, 1176, 628), **card)
     d.line((408, 388, 408, 596), fill=palette['line'])
     d.line((792, 388, 792, 596), fill=palette['line'])
-    columns = [(216, _fmt(summary['total']), 'Contribuições totais', dates['total']),
-               (984, _fmt(summary['longest_streak']), 'Maior sequência', dates['longest'])]
+    columns = [(216, _fmt(summary['total'], locale), 'Contribuições totais', dates['total']),
+               (984, _fmt(summary['longest_streak'], locale), 'Maior sequência', dates['longest'])]
     for cx, value, label, span in columns:
         d.text((cx,467), value, font=font(TYPE['number'],True), fill=text, anchor='ms')
-        d.text((cx,510), label, font=font(TYPE['card']), fill=text, anchor='ms')
+        d.text((cx,510), tr(locale, label), font=font(TYPE['card']), fill=text, anchor='ms')
         # A range crossing two old years is wider; fit it inside its own column.
         size = TYPE['meta']
         while size > 16 and d.textlength(span, font=font(size)) > 352:
@@ -202,10 +210,10 @@ def render_status(root, font, palette):
     d.ellipse((581,360,619,414), fill=palette['matte'])
     _flame(im, 600, 367, fire, palette['matte'], scale=.60)
     d.text((600,463), str(summary['current_streak']), font=font(TYPE['number'],True), fill=text, anchor='ms')
-    d.text((600,546), 'Sequência atual', font=font(TYPE['card'],True), fill=fire, anchor='ms')
+    d.text((600,546), tr(locale, 'Sequência atual'), font=font(TYPE['card'],True), fill=fire, anchor='ms')
     size = TYPE['meta']
     while size > 16 and d.textlength(dates['current'], font=font(size)) > 352:
         size -= 1
     d.text((600,583), dates['current'], font=font(size), fill=muted, anchor='ms')
-    im.save(root / 'assets' / f'status-{palette["name"]}.png')
+    im.save(root / 'assets' / f'{localized("status", locale)}-{palette["name"]}.png')
     return summary

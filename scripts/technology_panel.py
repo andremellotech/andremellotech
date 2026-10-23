@@ -2,6 +2,7 @@
 from PIL import Image, ImageDraw
 from themes import TRANSPARENT
 from branding import TYPE, MARGIN, section_heading
+from profile_i18n import DEFAULT, tr, localized
 
 HEIGHT = 808
 
@@ -35,13 +36,15 @@ def _product(label, kind, font, palette):
     return image
 
 
-def render_technology(root, font, palette):
+def render_technology(root, font, palette, locale=DEFAULT):
     image = Image.new('RGBA', (1200, HEIGHT), TRANSPARENT)
     draw = ImageDraw.Draw(image)
-    section_heading(draw, palette, font, 'Tecnologias e formação', 12)
+    section_heading(draw, palette, font, tr(locale, 'Tecnologias e formação'), 12)
+    def text(xy, value, **kwargs):
+        draw.text(xy, tr(locale, value), **kwargs)
     def card(box, title):
         draw.rounded_rectangle(box, radius=12, fill=palette['surface'], outline=palette['line'])
-        draw.text((box[0]+20, box[1]+17), title, font=font(TYPE['card'], True), fill=palette['accent'])
+        text((box[0]+20, box[1]+17), title, font=font(TYPE['card'], True), fill=palette['accent'])
     def badges(items, x, y, limit):
         start = x
         for badge in items:
@@ -55,13 +58,13 @@ def render_technology(root, font, palette):
     core += [_product('Power Automate', 'automate', font, palette),
              _product('Oracle Cloud', 'oracle', font, palette)]
     badges(core, 44, 124, 1156)
-    draw.text((44, 192), 'Análise, integração de dados e automação de rotinas.',
+    text((44, 192), 'Análise, integração de dados e automação de rotinas.',
               font=font(TYPE['meta']), fill=palette['muted'])
 
     card((MARGIN, 246, 588, 462), 'Sistemas e comunicação')
     badges([_badge(root, stem, palette) for stem in ['sap', 'powerpoint']], 44, 302, 568)
-    draw.text((44, 378), 'Office 365, apresentações executivas', font=font(TYPE['body']), fill=palette['muted'])
-    draw.text((44, 409), 'e organização de informações.', font=font(TYPE['body']), fill=palette['muted'])
+    text((44, 378), 'Office 365, apresentações executivas', font=font(TYPE['body']), fill=palette['muted'])
+    text((44, 409), 'e organização de informações.', font=font(TYPE['body']), fill=palette['muted'])
 
     card((612, 246, 1176, 462), 'Linguagens e versionamento')
     badges([_badge(root, stem, palette) for stem in ['HTML2', 'CSS2', 'JavaScript2', 'Lua2', 'GitHub']],
@@ -69,21 +72,21 @@ def render_technology(root, font, palette):
 
     card((MARGIN, 486, 1176, 600), 'Banco de dados · experiência anterior')
     image.alpha_composite(_badge(root, 'MySQL', palette), (44, 536))
-    draw.text((210, 547), 'MySQL em servidores de Tibia e GTA V / FiveM.',
+    text((210, 547), 'MySQL em servidores de Tibia e GTA V / FiveM.',
               font=font(TYPE['body']), fill=palette['muted'])
 
     # Academic details are secondary to the practice and outcomes above.
-    draw.text((MARGIN, 638), 'Formação em evolução', font=font(TYPE['card'], True), fill=palette['accent'])
-    draw.text((MARGIN, 679), 'Engenharia Elétrica · São Judas Tadeu (em curso)',
+    text((MARGIN, 638), 'Formação em evolução', font=font(TYPE['card'], True), fill=palette['accent'])
+    text((MARGIN, 679), 'Engenharia Elétrica · São Judas Tadeu (em curso)',
               font=font(TYPE['meta']), fill=palette['muted'])
-    draw.text((MARGIN, 711), 'Engenharia de Segurança do Trabalho · UFPR (em curso)',
+    text((MARGIN, 711), 'Engenharia de Segurança do Trabalho · UFPR (em curso)',
               font=font(TYPE['meta']), fill=palette['muted'])
-    draw.text((MARGIN, 761), 'Pós-graduação em Construção Civil · FAVENI',
+    text((MARGIN, 761), 'Pós-graduação em Construção Civil · FAVENI',
               font=font(TYPE['meta']), fill=palette['muted'])
     draw.line((624, 640, 624, 790), fill=palette['line'])
-    draw.text((656, 638), 'Pesquisa e reconhecimento', font=font(TYPE['card'], True), fill=palette['accent'])
-    draw.text((656, 679), 'Ex-bolsista FAPESP e CAPES', font=font(TYPE['meta']), fill=palette['muted'])
-    draw.text((656, 711), 'Artigo na Brazilian Administration Review', font=font(TYPE['meta']), fill=palette['muted'])
-    draw.text((656, 743), 'Destaque profissional KPMG · FY25', font=font(TYPE['meta']), fill=palette['muted'])
-    draw.text((656, 775), 'Destaque REIAd · 2023 e 2024', font=font(TYPE['meta']), fill=palette['muted'])
-    image.save(root/'assets'/f'stack-{palette["name"]}.png')
+    text((656, 638), 'Pesquisa e reconhecimento', font=font(TYPE['card'], True), fill=palette['accent'])
+    text((656, 679), 'Ex-bolsista FAPESP e CAPES', font=font(TYPE['meta']), fill=palette['muted'])
+    text((656, 711), 'Artigo na Brazilian Administration Review', font=font(TYPE['meta']), fill=palette['muted'])
+    text((656, 743), 'Destaque profissional KPMG · FY25', font=font(TYPE['meta']), fill=palette['muted'])
+    text((656, 775), 'Destaque REIAd · 2023 e 2024', font=font(TYPE['meta']), fill=palette['muted'])
+    image.save(root/'assets'/f'{localized("stack", locale)}-{palette["name"]}.png')

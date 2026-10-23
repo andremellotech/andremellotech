@@ -64,7 +64,7 @@ jobs:
         id: changed
         shell: bash
         run: |
-          if git diff --quiet -- assets data README.md previa.html PREVIA.png PREVIA-ESCURO.png && [ -z "$(git ls-files --others --exclude-standard assets data README.md previa.html PREVIA.png PREVIA-ESCURO.png)" ]; then
+          if git diff --quiet -- assets data README.md README.en-US.md previa.html preview.en-US.html PREVIA.png PREVIA-ESCURO.png PREVIEW-en-US-light.png PREVIEW-en-US-dark.png && [ -z "$(git ls-files --others --exclude-standard assets data README.md README.en-US.md previa.html preview.en-US.html PREVIA.png PREVIA-ESCURO.png PREVIEW-en-US-light.png PREVIEW-en-US-dark.png)" ]; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
@@ -85,7 +85,7 @@ jobs:
       - name: Salvar atualização
         if: steps.changed.outputs.changed == 'true'
         run: |
-          git add assets data README.md previa.html PREVIA.png PREVIA-ESCURO.png
+          git add assets data README.md README.en-US.md previa.html preview.en-US.html PREVIA.png PREVIA-ESCURO.png PREVIEW-en-US-light.png PREVIEW-en-US-dark.png
           if git diff --cached --quiet; then exit 0; fi
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'

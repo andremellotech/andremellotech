@@ -4,6 +4,10 @@ O README de `andremellotech/andremellotech` apresenta o perfil com dados públic
 
 ## Identidade e organização
 
+O topo oferece dois botões: Português (Brasil) e English (US). O português abre o perfil principal; o inglês abre `README.en-US.md` no próprio GitHub, com caminho de volta. O GitHub não permite executar JavaScript para trocar o conteúdo do README na mesma tela. Ambas as versões são geradas pelo mesmo workflow e pelos mesmos JSONs de dados, incluindo as imagens e datas; o usuário não precisa atualizar uma versão separadamente. Os valores monetários da versão inglesa permanecem em reais (BRL), sem conversão de moeda.
+
+`scripts/profile_i18n.py` centraliza a tradução; `language_buttons.py` desenha os botões localmente. A versão inglesa mantém a escala visual, o retrato, os temas e a cobrinha oficiais. Textos novos precisam de tradução explícita, evitando uma edição inglesa parcialmente em português.
+
 A abertura tem 1200 × 400 pixels, com nome de 40 pixels, textos neutros e retrato em uma moldura de desenho técnico adaptada ao tema. O fundo externo é transparente. Os contatos aparecem abaixo, em badges locais de 22 pixels exibidos: somente o ícone e o identificador (André Mello, @andremellotech e andremello@outlook.com), sem repetir o nome da plataforma. O botão de e-mail abre o aplicativo de mensagens com o destinatário preenchido, sem enviar automaticamente. Os títulos das seções não têm numeração.
 
 O texto de abertura conecta engenharia, dados, governança e execução. Apresenta a atuação como consultor na KPMG Brasil e a formação em Engenharia Civil e Mestrado em Administração. Todos os textos e datas da apresentação estão em português; nomes próprios de tecnologias, empresas e periódicos são preservados.
@@ -68,7 +72,7 @@ Todos os PNGs e GIFs do README ficam em `https://andremellotech.github.io/andrem
 
 O HTML picture escolhe o tema. O fundo externo é transparente; o painel do retrato e os cards têm suas próprias superfícies. A animação do retrato conserva a duração original, com texto fixo e somente a região do rosto mudando. O compositor da cobrinha escreve retângulos de diferença entre frames. A nova versão precisa ser conferida por André na rede interna da KPMG; não foi testada dentro dessa rede.
 
-`scripts/prepare_pages.py` seleciona 17 imagens, a prévia HTML e `.nojekyll`. Código, dados e GIFs fonte não são hospedados no Pages. As imagens são publicadas antes de o bot atualizar os links do README.
+`scripts/prepare_pages.py` seleciona 33 imagens para os dois idiomas, as prévias HTML e `.nojekyll`. A prévia inglesa fica em `/en-US/`. Código, dados e GIFs fonte não são hospedados no Pages. As imagens são publicadas antes de o bot atualizar os links dos dois READMEs.
 
 ## Edição e verificação
 

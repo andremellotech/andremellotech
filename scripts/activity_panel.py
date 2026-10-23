@@ -6,6 +6,7 @@ from PIL import Image,ImageDraw
 from fetch_contributions import derive_stats
 from themes import THEMES, TRANSPARENT
 from branding import section_heading
+from profile_i18n import DEFAULT, tr, localized
 
 def contribution_summary(content,calendar):
     days=calendar['days']
@@ -20,7 +21,7 @@ def week_grid(days):
     return [dict(d,column=(date.fromisoformat(d['date'])-sunday).days//7,
                  row=(date.fromisoformat(d['date']).weekday()+1)%7) for d in ordered]
 
-def render_activity(root,font,palette=None):
+def render_activity(root,font,palette=None,locale=DEFAULT):
     palette=palette or THEMES['dark']
     colors=palette['calendar']
     white,muted,accent=palette['text'],palette['muted'],palette['accent']
@@ -30,11 +31,12 @@ def render_activity(root,font,palette=None):
     cells=week_grid(calendar['days'])
     im=Image.new('RGBA',(1200,316),TRANSPARENT);d=ImageDraw.Draw(im)
     def text(x,y,value,size=18,color=None,bold=False):d.text((x,y),str(value),font=font(size,bold),fill=color or white)
-    section_heading(d,palette,font,'Atividade e contribuições',12)
+    section_heading(d,palette,font,tr(locale,'Atividade e contribuições'),12)
     d.rounded_rectangle((12,60,1188,304),radius=12,fill=palette['matte'],outline=palette['line'])
     columns=max(c['column'] for c in cells)+1;step=19;size=16
     x0=(1200-(columns*step-3))//2;y0=115
-    months=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez']
+    months=(['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'] if locale==DEFAULT
+            else ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'])
     prev=None;starts=[]
     for c in cells:
         day=date.fromisoformat(c['date']);key=day.strftime('%Y-%m')
@@ -43,12 +45,12 @@ def render_activity(root,font,palette=None):
             starts.append((x0+c['column']*step,label));prev=key
         x=x0+c['column']*step;y=y0+c['row']*step
         d.rounded_rectangle((x,y,x+size-1,y+size-1),radius=3,fill=colors[c['level']])
-    for row,label in [(1,'Seg'),(3,'Qua'),(5,'Sex')]:text(x0-42,y0+row*step,label,12,muted)
+    for row,label in [(1,'Seg'),(3,'Qua'),(5,'Sex')]:text(x0-42,y0+row*step,tr(locale,label),12,muted)
     for index,(x,label) in enumerate(starts):
         if index+1<len(starts) and starts[index+1][0]-x<35:continue
         text(x,83,label,13,muted)
-    text(929,275,'Menos',12,muted)
+    text(929,275,tr(locale,'Menos'),12,muted)
     for i,color in enumerate(colors):d.rounded_rectangle((976+i*20,277,991+i*20,292),radius=3,fill=color)
-    text(1085,275,'Mais',12,muted)
-    im.save(root/'assets'/('activity-'+palette['name']+'.png'))
+    text(1085,275,tr(locale,'Mais'),12,muted)
+    im.save(root/'assets'/(localized('activity',locale)+'-'+palette['name']+'.png'))
     return summary

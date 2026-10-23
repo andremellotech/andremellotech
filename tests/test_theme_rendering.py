@@ -39,10 +39,13 @@ class ThemeRendering(unittest.TestCase):
             self.assertTrue(any('prefers-color-scheme: dark' in s.get('media', '') for s in sources),
                             'The GitHub theme must choose the matching text colors')
             links = [attrs['href'] for tag, attrs in parsed.tags if tag == 'a']
-            self.assertEqual(links[:3], ['https://www.linkedin.com/in/aamello/',
+            language_urls = ['https://github.com/andremellotech',
+                             'https://github.com/andremellotech/andremellotech/blob/main/README.en-US.md']
+            self.assertEqual(links[:2], language_urls, 'Both language buttons must work on GitHub')
+            self.assertEqual(links[2:], ['https://www.linkedin.com/in/aamello/',
                                          'https://github.com/andremellotech?tab=repositories',
                                          'mailto:andremello@outlook.com'],
-                             'All three contact buttons must use the correct destinations')
+                             'All three contact buttons must keep the correct destinations')
             readme_text = (root / 'README.md').read_text(encoding='utf-8')
             self.assertNotIn('| Projeto | Aplicação |', readme_text)
             self.assertNotIn('Projetos em destaque', readme_text)
@@ -116,7 +119,28 @@ class ThemeRendering(unittest.TestCase):
                     self.assertEqual(im.mode, 'RGBA')
                     self.assertEqual(im.getpixel((0, 0))[3], 0)
             subprocess.run([sys.executable, str(root / 'scripts/prepare_pages.py')], check=True, capture_output=True)
-            for tag, attrs in parsed.tags:
+            english = Elements((root/'README.en-US.md').read_text(encoding='utf-8'))
+            self.assertEqual([a['href'] for tag, a in english.tags if tag == 'a'], links,
+                             'English must return to the Portuguese profile and keep contact links')
+            english_panels = [a['src'] for tag, a in english.tags if tag == 'img' and a.get('width') == '100%']
+            self.assertEqual(len(english_panels), 5)
+            self.assertTrue(all('-en-US-' in url for url in english_panels),
+                            'English needs translated pictures, not only an English heading')
+            english_readme = (root/'README.en-US.md').read_text(encoding='utf-8')
+            self.assertIn('Civil Engineer', english_readme)
+            self.assertIn('Experience and results', english_readme)
+            self.assertNotIn('Tecnologias e formação', english_readme)
+            for theme in ['light', 'dark']:
+                for stem in ['profile-intro', 'contribution-snake']:
+                    with Image.open(root/f'assets/{stem}-en-US-{theme}.gif') as gif:
+                        self.assertGreater(gif.n_frames, 1)
+                        self.assertEqual(gif.info.get('loop'), 0)
+                        self.assertEqual(gif.convert('RGBA').getpixel((0,0))[3], 0)
+                with Image.open(root/f'assets/status-{theme}.png') as pt, Image.open(root/f'assets/status-en-US-{theme}.png') as en:
+                    self.assertEqual(pt.size, en.size, 'Both languages keep the same proportions')
+                    self.assertNotEqual(pt.tobytes(), en.tobytes(), 'The card text must actually be translated')
+            self.assertTrue((root/'work/pages/en-US/index.html').exists())
+            for tag, attrs in parsed.tags + english.tags:
                 url = attrs.get('src') or attrs.get('srcset')
                 if url:
                     self.assertTrue(url.startswith('https://andremellotech.github.io/andremellotech/assets/'))

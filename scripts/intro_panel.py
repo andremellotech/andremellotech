@@ -2,26 +2,27 @@
 from PIL import Image, ImageDraw, ImageColor
 from themes import TRANSPARENT
 from branding import TYPE, MARGIN
+from profile_i18n import DEFAULT, tr
 
 INTRO_H = 400
 PORTRAIT_AT = (850, 18)
 PORTRAIT_SIZE = (290, 364)
 
 
-def render_intro(font, palette, scale=2):
+def render_intro(font, palette, scale=2, locale=DEFAULT):
     s = scale
     image = Image.new('RGBA', (1200*s, INTRO_H*s), TRANSPARENT)
     d = ImageDraw.Draw(image)
 
-    def text(x, y, value, size, color, bold=False, mono=False):
-        d.text((x*s, y*s), value, font=font(size*s, bold, mono), fill=color)
+    def text(x, y, value, size, color, bold=False, mono=False, raw=False):
+        d.text((x*s, y*s), value if raw else tr(locale, value), font=font(size*s, bold, mono), fill=color)
 
     def line(points, color, width=1):
         d.line([(x*s, y*s) for x, y in points], fill=color, width=width*s, joint='curve')
 
     # Type, whitespace and one blue accent carry the identity across both themes.
-    text(MARGIN, 18, '@ANDREMELLOTECH', TYPE['meta'], palette['muted'], mono=True)
-    text(MARGIN-2, 49, 'André Mello', TYPE['name'], palette['text'], True)
+    text(MARGIN, 18, '@ANDREMELLOTECH', TYPE['meta'], palette['muted'], mono=True, raw=True)
+    text(MARGIN-2, 49, 'André Mello', TYPE['name'], palette['text'], True, raw=True)
     line([(MARGIN, 120), (80, 120)], palette['brand'], 3)
     text(96, 108, 'CONSULTORIA · ENGENHARIA · DADOS', TYPE['meta'], palette['brand'], True)
     text(MARGIN, 156, 'Engenharia, dados e governança.', TYPE['hero'], palette['text'], True)

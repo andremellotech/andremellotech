@@ -2,6 +2,7 @@
 from PIL import Image, ImageDraw
 from themes import TRANSPARENT
 from branding import MARGIN, TYPE, section_heading, domain_icon, wrapped_text
+from profile_i18n import DEFAULT, tr, localized
 
 HEIGHT = 512
 RESULTS = [
@@ -21,13 +22,14 @@ ALT = ('Atuação e resultados informados por André: governança de R$ 660 milh
        'e contratos com CAPEX de até R$ 125 milhões, análise de dados e automação.')
 
 
-def render_professional(root, font, palette):
+def render_professional(root, font, palette, locale=DEFAULT):
     image = Image.new('RGBA', (1200, HEIGHT), TRANSPARENT)
     draw = ImageDraw.Draw(image)
-    section_heading(draw, palette, font, 'Atuação e resultados', 12)
-    draw.text((MARGIN, 70), 'Engenharia e visão de negócio para transformar informação em ação.',
+    section_heading(draw, palette, font, tr(locale, 'Atuação e resultados'), 12)
+    draw.text((MARGIN, 70), tr(locale, 'Engenharia e visão de negócio para transformar informação em ação.'),
               font=font(TYPE['body']), fill=palette['muted'])
     for index, (value, title, detail) in enumerate(RESULTS):
+        value, title, detail = (tr(locale, item) for item in (value, title, detail))
         left = MARGIN + index * 294
         draw.rounded_rectangle((left, 112, left + 270, 260), radius=12,
                                fill=palette['surface'], outline=palette['line'])
@@ -36,6 +38,7 @@ def render_professional(root, font, palette):
         draw.text((left + 20, 199), title, font=font(TYPE['meta'], True), fill=palette['accent'])
         draw.text((left + 20, 226), detail, font=font(TYPE['meta']), fill=palette['muted'])
     for index, (title, description) in enumerate(PILLARS):
+        title, description = tr(locale, title), tr(locale, description)
         left = MARGIN + index * 392
         draw.rounded_rectangle((left, 284, left + 368, 496), radius=12,
                                fill=palette['matte'], outline=palette['line'])
@@ -45,4 +48,4 @@ def render_professional(root, font, palette):
                             palette['muted'], width=328)
         if used > 116:
             raise ValueError('Professional description exceeds its card: ' + title)
-    image.save(root/'assets'/f'professional-{palette["name"]}.png')
+    image.save(root/'assets'/f'{localized("professional", locale)}-{palette["name"]}.png')
