@@ -12,8 +12,10 @@ def render_badge(path, font, label, value, label_bg, value_bg, icon=None, assets
     face = font(24, True)
     probe = ImageDraw.Draw(Image.new('RGBA', (1, 1)))
     icon_w = 52 if icon else 0
-    left_w = 22 + icon_w + _text_width(probe, label, face) + 22
-    right_w = 22 + _text_width(probe, value, face) + 22
+    compact = bool(icon and not label)
+    left_w = 68 if compact else 22 + icon_w + _text_width(probe, label, face) + 22
+    padding = 18 if compact else 22
+    right_w = padding + _text_width(probe, value, face) + padding
     width = left_w + right_w
     badge = Image.new('RGBA', (width, HEIGHT), value_bg)
     draw = ImageDraw.Draw(badge)
@@ -34,7 +36,7 @@ def render_badge(path, font, label, value, label_bg, value_bg, icon=None, assets
         badge.alpha_composite(mark, (x, 11))
     x += icon_w
     draw.text((x, 12), label, font=face, fill='white')
-    draw.text((left_w + 22, 12), value, font=face, fill='white')
+    draw.text((left_w + padding, 12), value, font=face, fill='white')
     mask = Image.new('L', badge.size, 0)
     ImageDraw.Draw(mask).rounded_rectangle((0, 0, width - 1, HEIGHT - 1), radius=10, fill=255)
     badge.putalpha(ImageChops.multiply(mask, badge.getchannel('A')))

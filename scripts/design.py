@@ -90,9 +90,9 @@ def render_badges():
     content = json.loads((ROOT / 'data/github-content.json').read_text(encoding='utf-8'))
     navy = '#17324d'
     for stem, label, value, left, right, icon in [
-            ('badge-linkedin', 'LinkedIn', 'André Mello', '#0a66c2', navy, 'linkedin'),
-            ('badge-github', 'GitHub', '@' + content['user']['login'], '#24292f', navy, 'github'),
-            ('badge-email', 'E-mail', 'andremello@outlook.com', '#0078d4', navy, 'email')]:
+            ('badge-linkedin', '', 'André Mello', '#0a66c2', navy, 'linkedin'),
+            ('badge-github', '', '@' + content['user']['login'], '#24292f', navy, 'github'),
+            ('badge-email', '', 'andremello@outlook.com', '#0078d4', navy, 'email')]:
         render_badge(A / f'{stem}.png', font, label, value, left, right, icon, A)
 
 

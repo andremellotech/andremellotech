@@ -41,23 +41,31 @@ def derive_stats(days: list[dict], today: date) -> dict:
     counts = {date.fromisoformat(d['date']):d['count'] for d in days}
     current, cursor = 0, today
     if counts.get(cursor, 0) == 0: cursor -= timedelta(days=1)
+    current_end = cursor
     while counts.get(cursor,0) > 0:
         current += 1
         cursor -= timedelta(days=1)
+    current_range = ({'start':(cursor+timedelta(days=1)).isoformat(), 'end':current_end.isoformat()}
+                     if current else None)
     run = longest = 0
+    longest_range = None
     previous = None
     monthly = defaultdict(int)
     for d in days:
         day = date.fromisoformat(d['date'])
         if previous is not None and day != previous + timedelta(days=1): run = 0
         run = run + 1 if d['count'] > 0 else 0
-        longest = max(longest, run)
+        if run > longest:
+            longest = run
+            longest_range = {'start':(day-timedelta(days=run-1)).isoformat(), 'end':day.isoformat()}
         monthly[d['date'][:7]] += d['count']
         previous = day
     best = max(days, key=lambda d:d['count'])
     return {'total':sum(d['count'] for d in days), 'current_streak':current,
             'longest_streak':longest,'best_day':{'date':best['date'],'count':best['count']},
-            'monthly_totals':dict(monthly)}
+            'monthly_totals':dict(monthly),
+            'first_contribution':next((d['date'] for d in days if d['count'] > 0), None),
+            'current_streak_range':current_range, 'longest_streak_range':longest_range}
 
 def validate_calendar(days: list[dict], today: date) -> None:
     dates = sorted(date.fromisoformat(d['date']) for d in days)

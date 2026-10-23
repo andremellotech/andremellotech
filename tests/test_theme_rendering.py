@@ -104,7 +104,7 @@ class ThemeRendering(unittest.TestCase):
                     self.assertEqual(im.height, 56, 'Badges are drawn at 2x for a 28 px display height')
                     self.assertEqual(im.getpixel((0, 0))[3], 0, 'Rounded corners stay transparent')
             with Image.open(root / 'assets/status-light.png') as im:
-                self.assertEqual(im.size, (1200, 500))
+                self.assertEqual(im.size, (1200, 800))
             subprocess.run([sys.executable, str(root / 'scripts/prepare_pages.py')], check=True, capture_output=True)
             for tag, attrs in parsed.tags:
                 url = attrs.get('src') or attrs.get('srcset')

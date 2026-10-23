@@ -12,7 +12,7 @@ LANGUAGE_COLORS = {'HTML':'#e34c26', 'TypeScript':'#3178c6', 'C#':'#7355dd',
                    'Python':'#3572A5', 'JavaScript':'#f1e05a', 'CSS':'#663399',
                    'Lua':'#000080', 'PowerShell':'#012456', 'SQL':'#e38c00', 'Power Query':'#ffb900'}
 
-HEIGHT = 500
+HEIGHT = 800
 
 
 def _icon(draw, kind, x, y, color):
@@ -60,22 +60,62 @@ def _fmt(value):
     return '—' if value is None else f'{value:,}'.replace(',', '.')
 
 
-def _flame(image, x, y, color, background):
-    s = 4
-    layer = Image.new('RGBA', (32*s, 36*s), TRANSPARENT)
+def streak_date_labels(summary, as_of):
+    months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+    def day_label(value):
+        value = date.fromisoformat(value)
+        return f'{months[value.month-1]} {value.day}' + (f', {value.year}' if value.year != as_of.year else '')
+    def interval(value):
+        if not value:
+            return '—'
+        start, end = day_label(value['start']), day_label(value['end'])
+        return start if start == end else start + ' - ' + end
+    first = summary.get('first_contribution')
+    return {'total':day_label(first)+' - Present' if first else '—',
+            'current':interval(summary.get('current_streak_range')),
+            'longest':interval(summary.get('longest_streak_range'))}
+
+
+def _flame(image, cx, y, color, background):
+    # Curved flame geometry follows the reference widget's src/card.php icon.
+    # Rasterized here so the profile does not depend on an external SVG service.
+    s, k = 4, 1200/495
+    width, height = math.ceil(27*k), math.ceil(25*k)
+    layer = Image.new('RGBA', (width*s, height*s), TRANSPARENT)
     draw = ImageDraw.Draw(layer)
-    outer = [(16,0),(22,11),(26,8),(30,18),(30,25),(26,31),(16,35),
-             (6,31),(1,24),(2,16),(8,9),(9,17),(14,12)]
-    inner = [(16,17),(22,25),(21,30),(16,32),(11,29),(11,25)]
-    draw.polygon([(a*s,b*s) for a,b in outer], fill=color)
-    draw.polygon([(a*s,b*s) for a,b in inner], fill=background)
-    image.alpha_composite(layer.resize((26,30), Image.Resampling.LANCZOS), (x,y))
+    def contour(start, segments):
+        points, current = [start], start
+        for controls in segments:
+            if len(controls) == 2:
+                current = controls
+                points.append(current)
+                continue
+            x0,y0 = current
+            x1,y1,x2,y2,x3,y3 = controls
+            for step in range(1,25):
+                t = step/24
+                points.append(((1-t)**3*x0+3*(1-t)**2*t*x1+3*(1-t)*t*t*x2+t**3*x3,
+                               (1-t)**3*y0+3*(1-t)**2*t*y1+3*(1-t)*t*t*y2+t**3*y3))
+            current = x3,y3
+        return [((x+12)*k*s,(y+1)*k*s) for x,y in points]
+    outer = contour((1.5,.67), [(1.5,.67,2.24,3.32,2.24,5.47),
+                    (2.24,7.53,.89,9.2,-1.17,9.2),(-3.23,9.2,-4.79,7.53,-4.79,5.47),
+                    (-4.76,5.11),(-6.78,7.51,-8,10.62,-8,13.99),
+                    (-8,18.41,-4.42,22,0,22),(4.42,22,8,18.41,8,13.99),
+                    (8,8.6,5.41,3.79,1.5,.67)])
+    inner = contour((-.29,19), [(-2.07,19,-3.51,17.6,-3.51,15.86),
+                    (-3.51,14.24,-2.46,13.1,-.7,12.74),(1.07,12.38,2.9,11.53,3.92,10.16),
+                    (4.31,11.45,4.51,12.81,4.51,14.2),(4.51,16.85,2.36,19,-.29,19)])
+    draw.polygon(outer, fill=color)
+    draw.polygon(inner, fill=background)
+    image.alpha_composite(layer.resize((width,height), Image.Resampling.LANCZOS), (cx-round(12*k),y))
 
 
 def render_status(root, font, palette):
     content = json.loads((root / 'data/github-content.json').read_text(encoding='utf-8'))
     history = json.loads((root/'data/contributions-history.json').read_text(encoding='utf-8'))
     summary = derive_stats(history['days'], date.fromisoformat(history['as_of']))
+    dates = streak_date_labels(summary, date.fromisoformat(history['as_of']))
     stats = content.get('stats', {})
     text, muted, accent, brand = palette['text'], palette['muted'], palette['accent'], palette['brand']
     blue = '#2f80ed' if palette['name'] == 'light' else '#58a6ff'
@@ -129,23 +169,27 @@ def render_status(root, font, palette):
         d.text((x+196 - d.textlength(label, font=font(12)), y+1), label, font=font(12), fill=muted)
     d.text((760, 272), 'Por bytes · até 6 repositórios públicos recentes', font=font(11), fill=muted)
 
-    d.rounded_rectangle((12, 316, 1188, 488), **card)
-    d.line((412, 340, 412, 464), fill=palette['line'])
-    d.line((788, 340, 788, 464), fill=palette['line'])
-    columns = [(212, _fmt(summary['total']), 'Total Contributions'),
-               (988, _fmt(summary['longest_streak']), 'Longest Streak')]
-    for cx, value, label in columns:
-        face = font(46, True)
-        d.text((cx - d.textlength(value, font=face) / 2, 359), value, font=face, fill=text)
-        face = font(16)
-        d.text((cx - d.textlength(label, font=face) / 2, 436), label, font=face, fill=text)
-    _ring(im, (600, 392), 43, 1, palette['line'], fire, 6)
-    d.rectangle((582,330,618,354), fill=palette['matte'])
-    _flame(im, 587, 325, fire, palette['matte'])
-    value = str(summary['current_streak'])
-    face = font(38, True)
-    d.text((600 - d.textlength(value, font=face) / 2, 369), value, font=face, fill=text)
-    face = font(15, True)
-    d.text((600 - d.textlength('Current Streak', font=face) / 2, 451), 'Current Streak', font=face, fill=fire)
+    d.rounded_rectangle((12, 316, 1188, 788), **card)
+    d.line((400, 384, 400, 728), fill=palette['line'])
+    d.line((800, 384, 800, 728), fill=palette['line'])
+    columns = [(212, _fmt(summary['total']), 'Total Contributions', dates['total']),
+               (988, _fmt(summary['longest_streak']), 'Longest Streak', dates['longest'])]
+    for cx, value, label, span in columns:
+        d.text((cx,510), value, font=font(68,True), fill=text, anchor='ms')
+        d.text((cx,597), label, font=font(34), fill=text, anchor='ms')
+        # A range crossing two old years is wider; fit it inside its own column.
+        size = 29
+        while size > 20 and d.textlength(span, font=font(size)) > 352:
+            size -= 1
+        d.text((cx,670), span, font=font(size), fill=muted, anchor='ms')
+    _ring(im, (600,488), 97, 1, palette['line'], fire, 12)
+    d.ellipse((569,349,631,437), fill=palette['matte'])
+    _flame(im, 600, 361, fire, palette['matte'])
+    d.text((600,510), str(summary['current_streak']), font=font(68,True), fill=text, anchor='ms')
+    d.text((600,656), 'Current Streak', font=font(34,True), fill=fire, anchor='ms')
+    size = 29
+    while size > 20 and d.textlength(dates['current'], font=font(size)) > 352:
+        size -= 1
+    d.text((600,718), dates['current'], font=font(size), fill=muted, anchor='ms')
     im.save(root / 'assets' / f'status-{palette["name"]}.png')
     return summary
