@@ -22,11 +22,11 @@ def render_intro(font, palette, scale=2):
     text(38, 24, '@ANDREMELLOTECH', 15, palette['muted'], mono=True)
     text(35, 53, 'André Mello', 44, palette['text'], True)
     line([(40, 120), (96, 120)], palette['brand'], 3)
-    text(112, 108, 'DATA & ANALYTICS', 17, palette['brand'], True)
-    text(37, 160, 'Clareza na análise.', 31, palette['text'], True)
-    text(37, 202, 'Eficiência na execução.', 31, palette['text'], True)
-    text(40, 267, 'Performance, automação e modelagem financeira.', 20, palette['muted'])
-    text(40, 310, 'Consultoria  ·  Tecnologia  ·  Engenharia', 18, palette['accent'])
+    text(112, 108, 'CONSULTORIA · DATA & ANALYTICS', 17, palette['brand'], True)
+    text(37, 160, 'Governança de portfólio.', 31, palette['text'], True)
+    text(37, 202, 'Dados para decisões executivas.', 31, palette['text'], True)
+    text(40, 267, 'PMO, automação e controle físico-financeiro.', 20, palette['muted'])
+    text(40, 310, 'Engenheiro Civil · MSc. em Administração', 18, palette['accent'])
     line([(40, 368), (715, 368)], palette['line'])
 
     # The gridded portrait is an illustration, not a fabricated performance chart.

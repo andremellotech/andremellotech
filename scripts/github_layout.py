@@ -115,8 +115,9 @@ def build_github_layout(root, font):
     content = json.loads((root / 'data/github-content.json').read_text(encoding='utf-8'))
     username = content['user']['login']
     intro = '<p align="center">' + themed_picture(root, 'profile-intro',
-             'André Mello — Data & Analytics. Clareza na análise. Eficiência na execução. '
-             'Performance, automação e modelagem financeira. Consultoria, tecnologia e engenharia. '
+             'André Mello — Consultoria e Data & Analytics. Governança de portfólio. '
+             'Dados para decisões executivas. PMO, automação e controle físico-financeiro. '
+             'Engenheiro Civil, MSc. em Administração. '
              'Retrato ASCII animado.', animated=True) + '</p>'
     links = ('<p align="center"><a href="https://www.linkedin.com/in/aamello/">'
              + badge_img(root, 'badge-linkedin', 'LinkedIn — André Mello') + '</a> '

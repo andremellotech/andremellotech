@@ -6,6 +6,8 @@ O README de `andremellotech/andremellotech` apresenta o perfil com dados públic
 
 A abertura tem 1200 × 400 pixels, com nome de 44 pixels, textos neutros e retrato em uma moldura de desenho técnico adaptada ao tema. O fundo externo é transparente. Os contatos aparecem abaixo, em badges locais de 22 pixels exibidos: somente o ícone e o identificador (André Mello, @andremellotech e andremello@outlook.com), sem repetir o nome da plataforma. O botão de e-mail abre o aplicativo de mensagens com o destinatário preenchido, sem enviar automaticamente. Os títulos das seções não têm numeração.
 
+O texto de abertura destaca governança de portfólio, decisões executivas, PMO, automação e controle físico-financeiro. A formação aparece em uma linha discreta: Engenheiro Civil e MSc. em Administração. Esse posicionamento foi alinhado ao título profissional e ao texto de Sobre do LinkedIn fornecidos por André, preservando o tamanho do bloco e a tipografia.
+
 A ordem é: apresentação; contatos; estatísticas e linguagens; total de contribuições e sequências; cobrinha; tecnologias e ferramentas. A seção **Projetos em destaque foi removida**, inclusive da prévia. O botão GitHub continua levando aos repositórios.
 
 Power BI, Python, Excel, Alteryx, SAP, PowerPoint e GitHub refletem o uso informado por André. HTML, CSS, JavaScript e Lua aparecem como conhecimentos. Office 365 acompanha Excel/PowerPoint; MySQL é experiência anterior em servidores de Tibia e GTA V/FiveM. Não foram acrescentados níveis, certificações ou resultados de clientes.
