@@ -4,7 +4,7 @@ O README de `andremellotech/andremellotech` apresenta o perfil com dados públic
 
 ## Identidade e organização
 
-A abertura tem 1200 × 400 pixels, com nome de 44 pixels, textos neutros e retrato em uma moldura de desenho técnico adaptada ao tema. O fundo externo é transparente. Os contatos aparecem abaixo, em badges locais de 28 pixels exibidos: somente o ícone e o identificador (André Mello, @andremellotech e andremello@outlook.com), sem repetir o nome da plataforma. O botão de e-mail abre o aplicativo de mensagens com o destinatário preenchido, sem enviar automaticamente. Os títulos das seções não têm numeração.
+A abertura tem 1200 × 400 pixels, com nome de 44 pixels, textos neutros e retrato em uma moldura de desenho técnico adaptada ao tema. O fundo externo é transparente. Os contatos aparecem abaixo, em badges locais de 22 pixels exibidos: somente o ícone e o identificador (André Mello, @andremellotech e andremello@outlook.com), sem repetir o nome da plataforma. O botão de e-mail abre o aplicativo de mensagens com o destinatário preenchido, sem enviar automaticamente. Os títulos das seções não têm numeração.
 
 A ordem é: apresentação; contatos; estatísticas e linguagens; total de contribuições e sequências; cobrinha; tecnologias e ferramentas. A seção **Projetos em destaque foi removida**, inclusive da prévia. O botão GitHub continua levando aos repositórios.
 
@@ -28,7 +28,7 @@ O gráfico compacto mostra as cinco maiores linguagens e a soma das demais, usan
 
 O ano atual é consultado a cada execução. Anos encerrados são revalidados uma vez por dia e reutilizados entre consultas do mesmo dia. Um ano incompleto impede gravar o novo histórico. As linhas técnicas de consulta continuam ocultas.
 
-Os três indicadores têm proporções maiores e datas como na referência: Total Contributions mostra a primeira contribuição real até Present; Current Streak e Longest Streak mostram o início e o fim dos respectivos períodos. O ano aparece nas datas de anos anteriores, como no cartão original. Um único dia não é repetido como intervalo. Sem atividade, a faixa correspondente mostra —; em empate da maior sequência, mantém-se a primeira. As datas vêm dos mesmos dias usados no cálculo dos números. A chama curva e o aro laranja seguem a referência do Solon; o aro é decorativo, sem representar porcentagem de progresso. O painel de estatísticas tem 1200 × 800 pixels para acomodar círculo, textos e datas com espaçamento.
+Os três indicadores têm proporções compactas e datas como na referência: Total Contributions mostra a primeira contribuição real até Present; Current Streak e Longest Streak mostram o início e o fim dos respectivos períodos. O ano aparece nas datas de anos anteriores, como no cartão original. Um único dia não é repetido como intervalo. Sem atividade, a faixa correspondente mostra —; em empate da maior sequência, mantém-se a primeira. As datas vêm dos mesmos dias usados no cálculo dos números. A chama curva e o aro laranja seguem a referência do Solon; o aro é decorativo, sem representar porcentagem de progresso. O painel de estatísticas tem 1200 × 624 pixels; a faixa de sequências ocupa 296 pixels, com números de 44 pixels, rótulos de 24 pixels e datas de 19 pixels.
 
 `scripts/fetch_contributions.py` mantém também o calendário público recente, validado, como fonte para a composição inicial da seção de atividade e para os dados locais.
 

@@ -12,7 +12,7 @@ LANGUAGE_COLORS = {'HTML':'#e34c26', 'TypeScript':'#3178c6', 'C#':'#7355dd',
                    'Python':'#3572A5', 'JavaScript':'#f1e05a', 'CSS':'#663399',
                    'Lua':'#000080', 'PowerShell':'#012456', 'SQL':'#e38c00', 'Power Query':'#ffb900'}
 
-HEIGHT = 800
+HEIGHT = 624
 
 
 def _icon(draw, kind, x, y, color):
@@ -76,10 +76,10 @@ def streak_date_labels(summary, as_of):
             'longest':interval(summary.get('longest_streak_range'))}
 
 
-def _flame(image, cx, y, color, background):
+def _flame(image, cx, y, color, background, scale=1):
     # Curved flame geometry follows the reference widget's src/card.php icon.
     # Rasterized here so the profile does not depend on an external SVG service.
-    s, k = 4, 1200/495
+    s, k = 4, 1200/495 * scale
     width, height = math.ceil(27*k), math.ceil(25*k)
     layer = Image.new('RGBA', (width*s, height*s), TRANSPARENT)
     draw = ImageDraw.Draw(layer)
@@ -169,27 +169,27 @@ def render_status(root, font, palette):
         d.text((x+196 - d.textlength(label, font=font(12)), y+1), label, font=font(12), fill=muted)
     d.text((760, 272), 'Por bytes · até 6 repositórios públicos recentes', font=font(11), fill=muted)
 
-    d.rounded_rectangle((12, 316, 1188, 788), **card)
-    d.line((400, 384, 400, 728), fill=palette['line'])
-    d.line((800, 384, 800, 728), fill=palette['line'])
+    d.rounded_rectangle((12, 316, 1188, 612), **card)
+    d.line((400, 348, 400, 576), fill=palette['line'])
+    d.line((800, 348, 800, 576), fill=palette['line'])
     columns = [(212, _fmt(summary['total']), 'Total Contributions', dates['total']),
                (988, _fmt(summary['longest_streak']), 'Longest Streak', dates['longest'])]
     for cx, value, label, span in columns:
-        d.text((cx,510), value, font=font(68,True), fill=text, anchor='ms')
-        d.text((cx,597), label, font=font(34), fill=text, anchor='ms')
+        d.text((cx,446), value, font=font(44,True), fill=text, anchor='ms')
+        d.text((cx,500), label, font=font(24), fill=text, anchor='ms')
         # A range crossing two old years is wider; fit it inside its own column.
-        size = 29
-        while size > 20 and d.textlength(span, font=font(size)) > 352:
+        size = 19
+        while size > 16 and d.textlength(span, font=font(size)) > 352:
             size -= 1
-        d.text((cx,670), span, font=font(size), fill=muted, anchor='ms')
-    _ring(im, (600,488), 97, 1, palette['line'], fire, 12)
-    d.ellipse((569,349,631,437), fill=palette['matte'])
-    _flame(im, 600, 361, fire, palette['matte'])
-    d.text((600,510), str(summary['current_streak']), font=font(68,True), fill=text, anchor='ms')
-    d.text((600,656), 'Current Streak', font=font(34,True), fill=fire, anchor='ms')
-    size = 29
-    while size > 20 and d.textlength(dates['current'], font=font(size)) > 352:
+        d.text((cx,541), span, font=font(size), fill=muted, anchor='ms')
+    _ring(im, (600,429), 64, 1, palette['line'], fire, 8)
+    d.ellipse((579,336,621,396), fill=palette['matte'])
+    _flame(im, 600, 344, fire, palette['matte'], scale=.68)
+    d.text((600,446), str(summary['current_streak']), font=font(44,True), fill=text, anchor='ms')
+    d.text((600,548), 'Current Streak', font=font(24,True), fill=fire, anchor='ms')
+    size = 19
+    while size > 16 and d.textlength(dates['current'], font=font(size)) > 352:
         size -= 1
-    d.text((600,718), dates['current'], font=font(size), fill=muted, anchor='ms')
+    d.text((600,580), dates['current'], font=font(size), fill=muted, anchor='ms')
     im.save(root / 'assets' / f'status-{palette["name"]}.png')
     return summary

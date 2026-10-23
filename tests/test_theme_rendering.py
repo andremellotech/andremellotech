@@ -97,14 +97,14 @@ class ThemeRendering(unittest.TestCase):
                     images.append(im.copy())
             self.assertEqual(images[0].size, images[1].size)
             self.assertNotEqual(images[0].tobytes(), images[1].tobytes(), 'Text must adapt to the selected theme')
-            badge_images = [attrs['src'] for tag, attrs in parsed.tags if tag == 'img' and attrs.get('height') == '28']
+            badge_images = [attrs['src'] for tag, attrs in parsed.tags if tag == 'img' and attrs.get('height') == '22']
             self.assertEqual(len(badge_images), 3, 'Three contact badges without duplicated statistics')
             for name in ['badge-linkedin.png', 'badge-github.png', 'badge-email.png']:
                 with Image.open(root / 'assets' / name) as im:
-                    self.assertEqual(im.height, 56, 'Badges are drawn at 2x for a 28 px display height')
+                    self.assertEqual(im.height, 56, 'Contact source images stay sharp at the compact display height')
                     self.assertEqual(im.getpixel((0, 0))[3], 0, 'Rounded corners stay transparent')
             with Image.open(root / 'assets/status-light.png') as im:
-                self.assertEqual(im.size, (1200, 800))
+                self.assertEqual(im.size, (1200, 624))
             subprocess.run([sys.executable, str(root / 'scripts/prepare_pages.py')], check=True, capture_output=True)
             for tag, attrs in parsed.tags:
                 url = attrs.get('src') or attrs.get('srcset')

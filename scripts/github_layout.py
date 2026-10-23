@@ -83,7 +83,7 @@ def themed_picture(root, stem, alt, animated=False, width='100%'):
 
 
 def badge_img(root, stem, alt):
-    return '<img src="' + image_url(root, stem + '.png') + '" height="28" alt="' + alt + '" />'
+    return '<img src="' + image_url(root, stem + '.png') + '" height="22" alt="' + alt + '" />'
 
 
 def build_github_layout(root, font):
@@ -139,7 +139,7 @@ def build_github_layout(root, font):
                     ':root{color-scheme:light dark}body{margin:0;background:light-dark(#f6f8fa,#010409);font:14px/1.5 system-ui}'
                     'main{max-width:900px;background:light-dark(#fff,#0d1117);border:1px solid light-dark(#d1d9e0,#3d444d);'
                     'border-radius:6px;padding:24px;margin:24px auto}p{margin:0 0 16px}img{max-width:100%;height:auto;vertical-align:middle}'
-                    'img[height="28"]{height:28px;width:auto}'
+                    'img[height="22"]{height:22px;width:auto}'
                     '@media(max-width:600px){main{padding:12px;margin:8px}}</style><main>'
                     + preview_body.replace(ASSET_HOST, './assets/') + '</main></html>')
     (root / 'previa.html').write_text(preview_html, encoding='utf-8')
