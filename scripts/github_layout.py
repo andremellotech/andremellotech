@@ -1,9 +1,8 @@
 """Compose theme-aware PNGs and a small, transparent animated portrait block."""
 from PIL import Image, ImageColor, ImageSequence, GifImagePlugin
 import hashlib, json
-from projects_section import projects_markdown, projects_html
 from themes import THEMES, TRANSPARENT
-from intro_panel import PORTRAIT_AT, PORTRAIT_SIZE
+from intro_panel import PORTRAIT_AT, PORTRAIT_SIZE, portrait_ink
 
 ASSET_HOST = 'https://andremellotech.github.io/andremellotech/assets/'
 
@@ -33,7 +32,7 @@ def animated_intro(assets, theme, palette, background):
     with Image.open(assets / 'andre-ascii.gif') as original:
         for source in ImageSequence.Iterator(original):
             frame = background.copy()
-            frame.alpha_composite(transparent_portrait(source, palette['portrait']), PORTRAIT_AT)
+            frame.alpha_composite(transparent_portrait(source, portrait_ink(palette)), PORTRAIT_AT)
             if shared_palette is None:
                 frame.save(assets / f'profile-intro-{theme}.png')
             # GIF has binary transparency. Matte only the antialiased glyph edges,
@@ -42,7 +41,7 @@ def animated_intro(assets, theme, palette, background):
             matte.alpha_composite(frame)
             rgb = matte.convert('RGB')
             if shared_palette is None:
-                shared_palette = rgb.quantize(colors=32, dither=Image.Dither.NONE)
+                shared_palette = rgb.quantize(colors=64, dither=Image.Dither.NONE)
             indexed = rgb.quantize(palette=shared_palette, dither=Image.Dither.NONE)
             indexed.paste(255, mask=frame.getchannel('A').point(lambda alpha: 255 if alpha == 0 else 0))
             indexed.info['transparency'] = 255
@@ -94,7 +93,7 @@ def build_github_layout(root, font):
         for name in ['intro', 'status', 'activity', 'stack']:
             if name == 'intro':
                 panel = Image.open(assets / f'intro-background-{theme}.png').convert('RGBA')
-                panel.alpha_composite(transparent_portrait(assets / 'andre-ascii.png', palette['portrait']), PORTRAIT_AT)
+                panel.alpha_composite(transparent_portrait(assets / 'andre-ascii.png', portrait_ink(palette)), PORTRAIT_AT)
             else:
                 panel = Image.open(assets / f'{name}-{theme}.png').convert('RGBA')
             panels.append(panel)
@@ -112,7 +111,7 @@ def build_github_layout(root, font):
                        Image.open(assets / f'intro-background-{theme}.png').convert('RGBA'))
 
     alt = ('Status do GitHub: repositórios públicos, estrelas, commits, pull requests, issues e seguidores; '
-           'composição de código dos repositórios; contribuições no último ano, sequência atual e maior sequência.')
+           'composição de código dos repositórios; total de contribuições desde a criação da conta, sequência atual e maior sequência.')
     content = json.loads((root / 'data/github-content.json').read_text(encoding='utf-8'))
     username = content['user']['login']
     intro = '<p align="center">' + themed_picture(root, 'profile-intro',
@@ -129,11 +128,8 @@ def build_github_layout(root, font):
     tools = '<p align="center">' + themed_picture(root, 'stack',
              'Tecnologias e ferramentas: Power BI, Python, Excel, Alteryx, SAP, PowerPoint; '
              'HTML, CSS, JavaScript e Lua; GitHub e experiência anterior em MySQL.') + '</p>'
-    project_table = projects_markdown(content, username)
-    projects_head = ('<p align="center">' + themed_picture(root, 'section-projects', 'Projetos em destaque') + '</p>') if project_table else ''
     top = '\n\n'.join([intro, links, status, snake, tools])
-    readme = top + '\n\n' + projects_head + '\n\n' + project_table
-    preview_body = top + projects_head + projects_html(content, username)
+    readme = preview_body = top
     (root / 'README.md').write_text(readme, encoding='utf-8')
     preview_html = ('<!doctype html><html lang="pt-BR"><meta charset="utf-8">'
                     '<meta name="viewport" content="width=device-width,initial-scale=1">'
@@ -142,7 +138,6 @@ def build_github_layout(root, font):
                     'main{max-width:900px;background:light-dark(#fff,#0d1117);border:1px solid light-dark(#d1d9e0,#3d444d);'
                     'border-radius:6px;padding:24px;margin:24px auto}p{margin:0 0 16px}img{max-width:100%;height:auto;vertical-align:middle}'
                     'img[height="28"]{height:28px;width:auto}'
-                    'table{border-collapse:collapse;width:100%;margin:8px 0 20px}th,td{border:1px solid light-dark(#d1d9e0,#3d444d);padding:6px 13px;vertical-align:top}th{background:light-dark(#f6f8fa,#151b23)}'
                     '@media(max-width:600px){main{padding:12px;margin:8px}}</style><main>'
                     + preview_body.replace(ASSET_HOST, './assets/') + '</main></html>')
     (root / 'previa.html').write_text(preview_html, encoding='utf-8')

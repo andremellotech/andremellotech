@@ -12,7 +12,6 @@ def prepare(root=ROOT):
         images.extend(f'{stem}-{theme}.{extension}' for stem, extension in
                       [('profile-intro', 'png'), ('profile-intro', 'gif'), ('status', 'png'),
                        ('contribution-snake', 'gif'), ('stack', 'png')])
-        images.append(f'section-projects-{theme}.png')
     for name in images:
         shutil.copy2(root/'assets'/name,dest/'assets'/name)
     shutil.copy2(root/'previa.html',dest/'index.html')

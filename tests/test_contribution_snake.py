@@ -1,41 +1,45 @@
-"""The animation consumes real calendar cells without teleporting or colliding."""
+"""Preserve the official snk animation while adapting its surrounding panel."""
 from pathlib import Path
 import sys
+import tempfile
 import unittest
-
+from PIL import Image, ImageSequence
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
+from themes import THEMES
+from snake_fixture import write_snake_fixture
 
 
 class ContributionSnake(unittest.TestCase):
-    def snake_states(self, cells):
-        try:
-            from contribution_snake import snake_states
-        except ImportError:
-            self.fail('The contribution animation generator is not available yet')
-        return snake_states(cells)
+    def setUp(self):
+        self.scratch = Path(__file__).resolve().parents[1]/'work/snake-unit-tests'
+        self.scratch.mkdir(parents=True, exist_ok=True)
 
-    def test_consumes_only_active_days_with_contiguous_collision_free_motion(self):
-        cells = [dict(column=0, row=0, count=3, level=2),
-                 dict(column=3, row=6, count=1, level=1),
-                 dict(column=2, row=1, count=0, level=0)]
-        states = self.snake_states(cells)
-        self.assertTrue(states)
-        self.assertFalse(states[0]['eaten'])
-        self.assertEqual(states[-1]['eaten'], {(0, 0), (3, 6)})
-        for previous, current in zip(states, states[1:]):
-            self.assertLessEqual(len(current['eaten'] - previous['eaten']), 1)
-            self.assertTrue(previous['eaten'] <= current['eaten'])
-            self.assertEqual(current['body'][1:], previous['body'][:-1])
-            a, b = previous['body'][0], current['body'][0]
-            self.assertEqual(abs(a[0]-b[0]) + abs(a[1]-b[1]), 1)
-            self.assertEqual(len(set(current['body'])), len(current['body']))
-        self.assertEqual(states[0]['body'], states[-1]['body'], 'The loop must join without jumping')
+    def test_preserves_source_motion_duration_loop_and_transparent_surround(self):
+        from contribution_snake import render_snake
+        with tempfile.TemporaryDirectory(dir=self.scratch) as directory:
+            root = Path(directory)
+            write_snake_fixture(root)
+            render_snake(root, THEMES['light'])
+            with Image.open(root/'assets/contribution-snake-light.gif') as result:
+                self.assertEqual(result.info.get('loop'), 0)
+                frames = [frame.convert('RGBA') for frame in ImageSequence.Iterator(result)]
+                result.seek(0)
+                self.assertEqual(sum(frame.info.get('duration', 0) for frame in ImageSequence.Iterator(result)), 360)
+                self.assertEqual(len(frames), 3)
+                self.assertTrue(all(frame.getpixel((0, 0))[3] == 0 for frame in frames))
+                self.assertNotEqual(frames[0].tobytes(), frames[1].tobytes())
+                self.assertEqual(frames[0].crop((0, 0, 1200, 60)).tobytes(),
+                                 frames[-1].crop((0, 0, 1200, 60)).tobytes())
 
-    def test_empty_calendar_does_not_invent_activity(self):
-        for cells in ([], [dict(column=52, row=4, count=0, level=0)]):
-            states = self.snake_states(cells)
-            self.assertTrue(states)
-            self.assertTrue(all(not state['eaten'] for state in states))
+    def test_missing_official_source_stops_instead_of_substituting_a_different_snake(self):
+        from contribution_snake import render_snake
+        with tempfile.TemporaryDirectory(dir=self.scratch) as directory:
+            root = Path(directory)
+            (root/'assets').mkdir()
+            Image.new('RGBA', (1200, 316)).save(root/'assets/activity-light.png')
+            with self.assertRaises(FileNotFoundError) as caught:
+                render_snake(root, THEMES['light'])
+            self.assertIn('snake-source-light.gif', str(caught.exception))
 
 
 if __name__ == '__main__':

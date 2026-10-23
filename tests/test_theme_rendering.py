@@ -4,6 +4,7 @@ from html.parser import HTMLParser
 import shutil, subprocess, sys, tempfile, unittest
 from PIL import Image, ImageSequence
 import hashlib, json
+from snake_fixture import write_snake_fixture
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -19,7 +20,7 @@ class Elements(HTMLParser):
 
 
 class ThemeRendering(unittest.TestCase):
-    def test_profile_preserves_contacts_native_projects_and_theme_assets(self):
+    def test_profile_preserves_contacts_and_theme_assets_without_project_showcase(self):
         scratch = ROOT / 'work/theme-tests'
         scratch.mkdir(parents=True, exist_ok=True)
         with tempfile.TemporaryDirectory(dir=scratch) as folder:
@@ -29,6 +30,9 @@ class ThemeRendering(unittest.TestCase):
             shutil.copytree(ROOT / 'assets/badges', root / 'assets/badges')
             for name in ['andre-ascii.png', 'andre-ascii.gif']:
                 shutil.copy2(ROOT / 'assets' / name, root / 'assets' / name)
+            write_snake_fixture(root)
+            calendar = json.loads((root/'data/contributions.json').read_text(encoding='utf-8'))
+            (root/'data/contributions-history.json').write_text(json.dumps(calendar), encoding='utf-8')
             subprocess.run([sys.executable, str(root / 'scripts/design.py')], check=True, capture_output=True)
             parsed = Elements((root / 'README.md').read_text(encoding='utf-8'))
             sources = [attrs for tag, attrs in parsed.tags if tag == 'source']
@@ -39,9 +43,9 @@ class ThemeRendering(unittest.TestCase):
                                          'https://github.com/andremellotech?tab=repositories'],
                              'LinkedIn and GitHub are the first two buttons, at the top')
             readme_text = (root / 'README.md').read_text(encoding='utf-8')
-            self.assertIn('| Projeto | Aplicação |', readme_text,
-                          'Projects must be native, selectable text')
-            self.assertIn('](https://github.com/andremellotech/financial-performance-analytics)', readme_text)
+            self.assertNotIn('| Projeto | Aplicação |', readme_text)
+            self.assertNotIn('Projetos em destaque', readme_text)
+            self.assertNotIn('<table', (root/'previa.html').read_text(encoding='utf-8'))
             self.assertFalse(any('profile-project' in (a.get('src', '') + a.get('srcset', ''))
                                  for _, a in parsed.tags), 'Do not show repository image cards')
             self.assertFalse(any(tag == 'details' for tag, _ in parsed.tags))
@@ -75,17 +79,6 @@ class ThemeRendering(unittest.TestCase):
                     self.assertGreater(gif.n_frames, 2, 'The live contribution section must animate')
                     self.assertEqual(gif.info.get('loop'), 0)
                     self.assertEqual(gif.convert('RGBA').getpixel((0, 0))[3], 0)
-                    def green_pixels(frame):
-                        pixels = frame.convert('RGB').crop((40, 110, 1160, 250)).tobytes()
-                        return sum(g > r*1.2 and g > b*1.2 for r, g, b in
-                                   zip(pixels[0::3], pixels[1::3], pixels[2::3]))
-                    first_green = green_pixels(gif)
-                    gif.seek(gif.n_frames-1)
-                    self.assertEqual(green_pixels(gif), 0, 'All contribution cells are consumed at the loop end')
-                    calendar = json.loads((root / 'data/contributions.json').read_text(encoding='utf-8'))
-                    if any(day['count'] > 0 for day in calendar['days']):
-                        self.assertGreater(first_green, 0, 'The loop must start with real contribution cells')
-                    gif.seek(0)
                     # Persistent titles must not blink or disappear as the snake moves.
                     title_frames = {hashlib.sha256(frame.convert('RGBA').crop((0, 0, 1200, 60)).tobytes()).hexdigest()
                                     for frame in ImageSequence.Iterator(gif)}
