@@ -8,18 +8,8 @@ from branding import TYPE, section_heading, metric_icon
 from fetch_contributions import derive_stats
 from profile_i18n import DEFAULT, tr, localized
 
-# Categorical identity palette: distinct hue families instead of neighboring
-# brand blues. The same mapping is shared by the bar and legend in both locales.
-LANGUAGE_COLORS = {
-    'light': {'HTML':'#c86b4f', 'TypeScript':'#356fa8', 'C#':'#8864ad',
-              'Python':'#258876', 'Power Query':'#aa8733', 'JavaScript':'#738b35',
-              'CSS':'#b8658e', 'Lua':'#6563a2', 'PowerShell':'#3b8196', 'SQL':'#967349',
-              'Outras':'#768190'},
-    'dark': {'HTML':'#e99478', 'TypeScript':'#7cadd7', 'C#':'#bb9fda',
-             'Python':'#63bba6', 'Power Query':'#d7bb69', 'JavaScript':'#aec16e',
-             'CSS':'#d69bb9', 'Lua':'#a39fd0', 'PowerShell':'#7cb7c7', 'SQL':'#c6a576',
-             'Outras':'#a3acb9'},
-}
+# Language colors come directly from the local GitHub Linguist snapshot.
+# They stay identical in both themes and both locales; only the card adapts.
 
 HEIGHT = 640
 
@@ -180,7 +170,7 @@ def render_status(root, font, palette, locale=DEFAULT):
     others = sum(size for _, size in list(languages.items())[5:])
     if others:
         rows.append(('Outras', others))
-    language_colors = LANGUAGE_COLORS[palette['name']]
+    language_colors = json.loads((root/'data/language-colors.json').read_text(encoding='utf-8'))['colors']
     rail = Image.new('RGBA', (394, 14), TRANSPARENT)
     rd = ImageDraw.Draw(rail)
     consumed = 0
