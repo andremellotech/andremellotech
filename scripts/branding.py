@@ -1,5 +1,5 @@
-"""A restrained AM signature and a single navy visual language."""
-from PIL import ImageDraw
+"""A blue visual identity with shared surfaces, spacing and typography."""
+from PIL import Image, ImageDraw, ImageColor
 
 MARGIN = 24
 GAP = 24
@@ -7,8 +7,30 @@ TYPE = dict(name=40, hero=32, section=26, card=22, body=20, meta=18, number=36)
 
 
 def section_heading(draw, palette, font, title, y=16):
-    draw.text((MARGIN, y - 1), title, font=font(TYPE['section'], True), fill=palette['accent'])
+    draw.rounded_rectangle((MARGIN,y+4,MARGIN+4,y+28),radius=2,fill=palette['brand'])
+    draw.text((MARGIN+16, y - 1), title, font=font(TYPE['section'], True), fill=palette['accent'])
     draw.line((MARGIN, y + 40, 1200 - MARGIN, y + 40), fill=palette['line'])
+    draw.line((MARGIN, y + 40, MARGIN+92, y + 40), fill=palette['brand'], width=2)
+
+
+def surface_card(image, box, palette, flat=False):
+    """A faint blue corner wash, crisp edge and short signature accent."""
+    left,top,right,bottom=box
+    width,height=right-left+1,bottom-top+1
+    end=palette.get('surface_end',palette['matte'])
+    if flat:
+        layer=Image.new('RGBA',(width,height),palette['matte'])
+    else:
+        gradient=Image.new('RGB',(2,2))
+        gradient.putdata([ImageColor.getrgb(color) for color in [palette['surface'],end,end,end]])
+        layer=gradient.resize((width,height),Image.Resampling.BILINEAR).convert('RGBA')
+    mask=Image.new('L',(width*2,height*2),0)
+    ImageDraw.Draw(mask).rounded_rectangle((0,0,width*2-1,height*2-1),radius=24,fill=255)
+    layer.putalpha(mask.resize((width,height),Image.Resampling.LANCZOS))
+    draw=ImageDraw.Draw(layer)
+    draw.rounded_rectangle((0,0,width-1,height-1),radius=12,outline=palette['line'])
+    draw.line((22,1,82,1),fill=palette['brand'],width=2)
+    image.alpha_composite(layer,(left,top))
 
 
 def wrapped_text(draw, xy, value, font, color, width, line_height=29):

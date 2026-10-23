@@ -20,6 +20,8 @@ Power BI, Python, Excel, Alteryx, SAP, Power Automate, Oracle Cloud, PowerPoint 
 
 `scripts/branding.py` centraliza margens de 24 pixels e a escala tipográfica: nome 40, chamada 32, títulos de seção 26, títulos de cartões 22, corpo 20, apoio 18 e indicadores 36 pixels. As artes têm 1200 pixels de largura e reduzem juntas no README. Todos os badges de tecnologias seguem o mesmo padrão neutro: altura 48, fonte 20, ícone alinhado e borda fina. As cores ficam nos símbolos; as superfícies e os textos acompanham o tema. Os símbolos são desenhados localmente, com GitHub e Alteryx derivados da arte local existente, sem consultas a serviços externos.
 
+A identidade visual usa azul como acento principal, pequenos pontos em ciano e títulos em azul-marinho no tema claro; no escuro, os tons ganham luminosidade. Os cartões de atividade e tecnologias compartilham um degradê suave, bordas arredondadas e um pequeno traço azul de assinatura. Os ícones de atividade recebem bases azuis claras. O retrato tem grade e linhas abstratas de conexão; são elementos decorativos, sem representar dados. Os contatos e botões de idioma usam o mesmo azul profundo. O fundo externo continua transparente, as dimensões e a escala tipográfica permanecem iguais e as cores oficiais das linguagens não são alteradas por essa identidade.
+
 As referências são [Solon](https://github.com/solonz), para o cartão compacto de linguagens e o indicador com chama, e [Mateus Hoffman](https://github.com/MateusHoffman), para a cobrinha. Os dados são sempre de André.
 
 ## Estatísticas ligadas ao GitHub
