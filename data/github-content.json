@@ -2,7 +2,7 @@
   "user": {
     "login": "andremellotech",
     "name": "André Mello",
-    "bio": "Engenharia, dados e governança | Consultor na KPMG Brasil | Portfólio, PMO e automação | Engenheiro Civil · Mestre em Administração",
+    "bio": "Dados, automação e engenharia | Python · Power BI · SAP | Projetos, integrações e ferramentas em código.",
     "public_repos": 7,
     "followers": 1,
     "following": 1,
@@ -72,7 +72,7 @@
     },
     {
       "name": "andremellotech",
-      "description": "Engenharia, análise de dados e governança de portfólio · PMO, automação e visão de negócio.",
+      "description": "Dados, automação e engenharia em código · Projetos, integrações e ferramentas com Python, Power BI e SAP.",
       "html_url": "https://github.com/andremellotech/andremellotech",
       "language": "Python",
       "fork": false,
@@ -96,7 +96,7 @@
     "stars": 0,
     "pull_requests": 16,
     "issues": 0,
-    "commits": 86
+    "commits": 87
   },
   "as_of": "2026-10-23"
 }
