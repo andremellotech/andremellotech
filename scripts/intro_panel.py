@@ -1,6 +1,7 @@
 """An editorial introduction with an engineering drawing around the portrait."""
 from PIL import Image, ImageDraw, ImageColor
 from themes import TRANSPARENT
+from branding import TYPE, MARGIN
 
 INTRO_H = 400
 PORTRAIT_AT = (850, 18)
@@ -19,15 +20,16 @@ def render_intro(font, palette, scale=2):
         d.line([(x*s, y*s) for x, y in points], fill=color, width=width*s, joint='curve')
 
     # Type, whitespace and one blue accent carry the identity across both themes.
-    text(38, 24, '@ANDREMELLOTECH', 15, palette['muted'], mono=True)
-    text(35, 53, 'André Mello', 44, palette['text'], True)
-    line([(40, 120), (96, 120)], palette['brand'], 3)
-    text(112, 108, 'CONSULTORIA · DATA & ANALYTICS', 17, palette['brand'], True)
-    text(37, 160, 'Governança de portfólio.', 31, palette['text'], True)
-    text(37, 202, 'Dados para decisões executivas.', 31, palette['text'], True)
-    text(40, 267, 'PMO, automação e controle físico-financeiro.', 20, palette['muted'])
-    text(40, 310, 'Engenheiro Civil · MSc. em Administração', 18, palette['accent'])
-    line([(40, 368), (715, 368)], palette['line'])
+    text(MARGIN, 18, '@ANDREMELLOTECH', TYPE['meta'], palette['muted'], mono=True)
+    text(MARGIN-2, 49, 'André Mello', TYPE['name'], palette['text'], True)
+    line([(MARGIN, 120), (80, 120)], palette['brand'], 3)
+    text(96, 108, 'CONSULTORIA · ENGENHARIA · DADOS', TYPE['meta'], palette['brand'], True)
+    text(MARGIN, 156, 'Engenharia, dados e governança.', TYPE['hero'], palette['text'], True)
+    text(MARGIN, 198, 'Da estratégia à execução.', TYPE['hero'], palette['text'], True)
+    text(MARGIN, 253, 'Portfólio, PMO e automação com foco em resultados.', TYPE['card'], palette['muted'])
+    text(MARGIN, 297, 'Consultor na KPMG Brasil · Mais de 6 anos de experiência', TYPE['body'], palette['accent'])
+    text(MARGIN, 337, 'Engenheiro Civil · Mestre em Administração', TYPE['body'], palette['muted'])
+    line([(MARGIN, 380), (740, 380)], palette['line'])
 
     # The gridded portrait is an illustration, not a fabricated performance chart.
     panel = [(836, 20), (1170, 20), (1170, 348), (1142, 376), (808, 376), (808, 48)]

@@ -1,9 +1,32 @@
 """A restrained AM signature and a single navy visual language."""
 from PIL import ImageDraw
 
+MARGIN = 24
+GAP = 24
+TYPE = dict(name=40, hero=32, section=26, card=22, body=20, meta=18, number=36)
+
 
 def section_heading(draw, palette, font, title, y=16):
-    draw.text((30, y - 1), title, font=font(20, True), fill=palette['accent'])
+    draw.text((MARGIN, y - 1), title, font=font(TYPE['section'], True), fill=palette['accent'])
+    draw.line((MARGIN, y + 40, 1200 - MARGIN, y + 40), fill=palette['line'])
+
+
+def wrapped_text(draw, xy, value, font, color, width, line_height=29):
+    """Wrap measured words without reducing the shared body text size."""
+    x, y = xy
+    lines, line = [], ''
+    for word in value.split():
+        candidate = (line + ' ' + word).strip()
+        if line and draw.textlength(candidate, font=font) > width:
+            lines.append(line)
+            line = word
+        else:
+            line = candidate
+    if line:
+        lines.append(line)
+    for index, line in enumerate(lines):
+        draw.text((x, y + index * line_height), line, font=font, fill=color)
+    return len(lines) * line_height
 
 
 def banner_background(image, height=224):

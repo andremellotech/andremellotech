@@ -1,8 +1,10 @@
 """Compose theme-aware PNGs and a small, transparent animated portrait block."""
 from PIL import Image, ImageColor, ImageSequence, GifImagePlugin
 import hashlib, json
+from html import escape
 from themes import THEMES, TRANSPARENT
 from intro_panel import PORTRAIT_AT, PORTRAIT_SIZE
+from professional_panel import ALT as PROFESSIONAL_ALT
 
 ASSET_HOST = 'https://andremellotech.github.io/andremellotech/assets/'
 
@@ -79,7 +81,7 @@ def themed_picture(root, stem, alt, animated=False, width='100%'):
                        + image_url(root, f'{stem}-{theme}.{extension}') + '" />')
     return ('<picture>' + ''.join(sources) + '<img src="'
             + image_url(root, f'{stem}-light.{extension}')
-            + '" width="' + width + '" align="top" alt="' + alt + '" /></picture>')
+            + '" width="' + width + '" align="top" alt="' + escape(alt, quote=True) + '" /></picture>')
 
 
 def badge_img(root, stem, alt):
@@ -90,7 +92,7 @@ def build_github_layout(root, font):
     assets = root / 'assets'
     for theme, palette in THEMES.items():
         panels = []
-        for name in ['intro', 'status', 'activity', 'stack']:
+        for name in ['intro', 'professional', 'stack', 'status', 'activity']:
             if name == 'intro':
                 panel = Image.open(assets / f'intro-background-{theme}.png').convert('RGBA')
                 panel.alpha_composite(transparent_portrait(assets / 'andre-ascii.png', palette['portrait']), PORTRAIT_AT)
@@ -110,14 +112,16 @@ def build_github_layout(root, font):
         animated_intro(assets, theme, palette,
                        Image.open(assets / f'intro-background-{theme}.png').convert('RGBA'))
 
-    alt = ('Status do GitHub: repositórios públicos, estrelas, commits, pull requests, issues e seguidores; '
+    alt = ('Presença no GitHub: repositórios públicos, estrelas, registros de alterações, propostas de alteração, ocorrências e seguidores; '
            'composição de código dos repositórios; total de contribuições desde a criação da conta, sequência atual e maior sequência.')
     content = json.loads((root / 'data/github-content.json').read_text(encoding='utf-8'))
+    alt += ' Linguagens por bytes em até seis repositórios públicos recentes: ' + ', '.join(content.get('languages', {})) + '.'
     username = content['user']['login']
     intro = '<p align="center">' + themed_picture(root, 'profile-intro',
-             'André Mello — Consultoria e Data & Analytics. Governança de portfólio. '
-             'Dados para decisões executivas. PMO, automação e controle físico-financeiro. '
-             'Engenheiro Civil, MSc. em Administração. '
+             'André Mello — Consultoria, engenharia e dados. Engenharia, dados e governança. '
+             'Da estratégia à execução. Portfólio, PMO e automação com foco em resultados. '
+             'Consultor na KPMG Brasil, com mais de 6 anos de experiência. '
+             'Engenheiro Civil e Mestre em Administração. '
              'Retrato ASCII animado.', animated=True) + '</p>'
     links = ('<p align="center"><a href="https://www.linkedin.com/in/aamello/">'
              + badge_img(root, 'badge-linkedin', 'LinkedIn — André Mello') + '</a> '
@@ -126,12 +130,16 @@ def build_github_layout(root, font):
              '<a href="mailto:andremello@outlook.com">'
              + badge_img(root, 'badge-email', 'E-mail — andremello@outlook.com') + '</a></p>')
     status = '<p align="center">' + themed_picture(root, 'status', alt) + '</p>'
+    professional = '<p align="center">' + themed_picture(root, 'professional', PROFESSIONAL_ALT) + '</p>'
     snake = '<p align="center">' + themed_picture(root, 'contribution-snake',
              'Cobrinha animada percorrendo as contribuições públicas reais de André Mello.', animated=True) + '</p>'
     tools = '<p align="center">' + themed_picture(root, 'stack',
-             'Tecnologias e ferramentas: Power BI, Python, Excel, Alteryx, SAP, PowerPoint; '
-             'HTML, CSS, JavaScript e Lua; GitHub e experiência anterior em MySQL.') + '</p>'
-    top = '\n\n'.join([intro, links, status, snake, tools])
+             'Tecnologias e formação: Power BI, Python, Excel, Alteryx, SAP, Power Automate, Oracle Cloud e PowerPoint; '
+             'Office 365, HTML, CSS, JavaScript e Lua; GitHub e experiência anterior em MySQL. '
+             'Engenharia Elétrica em curso na São Judas Tadeu; Engenharia de Segurança do Trabalho em curso na UFPR; '
+             'pós-graduação em Construção Civil na FAVENI. Pesquisa com bolsas FAPESP e CAPES, '
+             'artigo na Brazilian Administration Review, destaque profissional KPMG FY25 e destaque REIAd em 2023 e 2024.') + '</p>'
+    top = '\n\n'.join([intro, links, professional, tools, status, snake])
     readme = preview_body = top
     (root / 'README.md').write_text(readme, encoding='utf-8')
     preview_html = ('<!doctype html><html lang="pt-BR"><meta charset="utf-8">'

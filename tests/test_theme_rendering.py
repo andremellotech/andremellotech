@@ -50,6 +50,12 @@ class ThemeRendering(unittest.TestCase):
             self.assertFalse(any('profile-project' in (a.get('src', '') + a.get('srcset', ''))
                                  for _, a in parsed.tags), 'Do not show repository image cards')
             self.assertFalse(any(tag == 'details' for tag, _ in parsed.tags))
+            # Career and technologies lead the profile; live GitHub statistics follow.
+            panels = [a['src'] for tag, a in parsed.tags if tag == 'img' and a.get('width') == '100%']
+            self.assertEqual([url.split('/')[-1].split('-light.')[0] for url in panels],
+                             ['profile-intro', 'professional', 'stack', 'status', 'contribution-snake'])
+            for english in ['Total Contributions', 'Current Streak', 'Longest Streak', 'Present', 'Data & Analytics', 'MSc.']:
+                self.assertNotIn(english, readme_text)
             portrait_sources = [s for s in sources if 'profile-intro-' in s.get('srcset', '')]
             self.assertEqual(len(portrait_sources), 2, 'A single animated introduction adapts to both themes')
             self.assertTrue(all('.gif?' in s['srcset'] for s in portrait_sources),
@@ -104,7 +110,11 @@ class ThemeRendering(unittest.TestCase):
                     self.assertEqual(im.height, 56, 'Contact source images stay sharp at the compact display height')
                     self.assertEqual(im.getpixel((0, 0))[3], 0, 'Rounded corners stay transparent')
             with Image.open(root / 'assets/status-light.png') as im:
-                self.assertEqual(im.size, (1200, 624))
+                self.assertEqual(im.size, (1200, 640))
+            for theme in ['light', 'dark']:
+                with Image.open(root / f'assets/professional-{theme}.png') as im:
+                    self.assertEqual(im.mode, 'RGBA')
+                    self.assertEqual(im.getpixel((0, 0))[3], 0)
             subprocess.run([sys.executable, str(root / 'scripts/prepare_pages.py')], check=True, capture_output=True)
             for tag, attrs in parsed.tags:
                 url = attrs.get('src') or attrs.get('srcset')

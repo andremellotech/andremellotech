@@ -10,7 +10,7 @@ def render_snake(root, palette):
         header = Image.open(root/'assets'/f"activity-{palette['name']}.png").convert('RGBA').crop((0, 0, 1200, 60))
         base = Image.new('RGBA', (1200, 316))
         base.alpha_composite(header)
-        ImageDraw.Draw(base).rounded_rectangle((12, 60, 1188, 304), radius=12,
+        ImageDraw.Draw(base).rounded_rectangle((24, 76, 1176, 304), radius=12,
                                                 fill=palette['matte'], outline=palette['line'])
         output_path = root/'assets'/f"contribution-snake-{palette['name']}.gif"
         shared = emitted = pending = None
@@ -33,8 +33,8 @@ def render_snake(root, palette):
             for original in ImageSequence.Iterator(source):
                 duration = original.info.get('duration', 100)
                 frame = base.copy()
-                art = ImageOps.contain(original.convert('RGBA'), (1160, 232), Image.Resampling.LANCZOS)
-                frame.alpha_composite(art, ((1200-art.width)//2, 66+(232-art.height)//2))
+                art = ImageOps.contain(original.convert('RGBA'), (1120, 208), Image.Resampling.LANCZOS)
+                frame.alpha_composite(art, ((1200-art.width)//2, 82+(208-art.height)//2))
                 if shared is None:
                     frame.save(root/'assets'/f"activity-{palette['name']}.png")
                 matte = Image.new('RGBA', frame.size, palette['matte'])

@@ -4,13 +4,17 @@ O README de `andremellotech/andremellotech` apresenta o perfil com dados públic
 
 ## Identidade e organização
 
-A abertura tem 1200 × 400 pixels, com nome de 44 pixels, textos neutros e retrato em uma moldura de desenho técnico adaptada ao tema. O fundo externo é transparente. Os contatos aparecem abaixo, em badges locais de 22 pixels exibidos: somente o ícone e o identificador (André Mello, @andremellotech e andremello@outlook.com), sem repetir o nome da plataforma. O botão de e-mail abre o aplicativo de mensagens com o destinatário preenchido, sem enviar automaticamente. Os títulos das seções não têm numeração.
+A abertura tem 1200 × 400 pixels, com nome de 40 pixels, textos neutros e retrato em uma moldura de desenho técnico adaptada ao tema. O fundo externo é transparente. Os contatos aparecem abaixo, em badges locais de 22 pixels exibidos: somente o ícone e o identificador (André Mello, @andremellotech e andremello@outlook.com), sem repetir o nome da plataforma. O botão de e-mail abre o aplicativo de mensagens com o destinatário preenchido, sem enviar automaticamente. Os títulos das seções não têm numeração.
 
-O texto de abertura destaca governança de portfólio, decisões executivas, PMO, automação e controle físico-financeiro. A formação aparece em uma linha discreta: Engenheiro Civil e MSc. em Administração. Esse posicionamento foi alinhado ao título profissional e ao texto de Sobre do LinkedIn fornecidos por André, preservando o tamanho do bloco e a tipografia.
+O texto de abertura conecta engenharia, dados, governança e execução. Apresenta a atuação como consultor na KPMG Brasil e a formação em Engenharia Civil e Mestrado em Administração. Todos os textos e datas da apresentação estão em português; nomes próprios de tecnologias, empresas e periódicos são preservados.
 
-A ordem é: apresentação; contatos; estatísticas e linguagens; total de contribuições e sequências; cobrinha; tecnologias e ferramentas. A seção **Projetos em destaque foi removida**, inclusive da prévia. O botão GitHub continua levando aos repositórios.
+A ordem é: apresentação; contatos; atuação e resultados; tecnologias e formação; presença no GitHub; atividade e contribuições com a cobrinha. A seção **Projetos em destaque foi removida**, inclusive da prévia. O botão GitHub continua levando aos repositórios.
 
-Power BI, Python, Excel, Alteryx, SAP, PowerPoint e GitHub refletem o uso informado por André. HTML, CSS, JavaScript e Lua aparecem como conhecimentos. Office 365 acompanha Excel/PowerPoint; MySQL é experiência anterior em servidores de Tibia e GTA V/FiveM. Não foram acrescentados níveis, certificações ou resultados de clientes.
+O conteúdo profissional é o informado por André em 22/10/2026: portfólio de R$ 660 milhões em ativos físicos, aumento de 25% na eficiência operacional, eliminação de 240 horas anuais de retrabalho, equipes de até 80 profissionais e contratos com CAPEX de até R$ 125 milhões. Esses resultados de carreira não são indicadores do GitHub e têm manutenção editorial em `scripts/professional_panel.py`.
+
+Power BI, Python, Excel, Alteryx, SAP, Power Automate, Oracle Cloud, PowerPoint e GitHub refletem o uso informado. HTML, CSS, JavaScript e Lua são conhecimentos; MySQL é experiência anterior em servidores de Tibia e GTA V/FiveM. Formação em curso e pesquisa aparecem em um bloco secundário. Nenhum nível de proficiência foi inventado.
+
+`scripts/branding.py` centraliza margens de 24 pixels e a escala tipográfica: nome 40, chamada 32, títulos de seção 26, títulos de cartões 22, corpo 20, apoio 18 e indicadores 36 pixels. As artes têm 1200 pixels de largura e reduzem juntas no README. Os badges de tecnologias têm 48 pixels na arte, preservando suas cores.
 
 As referências são [Solon](https://github.com/solonz), para o cartão compacto de linguagens e o indicador com chama, e [Mateus Hoffman](https://github.com/MateusHoffman), para a cobrinha. Os dados são sempre de André.
 
@@ -20,17 +24,17 @@ As referências são [Solon](https://github.com/solonz), para o cartão compacto
 
 Buscas opcionais indisponíveis ou incompletas mostram `—`. Valores antigos não são apresentados como uma consulta nova. Falhas na coleta principal interrompem a publicação e preservam a versão publicada.
 
-O gráfico compacto mostra as cinco maiores linguagens e a soma das demais, usando cores do [GitHub Linguist](https://github.com/github-linguist/linguist/blob/main/lib/linguist/languages.yml). O recorte é de até seis repositórios públicos recentes, por bytes: não representa proficiência. As parcelas incluem todo o recorte, com barra segmentada e legenda colorida.
+O gráfico compacto mostra as cinco maiores linguagens e a soma das demais, usando cores do [GitHub Linguist](https://github.com/github-linguist/linguist/blob/main/lib/linguist/languages.yml). O recorte é de até seis repositórios públicos recentes, por bytes: não representa proficiência. As parcelas incluem todo o recorte, com barra segmentada e legenda colorida. A legenda reserva uma coluna para o percentual, sem reduzir a fonte de nomes longos. Nomes excepcionalmente extensos são abreviados; os nomes completos e o recorte permanecem no texto alternativo da imagem.
 
 `scripts/fetch_streak_history.py` consulta diretamente o calendário público do GitHub desde a criação da conta, em 2021. Valida todos os dias de cada ano e calcula:
 
-- **Total Contributions:** soma de todo o histórico público.
-- **Current Streak:** dias consecutivos com atividade; um dia atual ainda vazio pode continuar a sequência encerrada ontem.
-- **Longest Streak:** maior sequência em todo o histórico.
+- **Contribuições totais:** soma de todo o histórico público.
+- **Sequência atual:** dias consecutivos com atividade; um dia atual ainda vazio pode continuar a sequência encerrada ontem.
+- **Maior sequência:** maior sequência em todo o histórico.
 
 O ano atual é consultado a cada execução. Anos encerrados são revalidados uma vez por dia e reutilizados entre consultas do mesmo dia. Um ano incompleto impede gravar o novo histórico. As linhas técnicas de consulta continuam ocultas.
 
-Os três indicadores têm proporções compactas e datas como na referência: Total Contributions mostra a primeira contribuição real até Present; Current Streak e Longest Streak mostram o início e o fim dos respectivos períodos. O ano aparece nas datas de anos anteriores, como no cartão original. Um único dia não é repetido como intervalo. Sem atividade, a faixa correspondente mostra —; em empate da maior sequência, mantém-se a primeira. As datas vêm dos mesmos dias usados no cálculo dos números. A chama curva e o aro laranja seguem a referência do Solon; o aro é decorativo, sem representar porcentagem de progresso. O painel de estatísticas tem 1200 × 624 pixels; a faixa de sequências ocupa 296 pixels, com números de 44 pixels, rótulos de 24 pixels e datas de 19 pixels.
+Os indicadores têm datas em português, como `7 abr 2021 — atual` e `13 out — 22 out`. O ano aparece nos anos anteriores. Um único dia não é repetido como intervalo. Sem atividade, a faixa correspondente mostra —; em empate da maior sequência, mantém-se a primeira. As datas vêm dos mesmos dias usados no cálculo dos números. A chama curva e o aro laranja seguem a referência do Solon; o aro é decorativo, sem representar porcentagem de progresso. O painel de estatísticas tem 1200 × 640 pixels; usa números de 36 pixels nas sequências, rótulos de 22 e datas de 18.
 
 `scripts/fetch_contributions.py` mantém também o calendário público recente, validado, como fonte para a composição inicial da seção de atividade e para os dados locais.
 
@@ -64,7 +68,7 @@ Todos os PNGs e GIFs do README ficam em `https://andremellotech.github.io/andrem
 
 O HTML picture escolhe o tema. O fundo externo é transparente; o painel do retrato e os cards têm suas próprias superfícies. A animação do retrato conserva a duração original, com texto fixo e somente a região do rosto mudando. O compositor da cobrinha escreve retângulos de diferença entre frames. A nova versão precisa ser conferida por André na rede interna da KPMG; não foi testada dentro dessa rede.
 
-`scripts/prepare_pages.py` seleciona 15 imagens, a prévia HTML e `.nojekyll`. Código, dados e GIFs fonte não são hospedados no Pages. As imagens são publicadas antes de o bot atualizar os links do README.
+`scripts/prepare_pages.py` seleciona 17 imagens, a prévia HTML e `.nojekyll`. Código, dados e GIFs fonte não são hospedados no Pages. As imagens são publicadas antes de o bot atualizar os links do README.
 
 ## Edição e verificação
 
@@ -72,6 +76,6 @@ Instale `scripts/requirements.txt`. A ordem no workflow é: testes; calendário 
 
 `previa.html` inclui a apresentação, contatos e os painéis sem projetos. `PREVIA.png` e `PREVIA-ESCURO.png` são composições estáticas: não mostram movimento nem os contatos nativos do README.
 
-A apresentação fica em `scripts/intro_panel.py`; estatísticas em `scripts/status_panel.py`; ferramentas em `scripts/design.py`; temas em `scripts/themes.py`; composição em `scripts/github_layout.py`. As fontes são Segoe UI no Windows e DejaVu Sans no Ubuntu. O workflow usa Ubuntu 24.04 e Python 3.11; as Actions são fixadas por SHA.
+A apresentação fica em `scripts/intro_panel.py`; atuação e resultados em `scripts/professional_panel.py`; tecnologias e formação em `scripts/technology_panel.py`; estatísticas em `scripts/status_panel.py`; temas em `scripts/themes.py`; composição em `scripts/github_layout.py`. As fontes são Segoe UI no Windows e DejaVu Sans no Ubuntu. O workflow usa Ubuntu 24.04 e Python 3.11; as Actions são fixadas por SHA.
 
 Execute `python -m unittest discover -s tests -v`. Os testes cobrem dados públicos, falhas HTTP, prevenção de ciclos, histórico completo entre anos e cache, recusa de histórico incompleto, adaptação fiel dos frames da cobrinha, fontes ausentes, temas, estabilidade dos textos e inclusão dos arquivos selecionados no staging.

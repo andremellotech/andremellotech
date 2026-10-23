@@ -4,7 +4,7 @@ import math
 from datetime import date
 from PIL import Image, ImageDraw
 from themes import TRANSPARENT
-from branding import section_heading, metric_icon
+from branding import TYPE, section_heading, metric_icon
 from fetch_contributions import derive_stats
 
 # GitHub Linguist colors, verified against its languages.yml.
@@ -12,7 +12,7 @@ LANGUAGE_COLORS = {'HTML':'#e34c26', 'TypeScript':'#3178c6', 'C#':'#7355dd',
                    'Python':'#3572A5', 'JavaScript':'#f1e05a', 'CSS':'#663399',
                    'Lua':'#000080', 'PowerShell':'#012456', 'SQL':'#e38c00', 'Power Query':'#ffb900'}
 
-HEIGHT = 624
+HEIGHT = 640
 
 
 def _icon(draw, kind, x, y, color):
@@ -60,18 +60,34 @@ def _fmt(value):
     return '—' if value is None else f'{value:,}'.replace(',', '.')
 
 
+def language_legend(rows, total, measure):
+    """Reserve the share column and keep readable type for long language names."""
+    entries = []
+    for index, (name, value) in enumerate(rows):
+        share = f'{value / (total or 1) * 100:.1f}%'.replace('.', ',')
+        available = 1156 - 762 - 18 - 12 - measure(share)
+        label = name
+        if measure(label) > available:
+            while label and measure(label.rstrip() + '…') > available:
+                label = label[:-1]
+            label = label.rstrip() + '…'
+        entries.append(dict(x=762, y=188 + index*23, right=1156,
+                            name=label, source=name, share=share))
+    return entries
+
+
 def streak_date_labels(summary, as_of):
-    months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+    months = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez']
     def day_label(value):
         value = date.fromisoformat(value)
-        return f'{months[value.month-1]} {value.day}' + (f', {value.year}' if value.year != as_of.year else '')
+        return f'{value.day} {months[value.month-1]}' + (f' {value.year}' if value.year != as_of.year else '')
     def interval(value):
         if not value:
             return '—'
         start, end = day_label(value['start']), day_label(value['end'])
-        return start if start == end else start + ' - ' + end
+        return start if start == end else start + ' — ' + end
     first = summary.get('first_contribution')
-    return {'total':day_label(first)+' - Present' if first else '—',
+    return {'total':day_label(first)+' — atual' if first else '—',
             'current':interval(summary.get('current_streak_range')),
             'longest':interval(summary.get('longest_streak_range'))}
 
@@ -118,78 +134,78 @@ def render_status(root, font, palette):
     dates = streak_date_labels(summary, date.fromisoformat(history['as_of']))
     stats = content.get('stats', {})
     text, muted, accent, brand = palette['text'], palette['muted'], palette['accent'], palette['brand']
-    blue = '#2f80ed' if palette['name'] == 'light' else '#58a6ff'
+    blue = palette['brand']
     fire = '#fb8c00'
     im = Image.new('RGBA', (1200, HEIGHT), TRANSPARENT)
     d = ImageDraw.Draw(im)
-    section_heading(d, palette, font, 'Status do GitHub', 12)
+    section_heading(d, palette, font, 'Presença no GitHub', 12)
     card = dict(radius=12, fill=palette['matte'], outline=palette['line'])
 
-    d.rounded_rectangle((12, 56, 718, 296), **card)
-    d.text((34, 72), 'Estatísticas do GitHub', font=font(20, True), fill=blue)
+    d.rounded_rectangle((24, 76, 718, 332), **card)
+    d.text((44, 92), 'Atividade pública', font=font(TYPE['card'], True), fill=blue)
     tiles = [('repos', 'Repositórios públicos', content['user']['public_repos']),
              ('stars', 'Estrelas recebidas', stats.get('stars')),
-             ('commits', 'Commits públicos', stats.get('commits')),
-             ('prs', 'Pull requests', stats.get('pull_requests')),
-             ('issues', 'Issues criadas', stats.get('issues')),
+             ('commits', 'Alterações registradas', stats.get('commits')),
+             ('prs', 'Propostas de alteração', stats.get('pull_requests')),
+             ('issues', 'Ocorrências criadas', stats.get('issues')),
              ('followers', 'Seguidores', content['user']['followers'])]
     for i, (kind, label, value) in enumerate(tiles):
-        x, y = 34 + (i % 2) * 340, 112 + (i // 2) * 60
+        x, y = 44 + (i % 2) * 338, 140 + (i // 2) * 64
         _icon(d, kind, x, y + 6, blue)
-        d.text((x + 44, y), label, font=font(13), fill=muted)
-        d.text((x + 44, y + 17), _fmt(value), font=font(26, True), fill=text)
+        d.text((x + 40, y), label, font=font(TYPE['meta']), fill=muted)
+        d.text((x + 40, y + 22), _fmt(value), font=font(30, True), fill=text)
 
-    d.rounded_rectangle((738, 56, 1188, 296), **card)
-    d.text((760, 72), 'Linguagens mais usadas', font=font(20, True), fill=blue)
+    d.rounded_rectangle((742, 76, 1176, 332), **card)
+    d.text((762, 92), 'Linguagens nos repositórios', font=font(TYPE['card'], True), fill=blue)
+    d.text((762, 128), 'Distribuição por bytes de código', font=font(TYPE['meta']), fill=muted)
     languages = content.get('languages', {})
     total = sum(languages.values()) or 1
     rows = list(languages.items())[:5]
     others = sum(size for _, size in list(languages.items())[5:])
     if others:
         rows.append(('Outras', others))
-    rail = Image.new('RGBA', (406, 12), TRANSPARENT)
+    rail = Image.new('RGBA', (394, 12), TRANSPARENT)
     rd = ImageDraw.Draw(rail)
     consumed = 0
     for name, size in rows:
-        start = round(406*consumed/total)
+        start = round(394*consumed/total)
         consumed += size
-        end = round(406*consumed/total)
+        end = round(394*consumed/total)
         if end > start:
             rd.rectangle((start,0,end-1,11), fill=LANGUAGE_COLORS.get(name, palette['muted']))
     mask = Image.new('L', rail.size)
-    ImageDraw.Draw(mask).rounded_rectangle((0,0,405,11), radius=6, fill=255)
+    ImageDraw.Draw(mask).rounded_rectangle((0,0,393,11), radius=6, fill=255)
     rail.putalpha(mask)
-    im.alpha_composite(rail, (760,112))
-    for i, (name, size) in enumerate(rows):
-        x, y = 760 + (i % 2)*210, 146 + (i//2)*38
-        share = size / total
-        d.ellipse((x,y+5,x+10,y+15), fill=LANGUAGE_COLORS.get(name,palette['muted']))
-        d.text((x+18, y), name, font=font(13), fill=text)
-        label = f'{share * 100:.1f}%'.replace('.', ',')
-        d.text((x+196 - d.textlength(label, font=font(12)), y+1), label, font=font(12), fill=muted)
-    d.text((760, 272), 'Por bytes · até 6 repositórios públicos recentes', font=font(11), fill=muted)
+    im.alpha_composite(rail, (762,168))
+    legend_face = font(TYPE['meta'])
+    measure = lambda value: d.textlength(value, font=legend_face)
+    for item in language_legend(rows, total, measure):
+        x, y = item['x'], item['y']
+        d.ellipse((x,y+5,x+10,y+15), fill=LANGUAGE_COLORS.get(item['source'],palette['muted']))
+        d.text((x+18, y), item['name'], font=legend_face, fill=text)
+        d.text((item['right'] - measure(item['share']), y), item['share'], font=legend_face, fill=muted)
 
-    d.rounded_rectangle((12, 316, 1188, 612), **card)
-    d.line((400, 348, 400, 576), fill=palette['line'])
-    d.line((800, 348, 800, 576), fill=palette['line'])
-    columns = [(212, _fmt(summary['total']), 'Total Contributions', dates['total']),
-               (988, _fmt(summary['longest_streak']), 'Longest Streak', dates['longest'])]
+    d.rounded_rectangle((24, 356, 1176, 628), **card)
+    d.line((408, 388, 408, 596), fill=palette['line'])
+    d.line((792, 388, 792, 596), fill=palette['line'])
+    columns = [(216, _fmt(summary['total']), 'Contribuições totais', dates['total']),
+               (984, _fmt(summary['longest_streak']), 'Maior sequência', dates['longest'])]
     for cx, value, label, span in columns:
-        d.text((cx,446), value, font=font(44,True), fill=text, anchor='ms')
-        d.text((cx,500), label, font=font(24), fill=text, anchor='ms')
+        d.text((cx,467), value, font=font(TYPE['number'],True), fill=text, anchor='ms')
+        d.text((cx,510), label, font=font(TYPE['card']), fill=text, anchor='ms')
         # A range crossing two old years is wider; fit it inside its own column.
-        size = 19
+        size = TYPE['meta']
         while size > 16 and d.textlength(span, font=font(size)) > 352:
             size -= 1
-        d.text((cx,541), span, font=font(size), fill=muted, anchor='ms')
-    _ring(im, (600,429), 64, 1, palette['line'], fire, 8)
-    d.ellipse((579,336,621,396), fill=palette['matte'])
-    _flame(im, 600, 344, fire, palette['matte'], scale=.68)
-    d.text((600,446), str(summary['current_streak']), font=font(44,True), fill=text, anchor='ms')
-    d.text((600,548), 'Current Streak', font=font(24,True), fill=fire, anchor='ms')
-    size = 19
+        d.text((cx,549), span, font=font(size), fill=muted, anchor='ms')
+    _ring(im, (600,445), 56, 1, palette['line'], fire, 7)
+    d.ellipse((581,360,619,414), fill=palette['matte'])
+    _flame(im, 600, 367, fire, palette['matte'], scale=.60)
+    d.text((600,463), str(summary['current_streak']), font=font(TYPE['number'],True), fill=text, anchor='ms')
+    d.text((600,546), 'Sequência atual', font=font(TYPE['card'],True), fill=fire, anchor='ms')
+    size = TYPE['meta']
     while size > 16 and d.textlength(dates['current'], font=font(size)) > 352:
         size -= 1
-    d.text((600,580), dates['current'], font=font(size), fill=muted, anchor='ms')
+    d.text((600,583), dates['current'], font=font(size), fill=muted, anchor='ms')
     im.save(root / 'assets' / f'status-{palette["name"]}.png')
     return summary

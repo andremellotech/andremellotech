@@ -30,7 +30,7 @@ def render_activity(root,font,palette=None):
     cells=week_grid(calendar['days'])
     im=Image.new('RGBA',(1200,316),TRANSPARENT);d=ImageDraw.Draw(im)
     def text(x,y,value,size=18,color=None,bold=False):d.text((x,y),str(value),font=font(size,bold),fill=color or white)
-    section_heading(d,palette,font,'Atividade & contribuições',12)
+    section_heading(d,palette,font,'Atividade e contribuições',12)
     d.rounded_rectangle((12,60,1188,304),radius=12,fill=palette['matte'],outline=palette['line'])
     columns=max(c['column'] for c in cells)+1;step=19;size=16
     x0=(1200-(columns*step-3))//2;y0=115

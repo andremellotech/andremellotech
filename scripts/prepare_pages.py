@@ -10,7 +10,7 @@ def prepare(root=ROOT):
     images.extend(f'badge-{stem}.png' for stem in ['linkedin','github','email'])
     for theme in ['light', 'dark']:
         images.extend(f'{stem}-{theme}.{extension}' for stem, extension in
-                      [('profile-intro', 'png'), ('profile-intro', 'gif'), ('status', 'png'),
+                      [('profile-intro', 'png'), ('profile-intro', 'gif'), ('professional', 'png'), ('status', 'png'),
                        ('contribution-snake', 'gif'), ('stack', 'png')])
     for name in images:
         shutil.copy2(root/'assets'/name,dest/'assets'/name)
