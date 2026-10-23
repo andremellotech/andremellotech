@@ -8,10 +8,16 @@ from branding import TYPE, section_heading, metric_icon
 from fetch_contributions import derive_stats
 from profile_i18n import DEFAULT, tr, localized
 
-# GitHub Linguist colors, verified against its languages.yml.
-LANGUAGE_COLORS = {'HTML':'#e34c26', 'TypeScript':'#3178c6', 'C#':'#7355dd',
-                   'Python':'#3572A5', 'JavaScript':'#f1e05a', 'CSS':'#663399',
-                   'Lua':'#000080', 'PowerShell':'#012456', 'SQL':'#e38c00', 'Power Query':'#ffb900'}
+# Categorical identity palette: distinct hue families instead of neighboring
+# brand blues. The same mapping is shared by the bar and legend in both locales.
+LANGUAGE_COLORS = {
+    'light': {'HTML':'#d65a3a', 'TypeScript':'#2f6fcb', 'C#':'#8953b8',
+              'Python':'#138675', 'Power Query':'#b7891c', 'JavaScript':'#6e8c1e',
+              'CSS':'#bd4985', 'Lua':'#5e5c99', 'PowerShell':'#347f9d', 'SQL':'#986d40'},
+    'dark': {'HTML':'#f0785a', 'TypeScript':'#6aa7ff', 'C#':'#b495ed',
+             'Python':'#45bba5', 'Power Query':'#dfb346', 'JavaScript':'#a8c35a',
+             'CSS':'#e483b9', 'Lua':'#9591d3', 'PowerShell':'#78b8cc', 'SQL':'#cd9b66'},
+}
 
 HEIGHT = 640
 
@@ -172,7 +178,8 @@ def render_status(root, font, palette, locale=DEFAULT):
     others = sum(size for _, size in list(languages.items())[5:])
     if others:
         rows.append(('Outras', others))
-    rail = Image.new('RGBA', (394, 12), TRANSPARENT)
+    language_colors = LANGUAGE_COLORS[palette['name']]
+    rail = Image.new('RGBA', (394, 14), TRANSPARENT)
     rd = ImageDraw.Draw(rail)
     consumed = 0
     for name, size in rows:
@@ -180,16 +187,18 @@ def render_status(root, font, palette, locale=DEFAULT):
         consumed += size
         end = round(394*consumed/total)
         if end > start:
-            rd.rectangle((start,0,end-1,11), fill=LANGUAGE_COLORS.get(name, palette['muted']))
+            rd.rectangle((start,0,end-1,13), fill=language_colors.get(name, palette['muted']))
+            if start:
+                rd.line((start,0,start,13), fill=palette['matte'])
     mask = Image.new('L', rail.size)
-    ImageDraw.Draw(mask).rounded_rectangle((0,0,393,11), radius=6, fill=255)
+    ImageDraw.Draw(mask).rounded_rectangle((0,0,393,13), radius=7, fill=255)
     rail.putalpha(mask)
     im.alpha_composite(rail, (762,168))
     legend_face = font(TYPE['meta'])
     measure = lambda value: d.textlength(value, font=legend_face)
     for item in language_legend(rows, total, measure, locale):
         x, y = item['x'], item['y']
-        d.ellipse((x,y+5,x+10,y+15), fill=LANGUAGE_COLORS.get(item['source'],palette['muted']))
+        d.ellipse((x,y+5,x+10,y+15), fill=language_colors.get(item['source'],palette['muted']))
         d.text((x+18, y), item['name'], font=legend_face, fill=text)
         d.text((item['right'] - measure(item['share']), y), item['share'], font=legend_face, fill=muted)
 
