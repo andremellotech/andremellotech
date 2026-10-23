@@ -11,12 +11,14 @@ from profile_i18n import DEFAULT, tr, localized
 # Categorical identity palette: distinct hue families instead of neighboring
 # brand blues. The same mapping is shared by the bar and legend in both locales.
 LANGUAGE_COLORS = {
-    'light': {'HTML':'#d65a3a', 'TypeScript':'#2f6fcb', 'C#':'#8953b8',
-              'Python':'#138675', 'Power Query':'#b7891c', 'JavaScript':'#6e8c1e',
-              'CSS':'#bd4985', 'Lua':'#5e5c99', 'PowerShell':'#347f9d', 'SQL':'#986d40'},
-    'dark': {'HTML':'#f0785a', 'TypeScript':'#6aa7ff', 'C#':'#b495ed',
-             'Python':'#45bba5', 'Power Query':'#dfb346', 'JavaScript':'#a8c35a',
-             'CSS':'#e483b9', 'Lua':'#9591d3', 'PowerShell':'#78b8cc', 'SQL':'#cd9b66'},
+    'light': {'HTML':'#c86b4f', 'TypeScript':'#356fa8', 'C#':'#8864ad',
+              'Python':'#258876', 'Power Query':'#aa8733', 'JavaScript':'#738b35',
+              'CSS':'#b8658e', 'Lua':'#6563a2', 'PowerShell':'#3b8196', 'SQL':'#967349',
+              'Outras':'#768190'},
+    'dark': {'HTML':'#e99478', 'TypeScript':'#7cadd7', 'C#':'#bb9fda',
+             'Python':'#63bba6', 'Power Query':'#d7bb69', 'JavaScript':'#aec16e',
+             'CSS':'#d69bb9', 'Lua':'#a39fd0', 'PowerShell':'#7cb7c7', 'SQL':'#c6a576',
+             'Outras':'#a3acb9'},
 }
 
 HEIGHT = 640
@@ -198,7 +200,10 @@ def render_status(root, font, palette, locale=DEFAULT):
     measure = lambda value: d.textlength(value, font=legend_face)
     for item in language_legend(rows, total, measure, locale):
         x, y = item['x'], item['y']
-        d.ellipse((x,y+5,x+10,y+15), fill=language_colors.get(item['source'],palette['muted']))
+        color = language_colors.get(item['source'],palette['muted'])
+        dot = Image.new('RGBA', (36,36), TRANSPARENT)
+        ImageDraw.Draw(dot).ellipse((1,1,34,34), fill=color)
+        im.alpha_composite(dot.resize((12,12),Image.Resampling.LANCZOS),(x,y+4))
         d.text((x+18, y), item['name'], font=legend_face, fill=text)
         d.text((item['right'] - measure(item['share']), y), item['share'], font=legend_face, fill=muted)
 
