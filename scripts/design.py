@@ -48,7 +48,7 @@ def render_theme(name, palette):
     save(render_intro(font, palette), 'intro-background')
 
     im, d = canvas(1200, 500)
-    section_heading(d, palette, font, '03', 'Tecnologias & ferramentas', 12)
+    section_heading(d, palette, font, 'Tecnologias & ferramentas', 12)
     for group, (heading, items) in enumerate(BADGE_GROUPS):
         if group == 4:
             left, y, right = 30, 378, 1170

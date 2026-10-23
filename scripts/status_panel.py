@@ -82,7 +82,7 @@ def render_status(root, font, palette):
     fire = '#fb8c00'
     im = Image.new('RGBA', (1200, HEIGHT), TRANSPARENT)
     d = ImageDraw.Draw(im)
-    section_heading(d, palette, font, '01', 'Status do GitHub', 12)
+    section_heading(d, palette, font, 'Status do GitHub', 12)
     card = dict(radius=12, fill=palette['matte'], outline=palette['line'])
 
     d.rounded_rectangle((12, 56, 718, 296), **card)

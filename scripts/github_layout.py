@@ -2,7 +2,7 @@
 from PIL import Image, ImageColor, ImageSequence, GifImagePlugin
 import hashlib, json
 from themes import THEMES, TRANSPARENT
-from intro_panel import PORTRAIT_AT, PORTRAIT_SIZE, portrait_ink
+from intro_panel import PORTRAIT_AT, PORTRAIT_SIZE
 
 ASSET_HOST = 'https://andremellotech.github.io/andremellotech/assets/'
 
@@ -32,7 +32,7 @@ def animated_intro(assets, theme, palette, background):
     with Image.open(assets / 'andre-ascii.gif') as original:
         for source in ImageSequence.Iterator(original):
             frame = background.copy()
-            frame.alpha_composite(transparent_portrait(source, portrait_ink(palette)), PORTRAIT_AT)
+            frame.alpha_composite(transparent_portrait(source, palette['portrait']), PORTRAIT_AT)
             if shared_palette is None:
                 frame.save(assets / f'profile-intro-{theme}.png')
             # GIF has binary transparency. Matte only the antialiased glyph edges,
@@ -41,7 +41,7 @@ def animated_intro(assets, theme, palette, background):
             matte.alpha_composite(frame)
             rgb = matte.convert('RGB')
             if shared_palette is None:
-                shared_palette = rgb.quantize(colors=64, dither=Image.Dither.NONE)
+                shared_palette = rgb.quantize(colors=32, dither=Image.Dither.NONE)
             indexed = rgb.quantize(palette=shared_palette, dither=Image.Dither.NONE)
             indexed.paste(255, mask=frame.getchannel('A').point(lambda alpha: 255 if alpha == 0 else 0))
             indexed.info['transparency'] = 255
@@ -93,7 +93,7 @@ def build_github_layout(root, font):
         for name in ['intro', 'status', 'activity', 'stack']:
             if name == 'intro':
                 panel = Image.open(assets / f'intro-background-{theme}.png').convert('RGBA')
-                panel.alpha_composite(transparent_portrait(assets / 'andre-ascii.png', portrait_ink(palette)), PORTRAIT_AT)
+                panel.alpha_composite(transparent_portrait(assets / 'andre-ascii.png', palette['portrait']), PORTRAIT_AT)
             else:
                 panel = Image.open(assets / f'{name}-{theme}.png').convert('RGBA')
             panels.append(panel)

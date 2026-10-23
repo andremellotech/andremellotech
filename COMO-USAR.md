@@ -4,7 +4,7 @@ O README de `andremellotech/andremellotech` apresenta o perfil com dados públic
 
 ## Identidade e organização
 
-A abertura tem 1200 × 400 pixels, com nome de 44 pixels, texto adaptado ao tema e retrato em um painel azul-marinho com desenho técnico. O fundo externo é transparente. Os contatos LinkedIn e GitHub aparecem abaixo, em badges locais de 28 pixels exibidos.
+A abertura tem 1200 × 400 pixels, com nome de 44 pixels, textos neutros e retrato em uma moldura de desenho técnico adaptada ao tema. O fundo externo é transparente. Os contatos LinkedIn e GitHub aparecem abaixo, em badges locais de 28 pixels exibidos. Os títulos das seções não têm numeração.
 
 A ordem é: apresentação; contatos; estatísticas e linguagens; total de contribuições e sequências; cobrinha; tecnologias e ferramentas. A seção **Projetos em destaque foi removida**, inclusive da prévia. O botão GitHub continua levando aos repositórios.
 

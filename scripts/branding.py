@@ -2,10 +2,8 @@
 from PIL import ImageDraw
 
 
-def section_heading(draw, palette, font, number, title, y=16):
-    draw.polygon([(35, y), (57, y), (57, y + 18), (52, y + 23), (30, y + 23), (30, y + 5)], fill='#294b70')
-    draw.text((35, y + 3), number, font=font(12, mono=True), fill='white')
-    draw.text((70, y - 1), title, font=font(20, True), fill=palette['accent'])
+def section_heading(draw, palette, font, title, y=16):
+    draw.text((30, y - 1), title, font=font(20, True), fill=palette['accent'])
 
 
 def banner_background(image, height=224):
