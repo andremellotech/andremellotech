@@ -4,9 +4,9 @@ O perfil está no repositório `andremellotech/andremellotech`. O GitHub exibe o
 
 ## Composição
 
-O banner usa azul-marinho, um detalhe dourado e o monograma AM. O nome tem 46 pixels na arte de 1200 pixels de largura; o tamanho exibido é proporcional à largura do README. As linhas do banner são decorativas e não representam indicadores. A apresentação foi compactada para 372 pixels de altura, mantendo o retrato animado. Os dois contatos aparecem logo abaixo do banner em badges locais com resolução dupla e 28 pixels de altura exibida.
+A abertura reúne nome, posicionamento e retrato ASCII animado em uma única arte de 1200 × 400 pixels, adaptada ao tema. O nome tem 44 pixels na arte; o tamanho exibido é proporcional à largura do README. A moldura quadriculada e o pequeno módulo isométrico remetem a desenho técnico e engenharia, sem representar indicadores. A antiga faixa azul com monograma e dourado foi retirada. Os dois contatos aparecem logo abaixo da apresentação em badges locais com resolução dupla e 28 pixels de altura exibida.
 
-A ordem é: banner; contatos; apresentação; estatísticas públicas e composição do código; contribuições e sequências; calendário; ferramentas; projetos em texto. As métricas usam tons neutros e azul; o calendário mantém as cores verdes nativas do GitHub. As ferramentas conservam os badges coloridos já aprovados por André.
+A ordem é: apresentação animada; contatos; estatísticas públicas e composição do código; contribuições e sequências; calendário com cobrinha animada; ferramentas; projetos em texto. As métricas usam tons neutros e azul; o calendário mantém as cores verdes nativas do GitHub. As ferramentas conservam os badges coloridos já aprovados por André. As referências visuais desta revisão foram [Solon](https://github.com/solonz) e [Mateus Hoffman](https://github.com/MateusHoffman): apresentação direta, desenho tecnológico e animação das contribuições. Nenhuma foto, arte ou dado desses perfis foi copiado.
 
 Power BI, Python, Excel, Alteryx, SAP, PowerPoint e GitHub representam o uso informado pelo usuário. HTML, CSS, JavaScript e Lua aparecem como conhecimentos. Office 365 é mencionado junto de Excel e PowerPoint. MySQL é identificado como experiência anterior em servidores de Tibia e GTA V / FiveM. Nenhum nível de proficiência, emprego, certificação ou resultado de cliente foi acrescentado.
 
@@ -15,6 +15,8 @@ Os três projetos descritos mais recentemente atualizados são selecionados auto
 ## Dados e significado dos indicadores
 
 `scripts/fetch_contributions.py` coleta o calendário público do GitHub. O total no período, a sequência atual e a maior sequência são calculados sobre esses dias. As datas e os dias ativos continuam nos arquivos de dados; as linhas técnicas de consulta ficam fora do painel.
+
+`scripts/contribution_snake.py` usa os mesmos dias para gerar a cobrinha em GIF, sem um novo serviço externo. Ela percorre uma rota contínua, sem cruzar o próprio corpo, e consome somente células com contribuição. O verde representa a intensidade original dos dias; a cobra é azul, com contraste próprio em cada tema. Ao reiniciar a animação, o calendário reaparece. O efeito não altera os dados nem os totais e não é um jogo controlável dentro do README. As imagens são regeneradas pela mesma execução do Actions que atualiza o painel.
 
 `scripts/fetch_github_content.py` coleta o perfil público, repositórios e composição do código. As estrelas são somadas nos repositórios públicos. Commits, pull requests e issues usam buscas por autor limitadas a `is:public`. Pull requests e issues incluem todos os estados: o rótulo é **Issues criadas**, não "abertas". A busca de commits considera as branches padrão, conforme a [documentação do GitHub](https://docs.github.com/en/search-github/searching-on-github/searching-commits). Esses totais indexados não são a mesma métrica que as contribuições do último ano.
 
@@ -49,9 +51,9 @@ O modelo usa `permissions: {}` para o token automático do repositório de orige
 
 Os arquivos do README são PNG e GIF publicados em `https://andremellotech.github.io/andremellotech/assets/`, com URLs absolutas para passarem pelo proxy Camo do GitHub. A versão em cada URL é calculada a partir do conteúdo. O fluxo de hospedagem é o mesmo que André confirmou como funcionando na rede KPMG. A revisão não introduz um novo serviço de imagens, JavaScript, vídeo ou SVG animado no perfil.
 
-O HTML `picture` seleciona a versão clara ou escura. O fundo externo permanece transparente; os cards usam superfícies apropriadas ao tema. Somente o banner mantém o azul-marinho nos dois temas. A animação reaproveita o arquivo original e preserva sua duração. Quadros consecutivos iguais são combinados; o texto é gravado uma vez e somente o retrato muda nos seguintes. Os testes verificam repetição, movimento, estabilidade do texto, transparência e tamanho abaixo de 1 MB.
+O HTML `picture` seleciona a versão clara ou escura. O fundo externo permanece transparente; os cards usam superfícies apropriadas ao tema. A apresentação reaproveita o retrato original e preserva sua duração. Quadros consecutivos iguais são combinados; o texto é gravado uma vez e somente o retrato muda nos seguintes. A cobrinha usa uma paleta compartilhada e grava somente os retângulos que mudam entre quadros. Os testes verificam repetição, movimento, estabilidade do texto, transparência e tamanho de cada GIF abaixo de 1 MB. A renderização no ambiente interno da KPMG deve continuar sendo conferida por André.
 
-`scripts/prepare_pages.py` publica somente as 14 imagens necessárias ao painel e às exportações estáticas, a prévia HTML e `.nojekyll`. As imagens são publicadas antes de o bot atualizar os links do README. Código, dados de trabalho e o modelo de notificação não são colocados na hospedagem Pages. O workflow usa as permissões existentes `contents: write`, `pages: write` e `id-token: write`.
+`scripts/prepare_pages.py` publica somente as 16 imagens necessárias ao painel e às exportações estáticas, a prévia HTML e `.nojekyll`. As imagens são publicadas antes de o bot atualizar os links do README. Código, dados de trabalho e o modelo de notificação não são colocados na hospedagem Pages. O workflow usa as permissões existentes `contents: write`, `pages: write` e `id-token: write`.
 
 ## Edição e verificação local
 
@@ -67,6 +69,6 @@ python scripts/prepare_pages.py
 
 `previa.html` contém contatos e projetos em texto, além das imagens. `PREVIA.png` e `PREVIA-ESCURO.png` mostram somente a composição gráfica estática; não incluem os elementos nativos do README nem reproduzem a interface completa do GitHub.
 
-Os textos e a seleção de ferramentas ficam em `scripts/design.py`; as cores, em `scripts/themes.py`; o banner e a moldura, em `scripts/branding.py`; as estatísticas, em `scripts/status_panel.py`; a lista de projetos, em `scripts/projects_section.py`; a composição, em `scripts/github_layout.py`. As fontes são Segoe UI no Windows e DejaVu Sans no Ubuntu. O workflow permanece em Ubuntu 24.04 e Python 3.11, com as Actions oficiais fixadas pelos SHAs já utilizados.
+Os textos da apresentação e o desenho técnico ficam em `scripts/intro_panel.py`; as ferramentas, em `scripts/design.py`; as cores, em `scripts/themes.py`; os títulos, em `scripts/branding.py`; as estatísticas, em `scripts/status_panel.py`; a cobrinha, em `scripts/contribution_snake.py`; a lista de projetos, em `scripts/projects_section.py`; a composição, em `scripts/github_layout.py`. As fontes são Segoe UI no Windows e DejaVu Sans no Ubuntu. O workflow permanece em Ubuntu 24.04 e Python 3.11, com as Actions oficiais fixadas pelos SHAs já utilizados.
 
-Os testes cobrem atualização por dados reais, prevenção de ciclos do bot, falhas HTTP, filtragem e escape de projetos, escopo público das estatísticas, respostas incompletas e a renderização dos temas com todos os arquivos referenciados incluídos no staging.
+Os testes cobrem atualização por dados reais, prevenção de ciclos do bot, falhas HTTP, filtragem e escape de projetos, escopo público das estatísticas, respostas incompletas, continuidade e consumo de células da cobrinha, calendário sem atividade e renderização dos temas com todos os arquivos referenciados incluídos no staging.

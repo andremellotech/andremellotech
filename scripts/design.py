@@ -6,10 +6,11 @@ from themes import THEMES, TRANSPARENT
 from activity_panel import render_activity
 from status_panel import render_status
 from badges import render_badge
-from github_layout import ABOUT_H
+from intro_panel import render_intro
+from contribution_snake import render_snake
 import json
 from github_layout import build_github_layout
-from branding import section_heading, chamfered_card, render_banner
+from branding import section_heading
 
 ROOT = Path(__file__).resolve().parents[1]
 A = ROOT / 'assets'
@@ -44,28 +45,10 @@ def render_theme(name, palette):
     def save(image, stem):
         image.save(A / f'{stem}-{name}.png')
 
-    save(render_banner(font), 'hero')
-
-    im, d = canvas(780, ABOUT_H)
-    section_heading(d, palette, font, '01', 'Sobre mim', 28)
-    txt(d, 30, 74, 'Dados, tecnologia', 34, palette['text'], True)
-    txt(d, 30, 116, 'e visão de negócio.', 34, palette['text'], True)
-    d.line((30, 168, 107, 168), fill=palette['brand_line'], width=2)
-    for i, line in enumerate(['Meu foco está em análise de performance,',
-                              'automação e modelagem financeira.']):
-        txt(d, 30, 190 + i * 31, line, 21, palette['muted'])
-    for i, label in enumerate(['DADOS', 'ANÁLISE', 'DECISÃO']):
-        x = 30 + i * 174
-        chamfered_card(d, (x, 290, x + 150, 342), palette['surface'], palette['line'], 8)
-        face = font(14, True)
-        d.text((x + (150 - d.textlength(label, font=face)) / 2, 308), label, font=face, fill=palette['accent'])
-        if i < 2:
-            d.line((x + 154, 316, x + 170, 316), fill=palette['muted'])
-            d.line((x + 166, 312, x + 170, 316, x + 166, 320), fill=palette['muted'])
-    save(im, 'about')
+    save(render_intro(font, palette), 'intro-background')
 
     im, d = canvas(1200, 500)
-    section_heading(d, palette, font, '04', 'Tecnologias & ferramentas', 12)
+    section_heading(d, palette, font, '03', 'Tecnologias & ferramentas', 12)
     for group, (heading, items) in enumerate(BADGE_GROUPS):
         if group == 4:
             left, y, right = 30, 378, 1170
@@ -98,10 +81,11 @@ def render_theme(name, palette):
             txt(d, 220, y + 65, 'MySQL nos servidores de Tibia e GTA V / FiveM.', 17, palette['muted'])
     save(im, 'stack')
     im, d = canvas(1200, 56)
-    section_heading(d, palette, font, '05', 'Projetos em destaque', 16)
+    section_heading(d, palette, font, '04', 'Projetos em destaque', 16)
     save(im, 'section-projects')
     render_status(ROOT, font, palette)
     render_activity(ROOT, font, palette)
+    render_snake(ROOT, palette)
 
 
 def render_badges():

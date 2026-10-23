@@ -3,7 +3,7 @@ from pathlib import Path
 from html.parser import HTMLParser
 import shutil, subprocess, sys, tempfile, unittest
 from PIL import Image, ImageSequence
-import hashlib
+import hashlib, json
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -45,11 +45,12 @@ class ThemeRendering(unittest.TestCase):
             self.assertFalse(any('profile-project' in (a.get('src', '') + a.get('srcset', ''))
                                  for _, a in parsed.tags), 'Do not show repository image cards')
             self.assertFalse(any(tag == 'details' for tag, _ in parsed.tags))
-            portrait_sources = [s for s in sources if 'profile-about-' in s.get('srcset', '')]
+            portrait_sources = [s for s in sources if 'profile-intro-' in s.get('srcset', '')]
+            self.assertEqual(len(portrait_sources), 2, 'A single animated introduction adapts to both themes')
             self.assertTrue(all('.gif?' in s['srcset'] for s in portrait_sources),
                             'The requested animation must remain selected on this reduced-motion computer')
             for theme in ['light', 'dark']:
-                animation = root / f'assets/profile-about-{theme}.gif'
+                animation = root / f'assets/profile-intro-{theme}.gif'
                 self.assertTrue(animation.exists(), 'The portrait must animate on the profile itself')
                 with Image.open(animation) as gif:
                     self.assertGreater(gif.n_frames, 1)
@@ -59,8 +60,8 @@ class ThemeRendering(unittest.TestCase):
                     portraits, text = set(), set()
                     for frame in ImageSequence.Iterator(gif):
                         rgba = frame.convert('RGBA')
-                        portraits.add(hashlib.sha256(rgba.crop((70, 0, 360, 364)).tobytes()).hexdigest())
-                        text.add(hashlib.sha256(rgba.crop((420, 0, 1200, 372)).tobytes()).hexdigest())
+                        portraits.add(hashlib.sha256(rgba.crop((850, 18, 1140, 382)).tobytes()).hexdigest())
+                        text.add(hashlib.sha256(rgba.crop((0, 0, 740, rgba.height)).tobytes()).hexdigest())
                     self.assertGreater(len(portraits), 1, 'The portrait must move')
                     self.assertEqual(len(text), 1, 'Text must stay stable')
                     gif.seek(0)
@@ -69,7 +70,28 @@ class ThemeRendering(unittest.TestCase):
                     source_duration = sum(frame.info.get('duration', 100) for frame in ImageSequence.Iterator(original))
                 self.assertAlmostEqual(duration, source_duration, delta=20, msg='Preserve the original animation pace')
                 self.assertLess(animation.stat().st_size, 1_000_000, 'Keep the corporate proxy payload below 1 MB')
-                self.assertTrue(any(f'profile-about-{theme}.gif' in s.get('srcset', '') for s in sources))
+                self.assertTrue(any(f'profile-intro-{theme}.gif' in s.get('srcset', '') for s in sources))
+                with Image.open(root / f'assets/contribution-snake-{theme}.gif') as gif:
+                    self.assertGreater(gif.n_frames, 2, 'The live contribution section must animate')
+                    self.assertEqual(gif.info.get('loop'), 0)
+                    self.assertEqual(gif.convert('RGBA').getpixel((0, 0))[3], 0)
+                    def green_pixels(frame):
+                        pixels = frame.convert('RGB').crop((40, 110, 1160, 250)).tobytes()
+                        return sum(g > r*1.2 and g > b*1.2 for r, g, b in
+                                   zip(pixels[0::3], pixels[1::3], pixels[2::3]))
+                    first_green = green_pixels(gif)
+                    gif.seek(gif.n_frames-1)
+                    self.assertEqual(green_pixels(gif), 0, 'All contribution cells are consumed at the loop end')
+                    calendar = json.loads((root / 'data/contributions.json').read_text(encoding='utf-8'))
+                    if any(day['count'] > 0 for day in calendar['days']):
+                        self.assertGreater(first_green, 0, 'The loop must start with real contribution cells')
+                    gif.seek(0)
+                    # Persistent titles must not blink or disappear as the snake moves.
+                    title_frames = {hashlib.sha256(frame.convert('RGBA').crop((0, 0, 1200, 60)).tobytes()).hexdigest()
+                                    for frame in ImageSequence.Iterator(gif)}
+                    self.assertEqual(len(title_frames), 1)
+                self.assertLess((root / f'assets/contribution-snake-{theme}.gif').stat().st_size, 1_000_000)
+                self.assertTrue(any(f'contribution-snake-{theme}.gif' in s.get('srcset', '') for s in sources))
             images = []
             for theme in ['light', 'dark']:
                 path = root / f'assets/profile-card-{theme}.png'
@@ -77,7 +99,7 @@ class ThemeRendering(unittest.TestCase):
                 with Image.open(path) as im:
                     self.assertEqual(im.mode, 'RGBA')
                     self.assertEqual(im.getpixel((0, 0))[3], 0, 'Page background must remain visible')
-                    self.assertEqual(im.getpixel((600, 235))[3], 0, 'Section spacing must stay transparent')
+                    self.assertEqual(im.getpixel((600, 410))[3], 0, 'Section spacing must stay transparent')
                     images.append(im.copy())
             self.assertEqual(images[0].size, images[1].size)
             self.assertNotEqual(images[0].tobytes(), images[1].tobytes(), 'Text must adapt to the selected theme')

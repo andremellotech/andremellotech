@@ -3,12 +3,9 @@ from PIL import Image, ImageColor, ImageSequence, GifImagePlugin
 import hashlib, json
 from projects_section import projects_markdown, projects_html
 from themes import THEMES, TRANSPARENT
-from branding import portrait_corners
+from intro_panel import PORTRAIT_AT, PORTRAIT_SIZE
 
 ASSET_HOST = 'https://andremellotech.github.io/andremellotech/assets/'
-ABOUT_H = 372                      # compact "Sobre mim" row
-PORTRAIT_AT, PORTRAIT_SIZE = (70, 0), (290, 364)
-TEXT_AT = 420
 
 
 def image_url(root, name):
@@ -29,18 +26,16 @@ def transparent_portrait(source, color):
     return portrait
 
 
-def animated_about(assets, theme, palette, about):
-    """Animate only the portrait row; keep the large remainder lossless PNG."""
+def animated_intro(assets, theme, palette, background):
+    """Animate the portrait inside one compact, theme-aware introduction."""
     frames, durations = [], []
     shared_palette = None
     with Image.open(assets / 'andre-ascii.gif') as original:
         for source in ImageSequence.Iterator(original):
-            frame = Image.new('RGBA', (1200, ABOUT_H), TRANSPARENT)
+            frame = background.copy()
             frame.alpha_composite(transparent_portrait(source, palette['portrait']), PORTRAIT_AT)
-            frame.alpha_composite(about, (TEXT_AT, 0))
-            portrait_corners(frame, palette)
             if shared_palette is None:
-                frame.save(assets / f'profile-about-{theme}.png')
+                frame.save(assets / f'profile-intro-{theme}.png')
             # GIF has binary transparency. Matte only the antialiased glyph edges,
             # leaving all empty space transparent over GitHub's own background.
             matte = Image.new('RGBA', frame.size, palette['matte'])
@@ -60,7 +55,7 @@ def animated_about(assets, theme, palette, about):
     # Write the fixed text once, then send only the small portrait rectangle.
     # A transparent clearing frame removes the initial portrait without erasing
     # the text. Each later portrait clears its own rectangle before the next one.
-    with (assets / f'profile-about-{theme}.gif').open('wb') as output:
+    with (assets / f'profile-intro-{theme}.gif').open('wb') as output:
         header, _ = GifImagePlugin.getheader(frames[0], info={
             'loop': 0, 'transparency': 255, 'background': 255, 'optimize': False})
         output.writelines(header)
@@ -71,7 +66,7 @@ def animated_about(assets, theme, palette, about):
         output.writelines(GifImagePlugin.getdata(clear, offset=PORTRAIT_AT, duration=10,
                                                 disposal=2, transparency=255))
         for frame, duration in zip(frames[1:], durations[1:]):
-            portrait = frame.crop(PORTRAIT_AT + (PORTRAIT_AT[0] + PORTRAIT_SIZE[0], PORTRAIT_SIZE[1]))
+            portrait = frame.crop(PORTRAIT_AT + (PORTRAIT_AT[0] + PORTRAIT_SIZE[0], PORTRAIT_AT[1] + PORTRAIT_SIZE[1]))
             output.writelines(GifImagePlugin.getdata(portrait, offset=PORTRAIT_AT,
                                                     duration=duration, disposal=2, transparency=255))
         output.write(b';')
@@ -96,12 +91,10 @@ def build_github_layout(root, font):
     assets = root / 'assets'
     for theme, palette in THEMES.items():
         panels = []
-        for name in ['hero', 'about-pair', 'status', 'activity', 'stack']:
-            if name == 'about-pair':
-                panel = Image.new('RGBA', (1200, ABOUT_H), TRANSPARENT)
+        for name in ['intro', 'status', 'activity', 'stack']:
+            if name == 'intro':
+                panel = Image.open(assets / f'intro-background-{theme}.png').convert('RGBA')
                 panel.alpha_composite(transparent_portrait(assets / 'andre-ascii.png', palette['portrait']), PORTRAIT_AT)
-                panel.alpha_composite(Image.open(assets / f'about-{theme}.png'), (TEXT_AT, 0))
-                portrait_corners(panel, palette)
             else:
                 panel = Image.open(assets / f'{name}-{theme}.png').convert('RGBA')
             panels.append(panel)
@@ -115,33 +108,30 @@ def build_github_layout(root, font):
         preview = Image.new('RGBA', main.size, palette['matte'])
         preview.alpha_composite(main)
         preview.convert('RGB').save(root / ('PREVIA.png' if theme == 'light' else 'PREVIA-ESCURO.png'))
-        # Adjoining slices keep the alignment while the portrait alone is animated.
-        about_y = panels[0].height + 28
-        body_y = about_y + panels[1].height + 28
-        main.crop((0, 0, 1200, panels[0].height)).save(assets / f'profile-header-{theme}.png')
-        main.crop((0, body_y, 1200, height)).save(assets / f'profile-body-{theme}.png')
-        animated_about(assets, theme, palette, Image.open(assets / f'about-{theme}.png').convert('RGBA'))
+        animated_intro(assets, theme, palette,
+                       Image.open(assets / f'intro-background-{theme}.png').convert('RGBA'))
 
     alt = ('Status do GitHub: repositórios públicos, estrelas, commits, pull requests, issues e seguidores; '
-           'linguagens mais usadas; contribuições no período, sequência atual e maior sequência. '
-           'Calendário de contribuições atualizado automaticamente. '
-           'Ferramentas: Power BI, Python, Excel, Alteryx, SAP e PowerPoint; conhecimentos em HTML, CSS, '
-           'JavaScript e Lua; GitHub; experiência anterior em MySQL nos servidores de Tibia e GTA V / FiveM. '
-           'Office 365 com Excel e PowerPoint.')
+           'composição de código dos repositórios; contribuições no último ano, sequência atual e maior sequência.')
     content = json.loads((root / 'data/github-content.json').read_text(encoding='utf-8'))
     username = content['user']['login']
-    banner = '<p align="center">' + themed_picture(root, 'profile-header',
-             'André Mello — Data & Analytics. Consultoria, tecnologia e engenharia.') + '</p>'
+    intro = '<p align="center">' + themed_picture(root, 'profile-intro',
+             'André Mello — Data & Analytics. Clareza na análise. Eficiência na execução. '
+             'Performance, automação e modelagem financeira. Consultoria, tecnologia e engenharia. '
+             'Retrato ASCII animado.', animated=True) + '</p>'
     links = ('<p align="center"><a href="https://www.linkedin.com/in/aamello/">'
              + badge_img(root, 'badge-linkedin', 'LinkedIn — André Mello') + '</a> '
              '<a href="https://github.com/' + username + '?tab=repositories">'
              + badge_img(root, 'badge-github', 'GitHub — explorar meus repositórios') + '</a></p>')
-    about = '<p align="center">' + themed_picture(root, 'profile-about',
-            'Sobre mim — retrato ASCII animado de André Mello. Dados, tecnologia e visão de negócio.', animated=True) + '</p>'
-    body = '<p align="center">' + themed_picture(root, 'profile-body', alt) + '</p>'
+    status = '<p align="center">' + themed_picture(root, 'status', alt) + '</p>'
+    snake = '<p align="center">' + themed_picture(root, 'contribution-snake',
+             'Cobrinha animada percorrendo as contribuições públicas reais de André Mello.', animated=True) + '</p>'
+    tools = '<p align="center">' + themed_picture(root, 'stack',
+             'Tecnologias e ferramentas: Power BI, Python, Excel, Alteryx, SAP, PowerPoint; '
+             'HTML, CSS, JavaScript e Lua; GitHub e experiência anterior em MySQL.') + '</p>'
     project_table = projects_markdown(content, username)
     projects_head = ('<p align="center">' + themed_picture(root, 'section-projects', 'Projetos em destaque') + '</p>') if project_table else ''
-    top = banner + '\n' + links + '\n\n' + about + '\n\n' + body
+    top = '\n\n'.join([intro, links, status, snake, tools])
     readme = top + '\n\n' + projects_head + '\n\n' + project_table
     preview_body = top + projects_head + projects_html(content, username)
     (root / 'README.md').write_text(readme, encoding='utf-8')
