@@ -38,10 +38,10 @@ def render_theme(name, palette, locale=DEFAULT):
 def render_badges():
     """Compact contact badges drawn locally and hosted with the profile."""
     content = json.loads((ROOT / 'data/github-content.json').read_text(encoding='utf-8'))
-    navy = '#123d68'
+    navy = '#17324d'
     for stem, label, value, left, right, icon in [
             ('badge-linkedin', '', 'André Mello', '#0a66c2', navy, 'linkedin'),
-            ('badge-github', '', '@' + content['user']['login'], '#0d2d4d', navy, 'github'),
+            ('badge-github', '', '@' + content['user']['login'], '#24292f', navy, 'github'),
             ('badge-email', '', 'andremello@outlook.com', '#0078d4', navy, 'email')]:
         render_badge(A / f'{stem}.png', font, label, value, left, right, icon, A)
 

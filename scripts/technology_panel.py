@@ -1,7 +1,7 @@
 """A compact technical stack with one neutral badge system."""
 from PIL import Image, ImageDraw, ImageChops
 from themes import TRANSPARENT
-from branding import TYPE, MARGIN, section_heading, surface_card
+from branding import TYPE, MARGIN, section_heading
 from profile_i18n import DEFAULT, tr, localized
 
 HEIGHT = 568
@@ -96,9 +96,8 @@ def render_technology(root, font, palette, locale=DEFAULT):
     def text(xy, value, **kwargs):
         draw.text(xy, tr(locale, value), **kwargs)
     def card(box, title):
-        surface_card(image,box,palette)
-        draw.rounded_rectangle((box[0]+20,box[1]+20,box[0]+23,box[1]+38),radius=1,fill=palette['brand'])
-        text((box[0]+34, box[1]+17), title, font=font(TYPE['card'], True), fill=palette['accent'])
+        draw.rounded_rectangle(box, radius=12, fill=palette['surface'], outline=palette['line'])
+        text((box[0]+20, box[1]+17), title, font=font(TYPE['card'], True), fill=palette['accent'])
     def badges(items, x, y, limit):
         start = x
         for badge in items:

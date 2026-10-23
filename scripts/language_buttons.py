@@ -10,7 +10,7 @@ def render_language_buttons(assets, font):
         width = round(probe.textlength(label, font=face)) + 74
         image = Image.new('RGBA', (width, 48), TRANSPARENT)
         draw = ImageDraw.Draw(image)
-        draw.rounded_rectangle((0,0,width-1,47), radius=10, fill='#123d68', outline='#8ab6e6')
+        draw.rounded_rectangle((0,0,width-1,47), radius=10, fill='#17324d', outline='#a6b7c8')
         if locale == 'pt-BR':
             draw.rectangle((12,12,44,35), fill='#18864b')
             draw.polygon([(28,14),(42,24),(28,33),(14,24)], fill='#ffcf40')

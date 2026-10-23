@@ -25,11 +25,9 @@ def render_intro(font, palette, scale=2, locale=DEFAULT):
     text(MARGIN-2, 49, 'André Mello', TYPE['name'], palette['text'], True, raw=True)
     line([(MARGIN, 120), (80, 120)], palette['brand'], 3)
     text(96, 108, 'DADOS · AUTOMAÇÃO · ENGENHARIA', TYPE['meta'], palette['brand'], True)
-    text(MARGIN, 157, 'Dados e automação na prática.', TYPE['hero'], palette['brand'], True)
+    text(MARGIN, 157, 'Dados e automação na prática.', TYPE['hero'], palette['text'], True)
     text(MARGIN, 213, 'Projetos de análise de dados, integrações e engenharia.', TYPE['body'], palette['muted'])
     line([(MARGIN, 270), (740, 270)], palette['line'])
-    line([(MARGIN,270),(112,270)],palette['brand'],3)
-    line([(112,270),(156,270)],palette['highlight'],3)
 
     # The gridded portrait is an illustration, not a fabricated performance chart.
     panel = [(906, 10), (1170, 10), (1170, 270), (1142, 298), (878, 298), (878, 38)]
@@ -43,11 +41,6 @@ def render_intro(font, palette, scale=2, locale=DEFAULT):
         gd.line((896*s, y*s, 1152*s, y*s), fill=faint, width=s)
     image.alpha_composite(grid)
     d = ImageDraw.Draw(image)
-    # Abstract routing nodes connect the portrait to the technical identity.
-    line([(770,98),(824,98),(852,70),(878,70)],palette['brand_line'])
-    line([(820,130),(850,130),(878,102)],palette['brand_line'])
-    for x,y in [(770,98),(820,130),(1170,100)]:
-        d.ellipse(((x-4)*s,(y-4)*s,(x+4)*s,(y+4)*s),fill=palette['highlight'])
     line(panel + [panel[0]], palette['brand_line'])
     line([(878, 90), (878, 38), (906, 10), (996, 10)], palette['brand'], 2)
     line([(1080, 298), (1142, 298), (1170, 270), (1170, 212)], palette['brand'], 2)
@@ -58,6 +51,6 @@ def render_intro(font, palette, scale=2, locale=DEFAULT):
     line([(857, 260), (857, 288)], palette['brand'], 2)
     line([(833, 260), (857, 274), (881, 260)], palette['brand_line'])
     line([(857, 232), (857, 204), (878, 183)], palette['brand_line'])
-    for x, y in [(857, 204)]:
+    for x, y in [(857, 204), (1170, 100)]:
         d.ellipse(((x-3)*s, (y-3)*s, (x+3)*s, (y+3)*s), fill=palette['brand'])
     return image.resize((1200, INTRO_H), Image.Resampling.LANCZOS)

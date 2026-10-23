@@ -4,7 +4,7 @@ import math
 from datetime import date
 from PIL import Image, ImageDraw
 from themes import TRANSPARENT
-from branding import TYPE, section_heading, metric_icon, surface_card
+from branding import TYPE, section_heading, metric_icon
 from fetch_contributions import derive_stats
 from profile_i18n import DEFAULT, tr, localized
 
@@ -145,7 +145,9 @@ def render_status(root, font, palette, locale=DEFAULT):
     im = Image.new('RGBA', (1200, HEIGHT), TRANSPARENT)
     d = ImageDraw.Draw(im)
     section_heading(d, palette, font, tr(locale, 'Presença no GitHub'), 12)
-    surface_card(im,(24,76,718,332),palette)
+    card = dict(radius=12, fill=palette['matte'], outline=palette['line'])
+
+    d.rounded_rectangle((24, 76, 718, 332), **card)
     d.text((44, 92), tr(locale, 'Atividade pública'), font=font(TYPE['card'], True), fill=blue)
     tiles = [('repos', 'Repositórios públicos', content['user']['public_repos']),
              ('stars', 'Estrelas recebidas', stats.get('stars')),
@@ -155,12 +157,11 @@ def render_status(root, font, palette, locale=DEFAULT):
              ('followers', 'Seguidores', content['user']['followers'])]
     for i, (kind, label, value) in enumerate(tiles):
         x, y = 44 + (i % 2) * 338, 140 + (i // 2) * 64
-        d.rounded_rectangle((x-4,y+2,x+30,y+36),radius=8,fill=palette['icon_bg'])
         _icon(d, kind, x, y + 6, blue)
         d.text((x + 40, y), tr(locale, label), font=font(TYPE['meta']), fill=muted)
-        d.text((x + 40, y + 22), _fmt(value, locale), font=font(30, True), fill=accent)
+        d.text((x + 40, y + 22), _fmt(value, locale), font=font(30, True), fill=text)
 
-    surface_card(im,(742,76,1176,332),palette)
+    d.rounded_rectangle((742, 76, 1176, 332), **card)
     d.text((762, 92), tr(locale, 'Linguagens nos repositórios'), font=font(TYPE['card'], True), fill=blue)
     d.text((762, 128), tr(locale, 'Distribuição por bytes de código'), font=font(TYPE['meta']), fill=muted)
     languages = content.get('languages', {})
@@ -196,13 +197,13 @@ def render_status(root, font, palette, locale=DEFAULT):
         d.text((x+18, y), item['name'], font=legend_face, fill=text)
         d.text((item['right'] - measure(item['share']), y), item['share'], font=legend_face, fill=muted)
 
-    surface_card(im,(24,356,1176,628),palette,flat=True)
+    d.rounded_rectangle((24, 356, 1176, 628), **card)
     d.line((408, 388, 408, 596), fill=palette['line'])
     d.line((792, 388, 792, 596), fill=palette['line'])
     columns = [(216, _fmt(summary['total'], locale), 'Contribuições totais', dates['total']),
                (984, _fmt(summary['longest_streak'], locale), 'Maior sequência', dates['longest'])]
     for cx, value, label, span in columns:
-        d.text((cx,467), value, font=font(TYPE['number'],True), fill=accent, anchor='ms')
+        d.text((cx,467), value, font=font(TYPE['number'],True), fill=text, anchor='ms')
         d.text((cx,510), tr(locale, label), font=font(TYPE['card']), fill=text, anchor='ms')
         # A range crossing two old years is wider; fit it inside its own column.
         size = TYPE['meta']
