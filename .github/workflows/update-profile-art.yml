@@ -5,6 +5,8 @@ on:
   schedule:
     - cron: '2-57/5 * * * *'
   workflow_dispatch:
+  repository_dispatch:
+    types: [repo-updated]
 permissions:
   contents: write
   pages: write
@@ -36,6 +38,9 @@ jobs:
       - name: Aguardar o gráfico do GitHub atualizar
         if: github.event_name == 'workflow_dispatch'
         run: sleep 90
+      - name: Aguardar o GitHub registrar o push recebido
+        if: github.event_name == 'repository_dispatch'
+        run: sleep 45
       - name: Coletar contribuições públicas
         id: calendar
         run: python scripts/fetch_contributions.py

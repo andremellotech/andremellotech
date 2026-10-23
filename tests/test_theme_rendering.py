@@ -19,7 +19,7 @@ class Elements(HTMLParser):
 
 
 class ThemeRendering(unittest.TestCase):
-    def test_profile_has_only_contact_links_and_theme_aware_assets(self):
+    def test_profile_preserves_contacts_native_projects_and_theme_assets(self):
         scratch = ROOT / 'work/theme-tests'
         scratch.mkdir(parents=True, exist_ok=True)
         with tempfile.TemporaryDirectory(dir=scratch) as folder:
@@ -35,8 +35,13 @@ class ThemeRendering(unittest.TestCase):
             self.assertTrue(any('prefers-color-scheme: dark' in s.get('media', '') for s in sources),
                             'The GitHub theme must choose the matching text colors')
             links = [attrs['href'] for tag, attrs in parsed.tags if tag == 'a']
-            self.assertEqual(links, ['https://www.linkedin.com/in/aamello/',
-                                     'https://github.com/andremellotech?tab=repositories'])
+            self.assertEqual(links[:2], ['https://www.linkedin.com/in/aamello/',
+                                         'https://github.com/andremellotech?tab=repositories'],
+                             'LinkedIn and GitHub are the first two buttons, at the top')
+            readme_text = (root / 'README.md').read_text(encoding='utf-8')
+            self.assertIn('| Projeto | Aplicação |', readme_text,
+                          'Projects must be native, selectable text')
+            self.assertIn('](https://github.com/andremellotech/financial-performance-analytics)', readme_text)
             self.assertFalse(any('profile-project' in (a.get('src', '') + a.get('srcset', ''))
                                  for _, a in parsed.tags), 'Do not show repository image cards')
             self.assertFalse(any(tag == 'details' for tag, _ in parsed.tags))
@@ -54,8 +59,8 @@ class ThemeRendering(unittest.TestCase):
                     portraits, text = set(), set()
                     for frame in ImageSequence.Iterator(gif):
                         rgba = frame.convert('RGBA')
-                        portraits.add(hashlib.sha256(rgba.crop((84, 0, 514, 550)).tobytes()).hexdigest())
-                        text.add(hashlib.sha256(rgba.crop((532, 0, 1200, 550)).tobytes()).hexdigest())
+                        portraits.add(hashlib.sha256(rgba.crop((70, 0, 360, 364)).tobytes()).hexdigest())
+                        text.add(hashlib.sha256(rgba.crop((420, 0, 1200, 372)).tobytes()).hexdigest())
                     self.assertGreater(len(portraits), 1, 'The portrait must move')
                     self.assertEqual(len(text), 1, 'Text must stay stable')
                     gif.seek(0)
@@ -76,9 +81,14 @@ class ThemeRendering(unittest.TestCase):
                     images.append(im.copy())
             self.assertEqual(images[0].size, images[1].size)
             self.assertNotEqual(images[0].tobytes(), images[1].tobytes(), 'Text must adapt to the selected theme')
-            for name in ['footer-linkedin.png', 'footer-github.png']:
+            badge_images = [attrs['src'] for tag, attrs in parsed.tags if tag == 'img' and attrs.get('height') == '28']
+            self.assertEqual(len(badge_images), 2, 'Two contact badges without duplicated statistics')
+            for name in ['badge-linkedin.png', 'badge-github.png']:
                 with Image.open(root / 'assets' / name) as im:
-                    self.assertEqual(im.getpixel((0, 0))[3], 0)
+                    self.assertEqual(im.height, 56, 'Badges are drawn at 2x for a 28 px display height')
+                    self.assertEqual(im.getpixel((0, 0))[3], 0, 'Rounded corners stay transparent')
+            with Image.open(root / 'assets/status-light.png') as im:
+                self.assertEqual(im.size, (1200, 500))
             subprocess.run([sys.executable, str(root / 'scripts/prepare_pages.py')], check=True, capture_output=True)
             for tag, attrs in parsed.tags:
                 url = attrs.get('src') or attrs.get('srcset')

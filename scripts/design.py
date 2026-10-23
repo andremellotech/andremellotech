@@ -1,11 +1,15 @@
 """Build the profile with transparent backgrounds and theme-aware text colors."""
 from pathlib import Path
-from PIL import Image, ImageDraw, ImageFont, ImageChops
+from PIL import Image, ImageDraw, ImageFont
 import os
 from themes import THEMES, TRANSPARENT
 from activity_panel import render_activity
+from status_panel import render_status
+from badges import render_badge
+from github_layout import ABOUT_H
+import json
 from github_layout import build_github_layout
-from branding import section_heading, monogram, chamfered_card, banner_background
+from branding import section_heading, chamfered_card, render_banner
 
 ROOT = Path(__file__).resolve().parents[1]
 A = ROOT / 'assets'
@@ -40,40 +44,28 @@ def render_theme(name, palette):
     def save(image, stem):
         image.save(A / f'{stem}-{name}.png')
 
-    im, d = canvas(1200, 224)
-    banner_background(im)
-    monogram(d, palette, font, 38, 39)
-    txt(d, 124, 31, 'ANDREMELLOTECH', 14, '#b6c7d8', True)
-    txt(d, 121, 54, 'André Mello', 44, 'white', True)
-    txt(d, 122, 115, 'Data & Analytics', 27, '#e5edf5', True)
-    txt(d, 122, 163, 'CONSULTORIA · TECNOLOGIA · ENGENHARIA', 15, '#b6c7d8')
-    save(im, 'hero')
+    save(render_banner(font), 'hero')
 
-    im, d = canvas(590, 550)
-    section_heading(d, palette, font, '01', 'Sobre mim', 40)
-    txt(d, 30, 89, 'Dados, tecnologia', 34, palette['text'], True)
-    txt(d, 30, 132, 'e visão de negócio.', 34, palette['text'], True)
-    d.line((30, 187, 107, 187), fill=palette['brand_line'], width=2)
+    im, d = canvas(780, ABOUT_H)
+    section_heading(d, palette, font, '01', 'Sobre mim', 28)
+    txt(d, 30, 74, 'Dados, tecnologia', 34, palette['text'], True)
+    txt(d, 30, 116, 'e visão de negócio.', 34, palette['text'], True)
+    d.line((30, 168, 107, 168), fill=palette['brand_line'], width=2)
     for i, line in enumerate(['Meu foco está em análise de performance,',
-                              'automação e modelagem financeira.',
-                              'Uso dados e tecnologia para organizar',
-                              'informações e apoiar decisões.']):
-        txt(d, 30, 209 + i * 31, line, 21, palette['muted'])
-    d.line((30, 370, 550, 370), fill=palette['line'])
-    txt(d, 30, 402, 'CLAREZA NA ANÁLISE. EFICIÊNCIA NA EXECUÇÃO.', 14, palette['muted'])
+                              'automação e modelagem financeira.']):
+        txt(d, 30, 190 + i * 31, line, 21, palette['muted'])
     for i, label in enumerate(['DADOS', 'ANÁLISE', 'DECISÃO']):
         x = 30 + i * 174
-        color = palette['accent']
-        chamfered_card(d, (x, 447, x + 150, 499), palette['surface'], palette['line'], 8)
+        chamfered_card(d, (x, 290, x + 150, 342), palette['surface'], palette['line'], 8)
         face = font(14, True)
-        d.text((x + (150 - d.textlength(label, font=face)) / 2, 465), label, font=face, fill=color)
+        d.text((x + (150 - d.textlength(label, font=face)) / 2, 308), label, font=face, fill=palette['accent'])
         if i < 2:
-            d.line((x + 154, 473, x + 170, 473), fill=palette['muted'])
-            d.line((x + 166, 469, x + 170, 473, x + 166, 477), fill=palette['muted'])
+            d.line((x + 154, 316, x + 170, 316), fill=palette['muted'])
+            d.line((x + 166, 312, x + 170, 316, x + 166, 320), fill=palette['muted'])
     save(im, 'about')
 
     im, d = canvas(1200, 500)
-    section_heading(d, palette, font, '03', 'Tecnologias & ferramentas', 12)
+    section_heading(d, palette, font, '04', 'Tecnologias & ferramentas', 12)
     for group, (heading, items) in enumerate(BADGE_GROUPS):
         if group == 4:
             left, y, right = 30, 378, 1170
@@ -105,39 +97,26 @@ def render_theme(name, palette):
             txt(d, 1150 - d.textlength(label, font=font(13)), y + 22, label, 13, palette['muted'])
             txt(d, 220, y + 65, 'MySQL nos servidores de Tibia e GTA V / FiveM.', 17, palette['muted'])
     save(im, 'stack')
+    im, d = canvas(1200, 56)
+    section_heading(d, palette, font, '05', 'Projetos em destaque', 16)
+    save(im, 'section-projects')
+    render_status(ROOT, font, palette)
     render_activity(ROOT, font, palette)
 
 
-def contact_button(stem, label, value, network):
-    scale, width, height = 2, 840, 176
-    badge = Image.new('RGBA', (width, height), '#17324d')
-    draw = ImageDraw.Draw(badge)
-    mask = Image.new('L', badge.size)
-    ImageDraw.Draw(mask).polygon([(24, 0), (width - 1, 0), (width - 1, height - 25),
-                                 (width - 25, height - 1), (0, height - 1), (0, 24)], fill=255)
-    if network == 'linkedin':
-        draw.rounded_rectangle((40, 42, 116, 118), radius=10, fill='#0a66c2')
-        draw.text((51, 46), 'in', font=font(24 * scale, True), fill='white')
-    else:
-        # Reuse the existing GitHub mark, removing the badge's dark background.
-        source = Image.open(A / 'badges/GitHub.webp').convert('RGBA').crop((15, 7, 37, 29))
-        alpha = source.convert('L').point(lambda value: max(0, min(255, round((value - 32) * 255 / 223))))
-        alpha = ImageChops.multiply(alpha, source.getchannel('A')).resize((72, 72), Image.Resampling.LANCZOS)
-        icon = Image.new('RGBA', alpha.size, 'white')
-        icon.putalpha(alpha)
-        badge.alpha_composite(icon, (42, 44))
-    draw.text((160, 24), label, font=font(22 * scale, True), fill='white')
-    draw.text((160, 91), value, font=font(15 * scale), fill='#c5d1dd')
-    draw.line((width - 96, 90, width - 56, 50), fill='white', width=4)
-    draw.line((width - 91, 50, width - 56, 50, width - 56, 85), fill='white', width=4)
-    badge.putalpha(mask)
-    badge.save(A / f'{stem}.png')
+def render_badges():
+    """Compact contact badges drawn locally and hosted with the profile."""
+    content = json.loads((ROOT / 'data/github-content.json').read_text(encoding='utf-8'))
+    navy = '#17324d'
+    for stem, label, value, left, right, icon in [
+            ('badge-linkedin', 'LinkedIn', 'André Mello', '#0a66c2', navy, 'linkedin'),
+            ('badge-github', 'GitHub', '@' + content['user']['login'], '#24292f', navy, 'github')]:
+        render_badge(A / f'{stem}.png', font, label, value, left, right, icon, A)
 
 
 if __name__ == '__main__':
     A.mkdir(exist_ok=True)
     for name, palette in THEMES.items():
         render_theme(name, palette)
-    contact_button('link-linkedin', 'LinkedIn', 'Conectar com André Mello', 'linkedin')
-    contact_button('link-github', 'GitHub', 'Explorar projetos e repositórios', 'github')
+    render_badges()
     build_github_layout(ROOT, font)

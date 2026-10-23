@@ -6,10 +6,12 @@ ROOT=Path(__file__).resolve().parents[1]
 def prepare(root=ROOT):
     dest=root/'work/pages'
     (dest/'assets').mkdir(parents=True,exist_ok=True)
-    images = ['profile-card-light.png','profile-card-dark.png','footer-linkedin.png','footer-github.png']
+    images = ['profile-card-light.png','profile-card-dark.png']
+    images.extend(f'badge-{stem}.png' for stem in ['linkedin','github'])
     for theme in ['light', 'dark']:
         images.extend(f'profile-{stem}-{theme}.{extension}' for stem, extension in
                       [('header', 'png'), ('about', 'png'), ('about', 'gif'), ('body', 'png')])
+        images.append(f'section-projects-{theme}.png')
     for name in images:
         shutil.copy2(root/'assets'/name,dest/'assets'/name)
     shutil.copy2(root/'previa.html',dest/'index.html')

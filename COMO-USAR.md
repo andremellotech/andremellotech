@@ -1,71 +1,72 @@
-# Instalar no perfil do GitHub
+# Perfil de André Mello
 
-1. Abra o repositório `andremellotech/andremellotech` no GitHub.
-2. Envie o conteúdo desta pasta para a raiz do repositório. Preserve a pasta `assets` e substitua o README.md anterior.
-3. Confirme o commit. O README será exibido no perfil.
+O perfil está no repositório `andremellotech/andremellotech`. O GitHub exibe o `README.md` desse repositório na página do usuário. O gerador mantém versões clara e escura, retrato ASCII animado e dados públicos atualizados pelo GitHub Actions.
 
-Abra `previa.html` para ver a composição localmente. `PREVIA.png` oferece uma visão estática; o README e a prévia HTML mostram o retrato animado.
+## Composição
 
-## Atualização
+O banner usa azul-marinho, um detalhe dourado e o monograma AM. O nome tem 46 pixels na arte de 1200 pixels de largura; o tamanho exibido é proporcional à largura do README. As linhas do banner são decorativas e não representam indicadores. A apresentação foi compactada para 372 pixels de altura, mantendo o retrato animado. Os dois contatos aparecem logo abaixo do banner em badges locais com resolução dupla e 28 pixels de altura exibida.
 
-O workflow consulta os dados públicos a cada 5 minutos (minutos 2, 7, 12 e assim por diante) e também após alterações na branch main deste repositório. Esse é o menor intervalo de agendamento do GitHub Actions. O agendamento pode atrasar ou perder execuções durante períodos de alta demanda; portanto, o intervalo não é uma garantia de prazo. Alterações em outros repositórios são detectadas na próxima consulta. A publicação só é reconstruída quando há mudanças nos dados ou na arte. Também pode ser executado manualmente pela aba Actions.
+A ordem é: banner; contatos; apresentação; estatísticas públicas e composição do código; contribuições e sequências; calendário; ferramentas; projetos em texto. As métricas usam tons neutros e azul; o calendário mantém as cores verdes nativas do GitHub. As ferramentas conservam os badges coloridos já aprovados por André.
 
-O painel no README usa imagens atualizadas automaticamente, sem execução de JavaScript. Apenas o retrato tem animação; os números exibidos não mudam dentro de uma página já aberta. É necessário recarregar a página para mostrar dados novos. O próprio GitHub pode levar até 24 horas para contabilizar contribuições; a coleta reproduz os dados publicados por ele e não antecipa esse processamento. Imagens exportadas ou mostradas na conversa são capturas estáticas.
+Power BI, Python, Excel, Alteryx, SAP, PowerPoint e GitHub representam o uso informado pelo usuário. HTML, CSS, JavaScript e Lua aparecem como conhecimentos. Office 365 é mencionado junto de Excel e PowerPoint. MySQL é identificado como experiência anterior em servidores de Tibia e GTA V / FiveM. Nenhum nível de proficiência, emprego, certificação ou resultado de cliente foi acrescentado.
 
-Cada execução deixa um resumo na aba Actions com horário da consulta, resultado, total coletado e situação da publicação. Quando a coleta encontra os mesmos dados, as etapas de publicação aparecem como dispensadas (skipped); isso é esperado e não indica falha. Solicitações GET são repetidas até três vezes após erros temporários de conexão, limite de requisições ou respostas 5xx. Erros permanentes continuam interrompendo a execução e ficam visíveis nos logs. A leitura usa a branch main mais recente e o token continua limitado às permissões já existentes.
+Os três projetos descritos mais recentemente atualizados são selecionados automaticamente a partir da lista pública. Forks, o próprio perfil, itens privados, endereços de outro proprietário e projetos sem descrição são excluídos. Os nomes conhecidos recebem títulos curtos; as descrições vêm dos repositórios. A lista usa Markdown nativo, com links e texto selecionável, sem capturas de tela. O campo de linguagem principal do repositório não é apresentado como se fosse a stack completa de cada solução.
 
-O ambiente de execução está fixado em Ubuntu 24.04. As Actions oficiais usam versões compatíveis com Node.js 24, fixadas pelo SHA completo da versão verificada. O upload preserva o arquivo público .nojekyll da pasta de publicação. O workflow verifica a compatibilidade das dependências com pip check antes dos testes e interrompe a atualização se houver erro.
+## Dados e significado dos indicadores
 
-Para atualizar manualmente: abra Actions → Atualizar perfil visual → Run workflow → main → Run workflow. A execução manual aguarda 90 segundos antes da coleta para dar tempo ao gráfico do GitHub processar alterações recentes; esse prazo não garante que todo processamento do GitHub já tenha terminado.
+`scripts/fetch_contributions.py` coleta o calendário público do GitHub. O total no período, a sequência atual e a maior sequência são calculados sobre esses dias. As datas e os dias ativos continuam nos arquivos de dados; as linhas técnicas de consulta ficam fora do painel.
 
-As métricas e o calendário usam o perfil público de andremellotech. A data, o intervalo consultado e os dias ativos continuam sendo coletados nos arquivos de dados, mas as duas linhas explicativas abaixo do calendário ficam ocultas no painel. A consulta automática a cada 5 minutos permanece ativa. Falhas na coleta interrompem a publicação e preservam o último painel válido.
+`scripts/fetch_github_content.py` coleta o perfil público, repositórios e composição do código. As estrelas são somadas nos repositórios públicos. Commits, pull requests e issues usam buscas por autor limitadas a `is:public`. Pull requests e issues incluem todos os estados: o rótulo é **Issues criadas**, não "abertas". A busca de commits considera as branches padrão, conforme a [documentação do GitHub](https://docs.github.com/en/search-github/searching-on-github/searching-commits). Esses totais indexados não são a mesma métrica que as contribuições do último ano.
 
-A assinatura AM usa azul-marinho e branco. O banner tem um fundo azul-marinho próprio, com linhas geométricas discretas; o fundo externo e os espaços entre seções continuam transparentes. Todas as áreas compartilham superfícies neutras e a mesma hierarquia de texto. Os selos preservam as cores das ferramentas e o calendário conserva as paletas verdes nativas do GitHub. Os níveis de intensidade são os mesmos retornados pelo calendário público, sem reinterpretar as faixas de contagem.
+Se uma busca opcional falhar ou retornar resultado incompleto ou inválido, o indicador correspondente mostra `—`. Um valor antigo não é reapresentado como uma consulta atual. As demais partes do painel continuam disponíveis. Falhas na coleta principal interrompem a publicação e preservam o último painel publicado.
 
-Para reconstruir localmente: instale `scripts/requirements.txt` e execute `python scripts/design.py`. Os textos ficam nesse arquivo, as cores em `scripts/themes.py` e os elementos de identidade compartilhados em `scripts/branding.py`. As fontes são Segoe UI no Windows e DejaVu Sans no Linux.
+A composição do código usa bytes em até seis repositórios públicos recentes. As quatro maiores linguagens e a soma das demais são exibidas, para que as parcelas representem o total do recorte. O gráfico descreve os arquivos dos repositórios; não mede proficiência nem tempo de trabalho. A legenda informa o recorte em bytes.
 
-## Direção visual
+## Atualização automática
 
-Combina a identidade animada original com uma apresentação sóbria voltada a dados, consultoria, tecnologia e engenharia. O banner reúne o nome, a assinatura AM e o foco em Data & Analytics. O desenho de linhas é um ornamento geométrico, sem dados ou indicadores inventados. O fluxo dado → análise → decisão conecta a apresentação ao painel. Os textos descrevem somente as áreas e ferramentas documentadas. Não foram acrescentadas experiência profissional, formação ou métricas de impacto não confirmadas.
+O workflow `.github/workflows/update-profile-art.yml` roda após push na branch `main`, por acionamento manual e pelo agendamento `2-57/5 * * * *`. Também está preparado para receber `repository_dispatch` do tipo `repo-updated`.
 
-O GitHub controla o layout externo e pode reduzir os painéis no celular. A prévia local aproxima o conteúdo, mas não reproduz a interface completa do GitHub. Há descrições alternativas nas imagens. O contato usa os dois botões de LinkedIn e repositórios, sem links repetidos abaixo. As miniaturas dos repositórios foram retiradas do painel; os repositórios continuam acessíveis pelo botão GitHub e pela seção nativa do perfil.
+O agendamento consulta a cada cinco minutos, mas o GitHub pode atrasar ou dispensar execuções em períodos de demanda elevada. Alterações em outros repositórios são detectadas na próxima coleta. Não é uma garantia de atualização em tempo real. É necessário recarregar uma página já aberta para mostrar a nova versão. A contabilização do próprio GitHub e os índices de busca podem ter atraso.
 
-## Referências e organização do painel
+O acionamento manual aguarda 90 segundos antes da coleta. O evento externo aguarda 45 segundos para dar tempo ao GitHub registrar o push. Esses prazos não garantem a conclusão da indexação. A publicação só é reconstruída quando os dados ou a arte mudam; uma execução sem alteração pode dispensar a publicação. Cada execução registra seu resultado na aba Actions.
 
-A coleção `awesome-github-profiles-main.zip`, da EddieHubCommunity, foi consultada como referência de organização. O arquivo `profiles/ritik307.json` corresponde à primeira imagem fornecida por André. Dessa referência foi aproveitada a ideia de um banner com presença visual; da segunda imagem fornecida, a organização em cards de métricas, calendário e tecnologias. A identidade foi adaptada para azul-marinho e tons neutros, sem copiar a paisagem, a fotografia, os textos ou os números dos exemplos.
+Os commits do gerador são atribuídos ao bot e não iniciam outra atualização por push. O horário de alteração do próprio repositório de perfil é neutralizado na coleta, evitando ciclos provocados apenas pelas imagens geradas. Erros HTTP temporários têm novas tentativas limitadas; erros permanentes continuam visíveis nos logs.
 
-A ordem do perfil é: banner; apresentação com retrato ASCII animado; atividade e contribuições; tecnologias e ferramentas; contatos. As métricas mostram repositórios públicos, contribuições no período, sequência atual e maior sequência, com os dados reais coletados do GitHub. Os quatro cards têm a mesma paleta neutra. O calendário usa fundo distinto dos quadrados sem atividade, preservando sua leitura nos dois temas; os rótulos de meses não se sobrepõem quando o primeiro mês ocupa poucas colunas.
+## Avisos entre repositórios — preparação concluída, ativação pendente
 
-As miniaturas dos projetos foram retiradas. A atividade e as contribuições continuam atualizadas pelo workflow existente. A inspiração nas referências muda a apresentação, sem substituir a hospedagem nem os fluxos de coleta e publicação.
+André informou que o segredo `PROFILE_DISPATCH_TOKEN` ainda não está configurado. O modelo está em `templates/notify-profile.yml`; ele não foi instalado nos outros repositórios e nenhum token foi criado ou salvo por esta atualização. O recebimento do evento está declarado no perfil. O agendamento de cinco minutos continua ativo independentemente desse recurso.
 
-A seção "Em construção" permanece retirada. LinkedIn e GitHub usam botões amplos, com ícones, setas de abertura e o mesmo fundo azul-marinho sólido. Somente o ícone do LinkedIn recebe o azul da marca. Cada botão mede 420 × 88 pixels na composição, com origem em imagem de resolução dupla. A marca GitHub é reaproveitada do badge já existente. A prévia PNG mostra o conteúdo principal.
+Para ativar depois:
 
-## Tecnologias selecionadas
+1. Configure uma credencial apropriada para o repositório de destino `andremellotech/andremellotech`. Um token fine-grained precisa da permissão **Contents: write** nesse repositório, conforme a [API de repository dispatch](https://docs.github.com/en/rest/repos/repos#create-a-repository-dispatch-event). Restrinja o destino ao repositório do perfil.
+2. Salve a credencial como segredo de Actions chamado `PROFILE_DISPATCH_TOKEN` em cada repositório de origem que enviará o aviso. Não coloque o valor no código, em arquivos do projeto ou em mensagens de chat.
+3. Copie o modelo para `.github/workflows/notify-profile.yml` nesses repositórios e ajuste a branch se necessário.
+4. Confira na aba Actions do perfil uma execução com o evento `repository_dispatch` após o próximo push de origem.
 
-Os badges representam o uso informado por André: Power BI, Python, Excel, Alteryx, SAP, PowerPoint, HTML e GitHub. Office 365 é mencionado junto de Excel e PowerPoint, evitando repetir a suíte em outro badge. MySQL aparece como experiência anterior no desenvolvimento de servidores de Tibia e GTA V / FiveM. Nenhum nível de proficiência foi presumido.
+O modelo usa `permissions: {}` para o token automático do repositório de origem. A credencial do segredo é usada somente para enviar o evento ao perfil. Ausência do segredo gera um aviso e encerra o notificador; o agendamento permanece como alternativa. O modelo evita notificar o perfil a partir dele mesmo e limita tempo e tentativas da chamada HTTP. A ativação entre repositórios não foi validada de ponta a ponta porque a credencial de origem ainda não existe.
 
-HTML, GitHub e MySQL mantêm os badges de https://github.com/mixzira, originados em https://content.mixzira.dev/Github/. Os demais foram preparados no mesmo formato compacto com ícones dos conjuntos SVG Logos, vscode-icons e Simple Icons, via Iconify. Os SVGs usados estão em assets/icons e os badges prontos em assets/badges. Os badges têm 36 pixels de altura e fundo translúcido, adaptando-se ao fundo do perfil.
+## Imagens, temas e rede corporativa
 
-Fontes dos ícones: https://api.iconify.design/logos/python.svg, https://api.iconify.design/logos/microsoft-power-bi.svg, https://api.iconify.design/logos/sap.svg, https://api.iconify.design/simple-icons/alteryx.svg, https://api.iconify.design/vscode-icons/file-type-excel.svg e https://api.iconify.design/vscode-icons/file-type-powerpoint.svg.
+Os arquivos do README são PNG e GIF publicados em `https://andremellotech.github.io/andremellotech/assets/`, com URLs absolutas para passarem pelo proxy Camo do GitHub. A versão em cada URL é calculada a partir do conteúdo. O fluxo de hospedagem é o mesmo que André confirmou como funcionando na rede KPMG. A revisão não introduz um novo serviço de imagens, JavaScript, vídeo ou SVG animado no perfil.
 
-HTML, CSS, JavaScript e Lua aparecem em Linguagens · Conhecimentos, conforme informado pelo usuário. Python permanece destacado em Dados & Automação. Os badges adicionais CSS, JavaScript e Lua mantêm os arquivos da referência mixzira, totalizando 12 badges.
+O HTML `picture` seleciona a versão clara ou escura. O fundo externo permanece transparente; os cards usam superfícies apropriadas ao tema. Somente o banner mantém o azul-marinho nos dois temas. A animação reaproveita o arquivo original e preserva sua duração. Quadros consecutivos iguais são combinados; o texto é gravado uma vez e somente o retrato muda nos seguintes. Os testes verificam repetição, movimento, estabilidade do texto, transparência e tamanho abaixo de 1 MB.
 
-No tema claro, os badges recebem uma base escura opaca dentro da cápsula para manter o contraste dos nomes brancos e dos ícones. As bordas coloridas e a transparência fora das cápsulas são preservadas. No tema escuro, os badges originais continuam sendo usados.
+`scripts/prepare_pages.py` publica somente as 14 imagens necessárias ao painel e às exportações estáticas, a prévia HTML e `.nojekyll`. As imagens são publicadas antes de o bot atualizar os links do README. Código, dados de trabalho e o modelo de notificação não são colocados na hospedagem Pages. O workflow usa as permissões existentes `contents: write`, `pages: write` e `id-token: write`.
 
-A revisão tipográfica usa Segoe UI e Segoe UI Semibold no Windows. O nome usa 44 pixels na arte original, o título de apresentação 36, os títulos de áreas 23 e os de categorias 20. Os tamanhos exibidos no GitHub variam proporcionalmente à largura disponível. O retrato ocupa 36% da largura e o texto de apresentação 49%. A moldura e as pequenas inscrições de terminal foram retiradas do retrato; somente o rosto é reenquadrado. As ferramentas usam uma grade de duas colunas e os badges têm 43 pixels de altura na composição. MySQL ocupa uma faixa própria com a indicação de experiência anterior.
+## Edição e verificação local
 
-## Composição contínua no GitHub
+Instale `scripts/requirements.txt` e execute:
 
-O conteúdo principal usa três blocos adjacentes em cada tema: `profile-header-*.png`, `profile-about-*.gif` e `profile-body-*.png`. Eles conservam o alinhamento da composição contínua. O elemento HTML `picture` permite ao próprio GitHub selecionar as cores adequadas ao tema. O fundo externo e os espaços vazios mantêm transparência; os cards têm superfícies coordenadas com o tema claro ou escuro. Somente o banner usa azul-marinho fixo nos dois temas. As cores estão centralizadas em `scripts/themes.py`.
+```sh
+python scripts/fetch_contributions.py
+python scripts/fetch_github_content.py
+python scripts/design.py
+python -m unittest discover -s tests -v
+python scripts/prepare_pages.py
+```
 
-A animação reaproveita o rosto e os tempos de `assets/andre-ascii.gif`. Quadros consecutivos iguais são combinados sem encurtar a duração original. O GIF usa uma paleta compartilhada de 32 cores; o texto é gravado uma vez e somente o retângulo do retrato muda nos quadros seguintes. Assim, as ferramentas e o restante do painel continuam em PNG sem perda de nitidez. Os testes verificam repetição, movimento, texto estável, transparência, duração e arquivos abaixo de 1 MB. A seleção por tema mantém o GIF solicitado mesmo quando o sistema indica movimento reduzido, sem modificar configurações do computador. As versões paradas `profile-about-*.png` e os arquivos completos `profile-card-light.png` e `profile-card-dark.png` continuam disponíveis para exportação estática.
+`previa.html` contém contatos e projetos em texto, além das imagens. `PREVIA.png` e `PREVIA-ESCURO.png` mostram somente a composição gráfica estática; não incluem os elementos nativos do README nem reproduzem a interface completa do GitHub.
 
-Os dois recortes transparentes do rodapé continuam sendo links reais para LinkedIn e repositórios. `scripts/github_layout.py` gera essa composição e é chamado pelo gerador principal. A prévia HTML segue o tema do sistema. `PREVIA.png` mostra a versão clara e `PREVIA-ESCURO.png` a escura. Os arquivos individuais dos badges permanecem disponíveis para edição, mas são incorporados ao painel no perfil. O perfil termina após os botões de contato, sem seções recolhíveis ou links repetidos.
+Os textos e a seleção de ferramentas ficam em `scripts/design.py`; as cores, em `scripts/themes.py`; o banner e a moldura, em `scripts/branding.py`; as estatísticas, em `scripts/status_panel.py`; a lista de projetos, em `scripts/projects_section.py`; a composição, em `scripts/github_layout.py`. As fontes são Segoe UI no Windows e DejaVu Sans no Ubuntu. O workflow permanece em Ubuntu 24.04 e Python 3.11, com as Actions oficiais fixadas pelos SHAs já utilizados.
 
-## Imagens e compatibilidade com redes corporativas
-
-A versão principal usa PNG e GIF com transparência nos dois temas. As imagens são publicadas por HTTPS em https://andremellotech.github.io/andremellotech/assets/ e referenciadas por URLs absolutas no README, para passarem pelo proxy de imagens do GitHub, como as imagens externas da referência mixzira. Cada URL inclui uma versão calculada a partir do conteúdo, evitando que o cache mantenha um painel antigo após atualizações. A animação não depende de JavaScript, vídeos, SVG animado ou novos serviços externos.
-
-O workflow precisa de contents:write para salvar os dados e a arte, e de pages:write e id-token:write para publicar os arquivos no GitHub Pages. Em Settings → Pages, a origem deve ser GitHub Actions. A publicação das imagens acontece antes do commit que atualiza os links do README. Apenas as imagens públicas do painel/rodapé e sua prévia são enviadas à hospedagem; os testes verificam que cada imagem referenciada está incluída.
-
-A versão anterior com essa mesma hospedagem e o proxy do GitHub foi confirmada por André como funcionando dentro da rede KPMG. As mudanças de tema e a animação preservam esse fluxo de carregamento.
+Os testes cobrem atualização por dados reais, prevenção de ciclos do bot, falhas HTTP, filtragem e escape de projetos, escopo público das estatísticas, respostas incompletas e a renderização dos temas com todos os arquivos referenciados incluídos no staging.

@@ -5,7 +5,7 @@ import json
 from PIL import Image,ImageDraw
 from fetch_contributions import derive_stats
 from themes import THEMES, TRANSPARENT
-from branding import section_heading, metric_icon
+from branding import section_heading
 
 def contribution_summary(content,calendar):
     days=calendar['days']
@@ -28,22 +28,12 @@ def render_activity(root,font,palette=None):
     calendar=json.loads((root/'data/contributions.json').read_text(encoding='utf-8'))
     summary=contribution_summary(content,calendar)
     cells=week_grid(calendar['days'])
-    im=Image.new('RGBA',(1200,444),TRANSPARENT);d=ImageDraw.Draw(im)
+    im=Image.new('RGBA',(1200,316),TRANSPARENT);d=ImageDraw.Draw(im)
     def text(x,y,value,size=18,color=None,bold=False):d.text((x,y),str(value),font=font(size,bold),fill=color or white)
-    section_heading(d,palette,font,'02','Atividade & contribuições',12)
-    metrics=[(summary['repositories'],'REPOSITÓRIOS PÚBLICOS'),
-             (summary['total'],'CONTRIBUIÇÕES NO PERÍODO'),
-             (summary['current_streak'],'SEQUÊNCIA ATUAL / DIAS'),
-             (summary['longest_streak'],'MAIOR SEQUÊNCIA / DIAS')]
-    for i,(value,label) in enumerate(metrics):
-        color=white
-        x=12+i*300
-        d.rounded_rectangle((x,60,x+276,168),radius=12,fill=palette['surface'],outline=palette['line'])
-        text(x+20,75,value,39,color,True);text(x+20,134,label,12,muted)
-        metric_icon(d,x+231,82,i,palette['muted'])
-    d.rounded_rectangle((12,188,1188,432),radius=12,fill=palette['matte'],outline=palette['line'])
+    section_heading(d,palette,font,'03','Atividade & contribuições',12)
+    d.rounded_rectangle((12,60,1188,304),radius=12,fill=palette['matte'],outline=palette['line'])
     columns=max(c['column'] for c in cells)+1;step=19;size=16
-    x0=(1200-(columns*step-3))//2;y0=243
+    x0=(1200-(columns*step-3))//2;y0=115
     months=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez']
     prev=None;starts=[]
     for c in cells:
@@ -56,9 +46,9 @@ def render_activity(root,font,palette=None):
     for row,label in [(1,'Seg'),(3,'Qua'),(5,'Sex')]:text(x0-42,y0+row*step,label,12,muted)
     for index,(x,label) in enumerate(starts):
         if index+1<len(starts) and starts[index+1][0]-x<35:continue
-        text(x,211,label,13,muted)
-    text(929,403,'Menos',12,muted)
-    for i,color in enumerate(colors):d.rounded_rectangle((976+i*20,405,991+i*20,420),radius=3,fill=color)
-    text(1085,403,'Mais',12,muted)
+        text(x,83,label,13,muted)
+    text(929,275,'Menos',12,muted)
+    for i,color in enumerate(colors):d.rounded_rectangle((976+i*20,277,991+i*20,292),radius=3,fill=color)
+    text(1085,275,'Mais',12,muted)
     im.save(root/'assets'/('activity-'+palette['name']+'.png'))
     return summary

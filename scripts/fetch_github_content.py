@@ -2,6 +2,8 @@
 import json
 import os
 import re
+from urllib.parse import urlencode
+import requests
 from datetime import datetime, timezone
 from pathlib import Path
 from github_http import github_session
@@ -30,6 +32,21 @@ def normalize_content(user:dict,repos:list,languages:dict)->dict:
             'languages':dict(sorted(totals.items(),key=lambda item:item[1],reverse=True)),
             'languages_scope':'Até seis repositórios públicos atualizados mais recentemente'}
 
+def collect_stats(get,username,repos):
+    """Public authored totals; unavailable/incomplete searches stay unavailable."""
+    stats={'stars':sum(r.get('stargazers_count') or 0 for r in repos)}
+    for key,kind,query in [('pull_requests','issues',f'author:{username} type:pr is:public'),
+                           ('issues','issues',f'author:{username} type:issue is:public'),
+                           ('commits','commits',f'author:{username} is:public')]:
+        try:
+            result=get(f'https://api.github.com/search/{kind}?'+urlencode({'q':query,'per_page':1})).json()
+            total=result['total_count']
+            stats[key]=total if type(total) is int and total>=0 and not result.get('incomplete_results',False) else None
+        except (requests.RequestException,ValueError,KeyError,TypeError) as error:
+            print(f'Aviso: contagem {key} indisponível ({type(error).__name__})')
+            stats[key]=None
+    return stats
+
 def main():
     username=json.loads((ROOT/'profile.json').read_text(encoding='utf-8-sig'))['username']
     if not re.fullmatch(r'[A-Za-z0-9-]+',username): raise ValueError('Invalid username')
@@ -54,6 +71,7 @@ def main():
     for repo in [r for r in repos if r.get('name','').lower()!=username.lower()][:6]:
         langs[repo['name']]=get(f'https://api.github.com/repos/{username}/{repo["name"]}/languages').json()
     data=normalize_content(user,repos,langs)
+    data['stats']=collect_stats(get,username,data['repositories'])
     data['as_of']=datetime.now(timezone.utc).date().isoformat()
     temp=ROOT/'data/github-content.tmp'
     temp.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
