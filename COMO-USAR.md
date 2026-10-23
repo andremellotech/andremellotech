@@ -4,7 +4,7 @@ O README de `andremellotech/andremellotech` apresenta o perfil com dados públic
 
 ## Identidade e organização
 
-A abertura tem 1200 × 400 pixels, com nome de 44 pixels, textos neutros e retrato em uma moldura de desenho técnico adaptada ao tema. O fundo externo é transparente. Os contatos LinkedIn e GitHub aparecem abaixo, em badges locais de 28 pixels exibidos. Os títulos das seções não têm numeração.
+A abertura tem 1200 × 400 pixels, com nome de 44 pixels, textos neutros e retrato em uma moldura de desenho técnico adaptada ao tema. O fundo externo é transparente. Os contatos LinkedIn, GitHub e E-mail aparecem abaixo, em badges locais de 28 pixels exibidos. O botão de e-mail abre o aplicativo de mensagens com o destinatário andremello@outlook.com, sem enviar automaticamente. Os títulos das seções não têm numeração.
 
 A ordem é: apresentação; contatos; estatísticas e linguagens; total de contribuições e sequências; cobrinha; tecnologias e ferramentas. A seção **Projetos em destaque foi removida**, inclusive da prévia. O botão GitHub continua levando aos repositórios.
 
@@ -60,7 +60,7 @@ Todos os PNGs e GIFs do README ficam em `https://andremellotech.github.io/andrem
 
 O HTML picture escolhe o tema. O fundo externo é transparente; o painel do retrato e os cards têm suas próprias superfícies. A animação do retrato conserva a duração original, com texto fixo e somente a região do rosto mudando. O compositor da cobrinha escreve retângulos de diferença entre frames. A nova versão precisa ser conferida por André na rede interna da KPMG; não foi testada dentro dessa rede.
 
-`scripts/prepare_pages.py` seleciona 14 imagens, a prévia HTML e `.nojekyll`. Código, dados e GIFs fonte não são hospedados no Pages. As imagens são publicadas antes de o bot atualizar os links do README.
+`scripts/prepare_pages.py` seleciona 15 imagens, a prévia HTML e `.nojekyll`. Código, dados e GIFs fonte não são hospedados no Pages. As imagens são publicadas antes de o bot atualizar os links do README.
 
 ## Edição e verificação
 

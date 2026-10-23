@@ -7,7 +7,7 @@ def prepare(root=ROOT):
     dest=root/'work/pages'
     (dest/'assets').mkdir(parents=True,exist_ok=True)
     images = ['profile-card-light.png','profile-card-dark.png']
-    images.extend(f'badge-{stem}.png' for stem in ['linkedin','github'])
+    images.extend(f'badge-{stem}.png' for stem in ['linkedin','github','email'])
     for theme in ['light', 'dark']:
         images.extend(f'{stem}-{theme}.{extension}' for stem, extension in
                       [('profile-intro', 'png'), ('profile-intro', 'gif'), ('status', 'png'),

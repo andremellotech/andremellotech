@@ -121,7 +121,9 @@ def build_github_layout(root, font):
     links = ('<p align="center"><a href="https://www.linkedin.com/in/aamello/">'
              + badge_img(root, 'badge-linkedin', 'LinkedIn — André Mello') + '</a> '
              '<a href="https://github.com/' + username + '?tab=repositories">'
-             + badge_img(root, 'badge-github', 'GitHub — explorar meus repositórios') + '</a></p>')
+             + badge_img(root, 'badge-github', 'GitHub — explorar meus repositórios') + '</a> '
+             '<a href="mailto:andremello@outlook.com">'
+             + badge_img(root, 'badge-email', 'E-mail — andremello@outlook.com') + '</a></p>')
     status = '<p align="center">' + themed_picture(root, 'status', alt) + '</p>'
     snake = '<p align="center">' + themed_picture(root, 'contribution-snake',
              'Cobrinha animada percorrendo as contribuições públicas reais de André Mello.', animated=True) + '</p>'

@@ -91,7 +91,8 @@ def render_badges():
     navy = '#17324d'
     for stem, label, value, left, right, icon in [
             ('badge-linkedin', 'LinkedIn', 'André Mello', '#0a66c2', navy, 'linkedin'),
-            ('badge-github', 'GitHub', '@' + content['user']['login'], '#24292f', navy, 'github')]:
+            ('badge-github', 'GitHub', '@' + content['user']['login'], '#24292f', navy, 'github'),
+            ('badge-email', 'E-mail', 'andremello@outlook.com', '#0078d4', navy, 'email')]:
         render_badge(A / f'{stem}.png', font, label, value, left, right, icon, A)
 
 

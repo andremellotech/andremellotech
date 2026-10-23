@@ -39,9 +39,10 @@ class ThemeRendering(unittest.TestCase):
             self.assertTrue(any('prefers-color-scheme: dark' in s.get('media', '') for s in sources),
                             'The GitHub theme must choose the matching text colors')
             links = [attrs['href'] for tag, attrs in parsed.tags if tag == 'a']
-            self.assertEqual(links[:2], ['https://www.linkedin.com/in/aamello/',
-                                         'https://github.com/andremellotech?tab=repositories'],
-                             'LinkedIn and GitHub are the first two buttons, at the top')
+            self.assertEqual(links[:3], ['https://www.linkedin.com/in/aamello/',
+                                         'https://github.com/andremellotech?tab=repositories',
+                                         'mailto:andremello@outlook.com'],
+                             'All three contact buttons must use the correct destinations')
             readme_text = (root / 'README.md').read_text(encoding='utf-8')
             self.assertNotIn('| Projeto | Aplicação |', readme_text)
             self.assertNotIn('Projetos em destaque', readme_text)
@@ -97,8 +98,8 @@ class ThemeRendering(unittest.TestCase):
             self.assertEqual(images[0].size, images[1].size)
             self.assertNotEqual(images[0].tobytes(), images[1].tobytes(), 'Text must adapt to the selected theme')
             badge_images = [attrs['src'] for tag, attrs in parsed.tags if tag == 'img' and attrs.get('height') == '28']
-            self.assertEqual(len(badge_images), 2, 'Two contact badges without duplicated statistics')
-            for name in ['badge-linkedin.png', 'badge-github.png']:
+            self.assertEqual(len(badge_images), 3, 'Three contact badges without duplicated statistics')
+            for name in ['badge-linkedin.png', 'badge-github.png', 'badge-email.png']:
                 with Image.open(root / 'assets' / name) as im:
                     self.assertEqual(im.height, 56, 'Badges are drawn at 2x for a 28 px display height')
                     self.assertEqual(im.getpixel((0, 0))[3], 0, 'Rounded corners stay transparent')
