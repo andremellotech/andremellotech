@@ -3,7 +3,7 @@
     "login": "andremellotech",
     "name": "André Mello",
     "bio": "Dados, automação e engenharia | Python · Power BI · SAP | Projetos, integrações e ferramentas em código.",
-    "public_repos": 7,
+    "public_repos": 6,
     "followers": 1,
     "following": 1,
     "created_at": "2021-04-07T20:02:16Z",
@@ -18,7 +18,7 @@
       "fork": false,
       "stargazers_count": 0,
       "forks_count": 0,
-      "pushed_at": "2026-10-23T19:19:20Z"
+      "pushed_at": "2026-10-24T00:19:39Z"
     },
     {
       "name": "financial-performance-analytics",
@@ -61,16 +61,6 @@
       "pushed_at": "2026-10-17T12:28:56Z"
     },
     {
-      "name": "mello-charts-desktop",
-      "description": "Suplemento gratuito para PowerPoint Windows: gráficos de build-up, cascata e comparação, editor local e importação Excel/CSV. Versão experimental.",
-      "html_url": "https://github.com/andremellotech/mello-charts-desktop",
-      "language": "C#",
-      "fork": false,
-      "stargazers_count": 0,
-      "forks_count": 0,
-      "pushed_at": "2026-10-16T22:26:12Z"
-    },
-    {
       "name": "andremellotech",
       "description": "Dados, automação e engenharia em código · Projetos, integrações e ferramentas com Python, Power BI e SAP.",
       "html_url": "https://github.com/andremellotech/andremellotech",
@@ -82,21 +72,19 @@
     }
   ],
   "languages": {
-    "HTML": 3511931,
-    "TypeScript": 539110,
-    "C#": 293175,
+    "HTML": 3512920,
+    "TypeScript": 582155,
     "Python": 292874,
     "Power Query": 126511,
-    "CSS": 58273,
-    "JavaScript": 20943,
-    "PowerShell": 6544
+    "CSS": 58945,
+    "JavaScript": 20943
   },
   "languages_scope": "Até seis repositórios públicos atualizados mais recentemente",
   "stats": {
     "stars": 0,
-    "pull_requests": 19,
+    "pull_requests": 17,
     "issues": 0,
-    "commits": 97
+    "commits": 88
   },
-  "as_of": "2026-10-23"
+  "as_of": "2026-10-24"
 }

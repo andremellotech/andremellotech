@@ -1,6 +1,6 @@
 {
   "username": "andremellotech",
-  "as_of": "2026-10-23",
+  "as_of": "2026-10-24",
   "days": [
     {
       "date": "2025-10-19",
@@ -1809,13 +1809,13 @@
     },
     {
       "date": "2026-10-15",
-      "count": 3,
-      "level": 1
+      "count": 0,
+      "level": 0
     },
     {
       "date": "2026-10-16",
-      "count": 12,
-      "level": 3
+      "count": 0,
+      "level": 0
     },
     {
       "date": "2026-10-17",
@@ -1849,14 +1849,19 @@
     },
     {
       "date": "2026-10-23",
-      "count": 17,
+      "count": 20,
       "level": 4
+    },
+    {
+      "date": "2026-10-24",
+      "count": 0,
+      "level": 0
     }
   ],
   "stats": {
-    "total": 120,
-    "current_streak": 11,
-    "longest_streak": 11,
+    "total": 108,
+    "current_streak": 7,
+    "longest_streak": 7,
     "best_day": {
       "date": "2026-10-19",
       "count": 21
@@ -1874,15 +1879,15 @@
       "2026-07": 0,
       "2026-08": 0,
       "2026-09": 0,
-      "2026-10": 120
+      "2026-10": 108
     },
     "first_contribution": "2026-10-13",
     "current_streak_range": {
-      "start": "2026-10-13",
+      "start": "2026-10-17",
       "end": "2026-10-23"
     },
     "longest_streak_range": {
-      "start": "2026-10-13",
+      "start": "2026-10-17",
       "end": "2026-10-23"
     }
   }
