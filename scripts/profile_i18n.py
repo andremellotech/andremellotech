@@ -3,6 +3,9 @@ DEFAULT = 'pt-BR'
 LOCALES = (DEFAULT, 'en-US')
 
 EN = {
+    'CIDADE DE CONTRIBUIÇÕES': 'CONTRIBUTION CITY',
+    'contribuições nos': 'contributions in the',
+    'últimos 12 meses': 'last 12 months',
     'Últimos 12 meses': 'Last 12 months',
     'contribuições em 12 meses': 'contributions in 12 months',
     'dias ativos': 'active days',

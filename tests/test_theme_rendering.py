@@ -86,7 +86,7 @@ class ThemeRendering(unittest.TestCase):
                 self.assertLess(animation.stat().st_size, 1_000_000, 'Keep the corporate proxy payload below 1 MB')
                 self.assertTrue(any(f'profile-intro-{theme}.gif' in s.get('srcset', '') for s in sources))
                 with Image.open(root / f'assets/activity-{theme}.png') as city:
-                    self.assertEqual(city.size,(1200,846),'One card contains metrics and the full annual city')
+                    self.assertEqual(city.size,(1200,918),'One card contains metrics and the full annual Aurora city')
                     self.assertEqual(city.mode,'RGBA')
                     self.assertEqual(city.getpixel((0,0))[3],0)
                 self.assertLess((root / f'assets/activity-{theme}.png').stat().st_size, 1_000_000)
@@ -143,7 +143,7 @@ class ThemeRendering(unittest.TestCase):
                         self.assertEqual(gif.info.get('loop'), 0)
                         self.assertEqual(gif.convert('RGBA').getpixel((0,0))[3], 0)
                 with Image.open(root/f'assets/activity-en-US-{theme}.png') as city:
-                    self.assertEqual(city.size,(1200,846))
+                    self.assertEqual(city.size,(1200,918))
                 self.assertIn('last 12 months',english_readme)
                 with Image.open(root/f'assets/status-{theme}.png') as pt, Image.open(root/f'assets/status-en-US-{theme}.png') as en:
                     self.assertEqual(pt.size, en.size, 'Both languages keep the same proportions')
