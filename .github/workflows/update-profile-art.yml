@@ -50,15 +50,6 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
       - name: Coletar histórico completo de contribuições e sequências
         run: python scripts/fetch_streak_history.py
-      - name: Gerar a mesma cobrinha usada por MateusHoffman em GIF
-        uses: Platane/snk@d8f6715049803e982ee5ff501b6b9b7d5deeb09b # v3, imagem Docker fixada por digest
-        with:
-          github_user_name: ${{ github.repository_owner }}
-          outputs: |
-            assets/snake-source-light.gif?color_snake=#005bcf&color_dots=#ebedf0,#FFC4A8,#FFA473,#FF8545,#FF5F1F&color_background=#ffffff
-            assets/snake-source-dark.gif?palette=github-dark&color_snake=#429aff&color_dots=#161b22,#FFC4A8,#FFA473,#FF8545,#FF5F1F&color_background=#0d1117
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
       - run: python scripts/design.py
       - name: Detectar mudanças nos dados ou na arte
         id: changed

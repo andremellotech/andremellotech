@@ -3,13 +3,13 @@ DEFAULT = 'pt-BR'
 LOCALES = (DEFAULT, 'en-US')
 
 EN = {
+    'Últimos 12 meses': 'Last 12 months',
+    'contribuições em 12 meses': 'contributions in 12 months',
+    'dias ativos': 'active days',
+    'Pico diário': 'Daily peak',
+    'Cada bloco representa um dia.': 'Each block represents one day.',
+    'Altura proporcional às contribuições.': 'Height is proportional to contributions.',
     'Contribuições em 3D': 'Contributions in 3D',
-    'Últimos 30 dias': 'Last 30 days',
-    'dias com atividade': 'active days',
-    'Máximo diário': 'Daily peak',
-    'Cada prédio é um dia com atividade.': 'Each building is an active day.',
-    'Altura = contribuições.': 'Height = contributions.',
-    'Calendário anual · cobrinha': 'Annual calendar · contribution snake',
     'DADOS · AUTOMAÇÃO · ENGENHARIA': 'DATA · AUTOMATION · ENGINEERING',
     'Dados e automação na prática.': 'Data and automation in practice.',
     'Projetos de análise de dados, integrações e engenharia.': 'Data analytics, integration and engineering projects.',
@@ -78,7 +78,6 @@ EN = {
     'LinkedIn — André Mello': 'LinkedIn — André Mello',
     'GitHub — explorar meus repositórios': 'GitHub — explore my repositories',
     'E-mail — andremello@outlook.com': 'Email — andremello@outlook.com',
-    'Cobrinha animada percorrendo as contribuições públicas reais de André Mello.': 'Animated snake following André Mello’s actual public GitHub contributions.',
     'Linguagens por bytes em até seis repositórios públicos recentes: ': 'Languages by bytes across up to six recent public repositories: ',
 }
 
@@ -141,9 +140,9 @@ STATUS_ALT = {
 }
 ACTIVITY_ALT = {
     DEFAULT: 'Atividade e contribuições: contribuições totais desde a criação da conta, sequência atual e maior sequência, '
-             'com suas datas. A cidade 3D mostra os últimos 30 dias: cada prédio é um dia com atividade, com altura proporcional ao número de contribuições. '
-             'A cobrinha animada mostra o calendário anual de contribuições públicas reais de André Mello, no mesmo cartão.',
+             'com suas datas. A cidade 3D mostra o ano inteiro, nos últimos 12 meses: cada bloco é um dia; '
+             'cada prédio é um dia com atividade e sua altura é proporcional ao número de contribuições públicas reais de André Mello.',
     'en-US': 'Activity and contributions: total contributions since account creation, current streak and longest streak, '
-             'with their date ranges. The 3D city shows the last 30 days: each building is an active day, with height proportional to contributions. '
-             'The animated snake shows André Mello’s actual annual public contribution calendar in the same card.',
+             'with their date ranges. The 3D city shows a complete year, covering the last 12 months: each block is one day; '
+             'each building is an active day with height proportional to André Mello’s actual public contributions.',
 }

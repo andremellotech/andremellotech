@@ -4,7 +4,6 @@ from html.parser import HTMLParser
 import shutil, subprocess, sys, tempfile, unittest
 from PIL import Image, ImageSequence
 import hashlib, json
-from snake_fixture import write_snake_fixture
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -30,7 +29,6 @@ class ThemeRendering(unittest.TestCase):
             shutil.copytree(ROOT / 'assets/badges', root / 'assets/badges')
             for name in ['andre-ascii.png', 'andre-ascii.gif']:
                 shutil.copy2(ROOT / 'assets' / name, root / 'assets' / name)
-            write_snake_fixture(root)
             calendar = json.loads((root/'data/contributions.json').read_text(encoding='utf-8'))
             (root/'data/contributions-history.json').write_text(json.dumps(calendar), encoding='utf-8')
             subprocess.run([sys.executable, str(root / 'scripts/design.py')], check=True, capture_output=True)
@@ -56,7 +54,7 @@ class ThemeRendering(unittest.TestCase):
             # The profile leads with live GitHub activity, not a duplicate resume.
             panels = [a['src'] for tag, a in parsed.tags if tag == 'img' and a.get('width') == '100%']
             self.assertEqual([url.split('/')[-1].split('-light.')[0] for url in panels],
-                             ['profile-intro', 'status', 'contribution-snake', 'stack'])
+                             ['profile-intro', 'status', 'activity', 'stack'])
             for resume_text in ['KPMG', '660 milhões', 'UFPR', 'Mestre em Administração', 'FAPESP']:
                 self.assertNotIn(resume_text, readme_text, 'Career details belong on LinkedIn')
             for english in ['Total Contributions', 'Current Streak', 'Longest Streak', 'Present', 'Data & Analytics', 'MSc.']:
@@ -87,17 +85,15 @@ class ThemeRendering(unittest.TestCase):
                 self.assertAlmostEqual(duration, source_duration, delta=20, msg='Preserve the original animation pace')
                 self.assertLess(animation.stat().st_size, 1_000_000, 'Keep the corporate proxy payload below 1 MB')
                 self.assertTrue(any(f'profile-intro-{theme}.gif' in s.get('srcset', '') for s in sources))
-                with Image.open(root / f'assets/contribution-snake-{theme}.gif') as gif:
-                    self.assertEqual(gif.size,(1200,934),'One card contains metrics, recent city and annual calendar')
-                    self.assertGreater(gif.n_frames, 2, 'The live contribution section must animate')
-                    self.assertEqual(gif.info.get('loop'), 0)
-                    self.assertEqual(gif.convert('RGBA').getpixel((0, 0))[3], 0)
-                    # Neither the heading nor contribution metrics can flicker with the animation.
-                    title_frames = {hashlib.sha256(frame.convert('RGBA').crop((0, 0, 1200, 738)).tobytes()).hexdigest()
-                                    for frame in ImageSequence.Iterator(gif)}
-                    self.assertEqual(len(title_frames), 1)
-                self.assertLess((root / f'assets/contribution-snake-{theme}.gif').stat().st_size, 1_000_000)
-                self.assertTrue(any(f'contribution-snake-{theme}.gif' in s.get('srcset', '') for s in sources))
+                with Image.open(root / f'assets/activity-{theme}.png') as city:
+                    self.assertEqual(city.size,(1200,846),'One card contains metrics and the full annual city')
+                    self.assertEqual(city.mode,'RGBA')
+                    self.assertEqual(city.getpixel((0,0))[3],0)
+                self.assertLess((root / f'assets/activity-{theme}.png').stat().st_size, 1_000_000)
+                self.assertTrue(any(f'activity-{theme}.png' in s.get('srcset', '') for s in sources))
+            self.assertNotIn('contribution-snake',readme_text)
+            self.assertNotIn('cobrinha',readme_text)
+            self.assertIn('últimos 12 meses',readme_text)
             images = []
             for theme in ['light', 'dark']:
                 path = root / f'assets/profile-card-{theme}.png'
@@ -141,11 +137,14 @@ class ThemeRendering(unittest.TestCase):
             self.assertNotIn('KPMG', english_readme)
             self.assertNotIn('Tecnologias e formação', english_readme)
             for theme in ['light', 'dark']:
-                for stem in ['profile-intro', 'contribution-snake']:
+                for stem in ['profile-intro']:
                     with Image.open(root/f'assets/{stem}-en-US-{theme}.gif') as gif:
                         self.assertGreater(gif.n_frames, 1)
                         self.assertEqual(gif.info.get('loop'), 0)
                         self.assertEqual(gif.convert('RGBA').getpixel((0,0))[3], 0)
+                with Image.open(root/f'assets/activity-en-US-{theme}.png') as city:
+                    self.assertEqual(city.size,(1200,846))
+                self.assertIn('last 12 months',english_readme)
                 with Image.open(root/f'assets/status-{theme}.png') as pt, Image.open(root/f'assets/status-en-US-{theme}.png') as en:
                     self.assertEqual(pt.size, en.size, 'Both languages keep the same proportions')
                     self.assertNotEqual(pt.tobytes(), en.tobytes(), 'The card text must actually be translated')

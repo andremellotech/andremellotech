@@ -94,13 +94,12 @@ def build_github_layout(root, font, locale=DEFAULT):
     assets = root / 'assets'
     for theme, palette in THEMES.items():
         panels = []
-        for name in ['intro', 'status', 'contribution-snake', 'stack']:
+        for name in ['intro', 'status', 'activity', 'stack']:
             if name == 'intro':
                 panel = Image.open(assets / f'{localized("intro-background",locale)}-{theme}.png').convert('RGBA')
                 panel.alpha_composite(transparent_portrait(assets / 'andre-ascii.png', palette['portrait']), PORTRAIT_AT)
             else:
-                extension = 'gif' if name == 'contribution-snake' else 'png'
-                panel = Image.open(assets / f'{localized(name,locale)}-{theme}.{extension}').convert('RGBA')
+                panel = Image.open(assets / f'{localized(name,locale)}-{theme}.png').convert('RGBA')
             panels.append(panel)
         height = sum(panel.height for panel in panels) + 28 * len(panels)
         main = Image.new('RGBA', (1200, height), TRANSPARENT)
@@ -131,10 +130,10 @@ def build_github_layout(root, font, locale=DEFAULT):
              '<a href="mailto:andremello@outlook.com">'
              + badge_img(root, 'badge-email', tr(locale, 'E-mail — andremello@outlook.com')) + '</a></p>')
     status = '<p align="center">' + themed_picture(root, localized('status',locale), alt) + '</p>'
-    snake = '<p align="center">' + themed_picture(root, localized('contribution-snake',locale),
-             ACTIVITY_ALT[locale], animated=True) + '</p>'
+    activity = '<p align="center">' + themed_picture(root, localized('activity',locale),
+             ACTIVITY_ALT[locale]) + '</p>'
     tools = '<p align="center">' + themed_picture(root, localized('stack',locale), TECHNOLOGY_ALT[locale]) + '</p>'
-    top = '\n\n'.join([language_links, intro, links, status, snake, tools])
+    top = '\n\n'.join([language_links, intro, links, status, activity, tools])
     readme = preview_body = top
     (root / readme_name(locale)).write_text(readme, encoding='utf-8')
     preview_html = ('<!doctype html><html lang="' + locale + '"><meta charset="utf-8">'
