@@ -20,3 +20,6 @@ def write_snake_fixture(root):
         streak = Image.new('RGBA', (1200, 272))
         ImageDraw.Draw(streak).rectangle((280,40,340,90), fill='#a65d00')
         streak.save(root/'assets'/f'streak-{theme}.png')
+        city=Image.new('RGBA',(1200,384))
+        ImageDraw.Draw(city).rectangle((600,70,660,130),fill='#168479')
+        city.save(root/'assets'/f'contribution-city-{theme}.png')

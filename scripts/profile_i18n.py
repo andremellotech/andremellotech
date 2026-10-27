@@ -3,6 +3,13 @@ DEFAULT = 'pt-BR'
 LOCALES = (DEFAULT, 'en-US')
 
 EN = {
+    'Contribuições em 3D': 'Contributions in 3D',
+    'Últimos 30 dias': 'Last 30 days',
+    'dias com atividade': 'active days',
+    'Máximo diário': 'Daily peak',
+    'Cada prédio é um dia com atividade.': 'Each building is an active day.',
+    'Altura = contribuições.': 'Height = contributions.',
+    'Calendário anual · cobrinha': 'Annual calendar · contribution snake',
     'DADOS · AUTOMAÇÃO · ENGENHARIA': 'DATA · AUTOMATION · ENGINEERING',
     'Dados e automação na prática.': 'Data and automation in practice.',
     'Projetos de análise de dados, integrações e engenharia.': 'Data analytics, integration and engineering projects.',
@@ -134,7 +141,9 @@ STATUS_ALT = {
 }
 ACTIVITY_ALT = {
     DEFAULT: 'Atividade e contribuições: contribuições totais desde a criação da conta, sequência atual e maior sequência, '
-             'com suas datas. Abaixo dos indicadores, a cobrinha animada percorre as contribuições públicas reais de André Mello, no mesmo cartão.',
+             'com suas datas. A cidade 3D mostra os últimos 30 dias: cada prédio é um dia com atividade, com altura proporcional ao número de contribuições. '
+             'A cobrinha animada mostra o calendário anual de contribuições públicas reais de André Mello, no mesmo cartão.',
     'en-US': 'Activity and contributions: total contributions since account creation, current streak and longest streak, '
-             'with their date ranges. Below the metrics, an animated snake follows André Mello’s actual public GitHub contributions in the same card.',
+             'with their date ranges. The 3D city shows the last 30 days: each building is an active day, with height proportional to contributions. '
+             'The animated snake shows André Mello’s actual annual public contribution calendar in the same card.',
 }

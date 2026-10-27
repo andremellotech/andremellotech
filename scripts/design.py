@@ -9,6 +9,7 @@ from badges import render_badge
 from intro_panel import render_intro
 from technology_panel import render_technology
 from contribution_snake import render_snake
+from contribution_city import render_city
 import json
 from github_layout import build_github_layout
 from language_buttons import render_language_buttons
@@ -32,6 +33,7 @@ def render_theme(name, palette, locale=DEFAULT):
     render_technology(ROOT, font, palette, locale)
     render_status(ROOT, font, palette, locale)
     render_activity(ROOT, font, palette, locale)
+    render_city(ROOT, font, palette, locale)
     render_snake(ROOT, palette, locale)
 
 

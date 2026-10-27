@@ -1,6 +1,6 @@
 # Perfil de André Mello
 
-O README de `andremellotech/andremellotech` apresenta o perfil com dados públicos do próprio GitHub, temas claro/escuro, retrato ASCII animado e cobrinha gerada automaticamente.
+O README de `andremellotech/andremellotech` apresenta o perfil com dados públicos do próprio GitHub, temas claro/escuro, retrato ASCII animado, cidade 3D recente e cobrinha anual geradas automaticamente.
 
 ## Identidade e organização
 
@@ -12,7 +12,7 @@ A abertura tem 1200 × 304 pixels, com nome de 40 pixels, textos neutros e retra
 
 O foco é o GitHub: dados, automação, integrações e engenharia em código. A abertura não repete cargo, formação ou resultados profissionais do LinkedIn. Os textos e datas têm versões em português e inglês dos EUA; nomes próprios de tecnologias são preservados.
 
-A ordem é: apresentação curta; contatos; presença no GitHub; atividade e contribuições; tecnologias e ferramentas. A seção Atividade e contribuições reúne, em um único cartão, contribuições totais, sequência atual, maior sequência e a cobrinha abaixo dos indicadores, com um único contorno e uma divisória discreta. Não há cartões de projetos. O botão GitHub continua levando aos repositórios.
+A ordem é: apresentação curta; contatos; presença no GitHub; atividade e contribuições; tecnologias e ferramentas. A seção Atividade e contribuições reúne, em um único cartão, contribuições totais, sequência atual, maior sequência, cidade 3D dos últimos 30 dias e uma faixa menor da cobrinha anual. Os recortes ficam identificados em cada visualização. Não há cartões de projetos. O botão GitHub continua levando aos repositórios.
 
 Os blocos de resultados de carreira, formação acadêmica e reconhecimentos foram retirados a pedido de André. O LinkedIn permanece acessível pelo botão de contato. O módulo antigo `professional_panel.py` não é executado nem incluído no perfil ou no novo staging do Pages.
 
@@ -20,7 +20,7 @@ Power BI, Python, Excel, Alteryx, SAP, Power Automate, Oracle Cloud, PowerPoint,
 
 `scripts/branding.py` centraliza margens de 24 pixels e a escala tipográfica: nome 40, chamada 32, títulos de seção 26, títulos de cartões 22, corpo 20, apoio 18 e indicadores 36 pixels. As artes têm 1200 pixels de largura e reduzem juntas no README. Todos os badges de tecnologias seguem o mesmo padrão neutro: altura 48, fonte 20, ícone alinhado e borda fina. As cores ficam nos símbolos; as superfícies e os textos acompanham o tema. Os símbolos são desenhados localmente, com GitHub e Alteryx derivados da arte local existente, sem consultas a serviços externos.
 
-As referências são [Solon](https://github.com/solonz), para o cartão compacto de linguagens e o indicador com chama, e [Mateus Hoffman](https://github.com/MateusHoffman), para a cobrinha. Os dados são sempre de André.
+As referências são [Solon](https://github.com/solonz), para o cartão compacto de linguagens e o indicador com chama; [Mateus Hoffman](https://github.com/MateusHoffman), para a cobrinha; e [GitSkins](https://www.gitskins.com/readme-generator), para a ideia de cidade de contribuições enviada por André. A cidade tem implementação própria em Pillow. Os dados são sempre de André.
 
 ## Estatísticas ligadas ao GitHub
 
@@ -38,7 +38,13 @@ O gráfico compacto mostra as cinco maiores linguagens e a soma das demais. As c
 
 O ano atual é consultado a cada execução. Anos encerrados são revalidados uma vez por dia e reutilizados entre consultas do mesmo dia. Um ano incompleto impede gravar o novo histórico. As linhas técnicas de consulta continuam ocultas.
 
-Os indicadores têm datas em português, como `7 abr 2021 — atual` e `13 out — 22 out`. O ano aparece nos anos anteriores. Um único dia não é repetido como intervalo. Sem atividade, a faixa correspondente mostra —; em empate da maior sequência, mantém-se a primeira. As datas vêm dos mesmos dias usados no cálculo dos números. A chama curva e o aro laranja seguem a referência do Solon; o aro é decorativo, sem representar porcentagem de progresso. O painel de presença no GitHub tem 1200 × 344 pixels, com repositórios e linguagens. Os três indicadores de contribuição aparecem apenas no cartão de atividade, de 1200 × 592 pixels, junto da animação. Os números continuam com 36 pixels, rótulos com 22 e datas com 18.
+Os indicadores têm datas em português, como `7 abr 2021 — atual` e `13 out — 22 out`. O ano aparece nos anos anteriores. Um único dia não é repetido como intervalo. Sem atividade, a faixa correspondente mostra —; em empate da maior sequência, mantém-se a primeira. As datas vêm dos mesmos dias usados no cálculo dos números. A chama curva e o aro laranja seguem a referência do Solon; o aro é decorativo, sem representar porcentagem de progresso. O painel de presença no GitHub tem 1200 × 344 pixels, com repositórios e linguagens. Os três indicadores de contribuição aparecem apenas no cartão de atividade, de 1200 × 934 pixels, junto da cidade e da animação. Os números continuam com 36 pixels, rótulos com 22 e datas com 18.
+
+## Cidade recente e calendário anual
+
+`scripts/contribution_city.py` desenha a cidade a partir de `data/contributions.json`. O recorte inclui o dia `as_of` e os 29 anteriores. Datas ausentes ou duplicadas, contagens negativas e valores fracionários interrompem a geração. Cada dia é um lote na posição de sua semana e dia da semana; apenas dias com contribuição têm prédio. A altura é linearmente proporcional à contagem do dia, normalizada pelo maior dia do recorte. Os tons em verde-água e as faces isométricas dão profundidade ao gráfico. Nenhum prédio ou valor é inventado para preencher a cidade.
+
+A escolha de 30 dias foi feita após comparar a cidade anual do perfil de André com a referência: o calendário de um perfil recente deixa grande área vazia na visão anual. A cidade aproxima o período recente e a cobrinha conserva a visão anual, evitando duas visualizações grandes com o mesmo recorte. A legenda explica a altura, apresenta dias ativos e máximo diário e identifica o intervalo. O mesmo modelo produz as versões PT/US e claro/escuro. A cidade é gerada no workflow atual e incorporada ao GIF final; não há chamadas ao GitSkins quando alguém abre o README.
 
 `scripts/fetch_contributions.py` mantém também o calendário público recente, validado, como fonte para a composição inicial da seção de atividade e para os dados locais.
 
@@ -48,7 +54,7 @@ O workflow usa **Platane/snk**, o mesmo gerador do perfil de Mateus, fixado no c
 
 São usadas as cores da referência: cobra `#005bcf` no tema claro e `#429aff` no escuro; contribuições `#FFC4A8, #FFA473, #FF8545, #FF5F1F`. A rota, a interpolação e a barra de células consumidas vêm do gerador original. É uma animação, sem controle pelo teclado dentro do README.
 
-A saída é GIF, em vez do SVG exibido por Mateus. `scripts/contribution_snake.py` adapta os frames ao cartão único, preservando a duração, o movimento e a repetição. Os três indicadores e o título ficam estáveis em todos os frames; apenas a região da cobrinha muda. A camada intermediária `streak-*.png` é gerada a partir do mesmo histórico validado e não é hospedada separadamente no Pages. Não desenha uma rota substituta. A ausência do GIF original ou da camada de indicadores gera erro. Os arquivos fonte `assets/snake-source-*.gif` são gerados pelo Actions; a hospedagem pública usa apenas o resultado composto.
+A saída é GIF, em vez do SVG exibido por Mateus. `scripts/contribution_snake.py` adapta os frames ao cartão único, preservando a duração, o movimento e a repetição. Os três indicadores, a cidade e o título ficam estáveis em todos os frames; apenas a faixa anual da cobrinha muda. As camadas intermediárias `streak-*.png` e `contribution-city-*.png` são geradas a partir dos dados validados e não são hospedadas separadamente no Pages. Não desenha uma rota substituta. A ausência do GIF original ou das camadas intermediárias gera erro. Os arquivos fonte `assets/snake-source-*.gif` são gerados pelo Actions; a hospedagem pública usa apenas o resultado composto.
 
 Os testes usam um GIF pequeno e controlado para testar o compositor sem rede. Essa amostra nunca é usada como alternativa no workflow de produção. A integração real de Platane/snk deve ser conferida na execução do Actions.
 

@@ -88,12 +88,12 @@ class ThemeRendering(unittest.TestCase):
                 self.assertLess(animation.stat().st_size, 1_000_000, 'Keep the corporate proxy payload below 1 MB')
                 self.assertTrue(any(f'profile-intro-{theme}.gif' in s.get('srcset', '') for s in sources))
                 with Image.open(root / f'assets/contribution-snake-{theme}.gif') as gif:
-                    self.assertEqual(gif.size,(1200,592),'One card contains the summary and the animated calendar')
+                    self.assertEqual(gif.size,(1200,934),'One card contains metrics, recent city and annual calendar')
                     self.assertGreater(gif.n_frames, 2, 'The live contribution section must animate')
                     self.assertEqual(gif.info.get('loop'), 0)
                     self.assertEqual(gif.convert('RGBA').getpixel((0, 0))[3], 0)
                     # Neither the heading nor contribution metrics can flicker with the animation.
-                    title_frames = {hashlib.sha256(frame.convert('RGBA').crop((0, 0, 1200, 348)).tobytes()).hexdigest()
+                    title_frames = {hashlib.sha256(frame.convert('RGBA').crop((0, 0, 1200, 738)).tobytes()).hexdigest()
                                     for frame in ImageSequence.Iterator(gif)}
                     self.assertEqual(len(title_frames), 1)
                 self.assertLess((root / f'assets/contribution-snake-{theme}.gif').stat().st_size, 1_000_000)

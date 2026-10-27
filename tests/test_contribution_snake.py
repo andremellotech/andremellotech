@@ -21,7 +21,7 @@ class ContributionSnake(unittest.TestCase):
             write_snake_fixture(root)
             render_snake(root, THEMES['light'])
             with Image.open(root/'assets/contribution-snake-light.gif') as result:
-                self.assertEqual(result.size, (1200, 592), 'Metrics and snake share one full-height card')
+                self.assertEqual(result.size, (1200, 934), 'Metrics, recent city and annual snake share one card')
                 self.assertEqual(result.info.get('loop'), 0)
                 frames = [frame.convert('RGBA') for frame in ImageSequence.Iterator(result)]
                 result.seek(0)
@@ -29,13 +29,15 @@ class ContributionSnake(unittest.TestCase):
                 self.assertEqual(len(frames), 3)
                 self.assertTrue(all(frame.getpixel((0, 0))[3] == 0 for frame in frames))
                 self.assertNotEqual(frames[0].tobytes(), frames[1].tobytes())
-                self.assertEqual(frames[0].crop((0, 0, 1200, 348)).tobytes(),
-                                 frames[-1].crop((0, 0, 1200, 348)).tobytes(),
-                                 'The heading and all three metrics stay fixed while the snake moves')
+                self.assertEqual(frames[0].crop((0, 0, 1200, 738)).tobytes(),
+                                 frames[-1].crop((0, 0, 1200, 738)).tobytes(),
+                                 'The heading, metrics and city stay fixed while the annual snake moves')
                 for frame in frames:
                     self.assertEqual(frame.getpixel((300,126))[:3], (166,93,0),
                                      'The generated contribution summary is included above the snake')
-                    for y in [120,300,400,560]:
+                    self.assertEqual(frame.getpixel((620,450))[:3],(22,132,121),
+                                     'The recent contribution city is included above the annual calendar')
+                    for y in [120,300,400,560,800,900]:
                         self.assertEqual(frame.getpixel((24,y))[:3], ImageColor.getrgb(THEMES['light']['line']),
                                          'One continuous border encloses metrics and animation')
 
