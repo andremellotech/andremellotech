@@ -17,3 +17,6 @@ def write_snake_fixture(root):
         header = Image.new('RGBA', (1200, 316))
         ImageDraw.Draw(header).rectangle((30, 12, 200, 35), fill='#294b70')
         header.save(root/'assets'/f'activity-{theme}.png')
+        streak = Image.new('RGBA', (1200, 272))
+        ImageDraw.Draw(streak).rectangle((280,40,340,90), fill='#a65d00')
+        streak.save(root/'assets'/f'streak-{theme}.png')

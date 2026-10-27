@@ -129,7 +129,12 @@ TECHNOLOGY_ALT = {
 }
 STATUS_ALT = {
     DEFAULT: 'Presença no GitHub: repositórios públicos, estrelas, registros de alterações, propostas de alteração, ocorrências e seguidores; '
-             'composição de código dos repositórios; total de contribuições desde a criação da conta, sequência atual e maior sequência.',
-    'en-US': 'GitHub presence: public repositories, stars, commits, pull requests, issues and followers; repository code composition; '
-             'total contributions since account creation, current streak and longest streak.',
+             'composição de código dos repositórios.',
+    'en-US': 'GitHub presence: public repositories, stars, commits, pull requests, issues and followers; repository code composition.',
+}
+ACTIVITY_ALT = {
+    DEFAULT: 'Atividade e contribuições: contribuições totais desde a criação da conta, sequência atual e maior sequência, '
+             'com suas datas. Abaixo dos indicadores, a cobrinha animada percorre as contribuições públicas reais de André Mello, no mesmo cartão.',
+    'en-US': 'Activity and contributions: total contributions since account creation, current streak and longest streak, '
+             'with their date ranges. Below the metrics, an animated snake follows André Mello’s actual public GitHub contributions in the same card.',
 }

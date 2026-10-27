@@ -11,7 +11,9 @@ from profile_i18n import DEFAULT, tr, localized
 # Language colors come directly from the local GitHub Linguist snapshot.
 # They stay identical in both themes and both locales; only the card adapts.
 
-HEIGHT = 640
+HEIGHT = 344
+STREAK_TOP = 356
+STREAK_HEIGHT = 272
 
 
 def _icon(draw, kind, x, y, color):
@@ -142,7 +144,9 @@ def render_status(root, font, palette, locale=DEFAULT):
     text, muted, accent, brand = palette['text'], palette['muted'], palette['accent'], palette['brand']
     blue = palette['brand']
     fire = '#fb8c00'
-    im = Image.new('RGBA', (1200, HEIGHT), TRANSPARENT)
+    # Render the unchanged metrics once, then hand their transparent layer to
+    # the animated activity card. The public status image contains only repos/languages.
+    im = Image.new('RGBA', (1200, STREAK_TOP + STREAK_HEIGHT), TRANSPARENT)
     d = ImageDraw.Draw(im)
     section_heading(d, palette, font, tr(locale, 'Presença no GitHub'), 12)
     card = dict(radius=12, fill=palette['matte'], outline=palette['line'])
@@ -197,7 +201,6 @@ def render_status(root, font, palette, locale=DEFAULT):
         d.text((x+18, y), item['name'], font=legend_face, fill=text)
         d.text((item['right'] - measure(item['share']), y), item['share'], font=legend_face, fill=muted)
 
-    d.rounded_rectangle((24, 356, 1176, 628), **card)
     d.line((408, 388, 408, 596), fill=palette['line'])
     d.line((792, 388, 792, 596), fill=palette['line'])
     columns = [(216, _fmt(summary['total'], locale), 'Contribuições totais', dates['total']),
@@ -219,5 +222,7 @@ def render_status(root, font, palette, locale=DEFAULT):
     while size > 16 and d.textlength(dates['current'], font=font(size)) > 352:
         size -= 1
     d.text((600,583), dates['current'], font=font(size), fill=muted, anchor='ms')
-    im.save(root / 'assets' / f'{localized("status", locale)}-{palette["name"]}.png')
+    im.crop((0,0,1200,HEIGHT)).save(root/'assets'/f'{localized("status",locale)}-{palette["name"]}.png')
+    im.crop((0,STREAK_TOP,1200,STREAK_TOP+STREAK_HEIGHT)).save(
+        root/'assets'/f'{localized("streak",locale)}-{palette["name"]}.png')
     return summary

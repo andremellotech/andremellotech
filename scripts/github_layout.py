@@ -5,7 +5,7 @@ from html import escape
 from themes import THEMES, TRANSPARENT
 from intro_panel import PORTRAIT_AT, PORTRAIT_SIZE
 from profile_i18n import (DEFAULT, tr, localized, readme_name, preview_name, preview_image,
-                          INTRO_ALT, TECHNOLOGY_ALT, STATUS_ALT)
+                          INTRO_ALT, TECHNOLOGY_ALT, STATUS_ALT, ACTIVITY_ALT)
 
 ASSET_HOST = 'https://andremellotech.github.io/andremellotech/assets/'
 
@@ -132,7 +132,7 @@ def build_github_layout(root, font, locale=DEFAULT):
              + badge_img(root, 'badge-email', tr(locale, 'E-mail — andremello@outlook.com')) + '</a></p>')
     status = '<p align="center">' + themed_picture(root, localized('status',locale), alt) + '</p>'
     snake = '<p align="center">' + themed_picture(root, localized('contribution-snake',locale),
-             tr(locale, 'Cobrinha animada percorrendo as contribuições públicas reais de André Mello.'), animated=True) + '</p>'
+             ACTIVITY_ALT[locale], animated=True) + '</p>'
     tools = '<p align="center">' + themed_picture(root, localized('stack',locale), TECHNOLOGY_ALT[locale]) + '</p>'
     top = '\n\n'.join([language_links, intro, links, status, snake, tools])
     readme = preview_body = top

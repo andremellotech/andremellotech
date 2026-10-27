@@ -1,4 +1,4 @@
-"""Frame-preserving compositor for the official Platane/snk GIF animation."""
+"""One contribution card: persistent streak metrics and the official snk animation."""
 from PIL import Image, ImageDraw, ImageOps, ImageSequence, ImageChops, GifImagePlugin
 from profile_i18n import DEFAULT, localized
 
@@ -9,10 +9,16 @@ def render_snake(root, palette, locale=DEFAULT):
     source_path = root/'assets'/f"snake-source-{palette['name']}.gif"
     with Image.open(source_path) as source:
         header = Image.open(root/'assets'/f"{localized('activity',locale)}-{palette['name']}.png").convert('RGBA').crop((0, 0, 1200, 60))
-        base = Image.new('RGBA', (1200, 316))
+        base = Image.new('RGBA', (1200, 592))
         base.alpha_composite(header)
-        ImageDraw.Draw(base).rounded_rectangle((24, 76, 1176, 304), radius=12,
-                                                fill=palette['matte'], outline=palette['line'])
+        draw = ImageDraw.Draw(base)
+        draw.rounded_rectangle((24, 76, 1176, 580), radius=12,
+                               fill=palette['matte'], outline=palette['line'])
+        with Image.open(root/'assets'/f"{localized('streak',locale)}-{palette['name']}.png") as streak:
+            if streak.size != (1200,272):
+                raise ValueError('The activity card requires a complete contribution summary')
+            base.alpha_composite(streak.convert('RGBA'),(0,76))
+        draw.line((44,340,1156,340),fill=palette['line'])
         output_path = root/'assets'/f"{localized('contribution-snake',locale)}-{palette['name']}.gif"
         shared = emitted = pending = None
         pending_duration = 0
@@ -35,7 +41,7 @@ def render_snake(root, palette, locale=DEFAULT):
                 duration = original.info.get('duration', 100)
                 frame = base.copy()
                 art = ImageOps.contain(original.convert('RGBA'), (1120, 208), Image.Resampling.LANCZOS)
-                frame.alpha_composite(art, ((1200-art.width)//2, 82+(208-art.height)//2))
+                frame.alpha_composite(art, ((1200-art.width)//2, 354+(208-art.height)//2))
                 if shared is None:
                     frame.save(root/'assets'/f"{localized('activity',locale)}-{palette['name']}.png")
                 matte = Image.new('RGBA', frame.size, palette['matte'])

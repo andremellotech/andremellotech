@@ -3,7 +3,7 @@ from pathlib import Path
 import sys
 import tempfile
 import unittest
-from PIL import Image, ImageSequence
+from PIL import Image, ImageSequence, ImageColor
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
 from themes import THEMES
 from snake_fixture import write_snake_fixture
@@ -21,6 +21,7 @@ class ContributionSnake(unittest.TestCase):
             write_snake_fixture(root)
             render_snake(root, THEMES['light'])
             with Image.open(root/'assets/contribution-snake-light.gif') as result:
+                self.assertEqual(result.size, (1200, 592), 'Metrics and snake share one full-height card')
                 self.assertEqual(result.info.get('loop'), 0)
                 frames = [frame.convert('RGBA') for frame in ImageSequence.Iterator(result)]
                 result.seek(0)
@@ -28,8 +29,15 @@ class ContributionSnake(unittest.TestCase):
                 self.assertEqual(len(frames), 3)
                 self.assertTrue(all(frame.getpixel((0, 0))[3] == 0 for frame in frames))
                 self.assertNotEqual(frames[0].tobytes(), frames[1].tobytes())
-                self.assertEqual(frames[0].crop((0, 0, 1200, 60)).tobytes(),
-                                 frames[-1].crop((0, 0, 1200, 60)).tobytes())
+                self.assertEqual(frames[0].crop((0, 0, 1200, 348)).tobytes(),
+                                 frames[-1].crop((0, 0, 1200, 348)).tobytes(),
+                                 'The heading and all three metrics stay fixed while the snake moves')
+                for frame in frames:
+                    self.assertEqual(frame.getpixel((300,126))[:3], (166,93,0),
+                                     'The generated contribution summary is included above the snake')
+                    for y in [120,300,400,560]:
+                        self.assertEqual(frame.getpixel((24,y))[:3], ImageColor.getrgb(THEMES['light']['line']),
+                                         'One continuous border encloses metrics and animation')
 
     def test_missing_official_source_stops_instead_of_substituting_a_different_snake(self):
         from contribution_snake import render_snake

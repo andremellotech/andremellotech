@@ -12,7 +12,7 @@ A abertura tem 1200 × 304 pixels, com nome de 40 pixels, textos neutros e retra
 
 O foco é o GitHub: dados, automação, integrações e engenharia em código. A abertura não repete cargo, formação ou resultados profissionais do LinkedIn. Os textos e datas têm versões em português e inglês dos EUA; nomes próprios de tecnologias são preservados.
 
-A ordem é: apresentação curta; contatos; presença no GitHub; atividade e contribuições com a cobrinha; tecnologias e ferramentas. Não há cartões de projetos. O botão GitHub continua levando aos repositórios.
+A ordem é: apresentação curta; contatos; presença no GitHub; atividade e contribuições; tecnologias e ferramentas. A seção Atividade e contribuições reúne, em um único cartão, contribuições totais, sequência atual, maior sequência e a cobrinha abaixo dos indicadores, com um único contorno e uma divisória discreta. Não há cartões de projetos. O botão GitHub continua levando aos repositórios.
 
 Os blocos de resultados de carreira, formação acadêmica e reconhecimentos foram retirados a pedido de André. O LinkedIn permanece acessível pelo botão de contato. O módulo antigo `professional_panel.py` não é executado nem incluído no perfil ou no novo staging do Pages.
 
@@ -38,7 +38,7 @@ O gráfico compacto mostra as cinco maiores linguagens e a soma das demais. As c
 
 O ano atual é consultado a cada execução. Anos encerrados são revalidados uma vez por dia e reutilizados entre consultas do mesmo dia. Um ano incompleto impede gravar o novo histórico. As linhas técnicas de consulta continuam ocultas.
 
-Os indicadores têm datas em português, como `7 abr 2021 — atual` e `13 out — 22 out`. O ano aparece nos anos anteriores. Um único dia não é repetido como intervalo. Sem atividade, a faixa correspondente mostra —; em empate da maior sequência, mantém-se a primeira. As datas vêm dos mesmos dias usados no cálculo dos números. A chama curva e o aro laranja seguem a referência do Solon; o aro é decorativo, sem representar porcentagem de progresso. O painel de estatísticas tem 1200 × 640 pixels; usa números de 36 pixels nas sequências, rótulos de 22 e datas de 18.
+Os indicadores têm datas em português, como `7 abr 2021 — atual` e `13 out — 22 out`. O ano aparece nos anos anteriores. Um único dia não é repetido como intervalo. Sem atividade, a faixa correspondente mostra —; em empate da maior sequência, mantém-se a primeira. As datas vêm dos mesmos dias usados no cálculo dos números. A chama curva e o aro laranja seguem a referência do Solon; o aro é decorativo, sem representar porcentagem de progresso. O painel de presença no GitHub tem 1200 × 344 pixels, com repositórios e linguagens. Os três indicadores de contribuição aparecem apenas no cartão de atividade, de 1200 × 592 pixels, junto da animação. Os números continuam com 36 pixels, rótulos com 22 e datas com 18.
 
 `scripts/fetch_contributions.py` mantém também o calendário público recente, validado, como fonte para a composição inicial da seção de atividade e para os dados locais.
 
@@ -48,7 +48,7 @@ O workflow usa **Platane/snk**, o mesmo gerador do perfil de Mateus, fixado no c
 
 São usadas as cores da referência: cobra `#005bcf` no tema claro e `#429aff` no escuro; contribuições `#FFC4A8, #FFA473, #FF8545, #FF5F1F`. A rota, a interpolação e a barra de células consumidas vêm do gerador original. É uma animação, sem controle pelo teclado dentro do README.
 
-A saída é GIF, em vez do SVG exibido por Mateus. `scripts/contribution_snake.py` adapta os frames ao painel, preservando a duração, o movimento e a repetição. Não desenha uma rota substituta. A ausência do GIF original gera erro. Os arquivos fonte `assets/snake-source-*.gif` são gerados pelo Actions; a hospedagem pública usa apenas o resultado composto.
+A saída é GIF, em vez do SVG exibido por Mateus. `scripts/contribution_snake.py` adapta os frames ao cartão único, preservando a duração, o movimento e a repetição. Os três indicadores e o título ficam estáveis em todos os frames; apenas a região da cobrinha muda. A camada intermediária `streak-*.png` é gerada a partir do mesmo histórico validado e não é hospedada separadamente no Pages. Não desenha uma rota substituta. A ausência do GIF original ou da camada de indicadores gera erro. Os arquivos fonte `assets/snake-source-*.gif` são gerados pelo Actions; a hospedagem pública usa apenas o resultado composto.
 
 Os testes usam um GIF pequeno e controlado para testar o compositor sem rede. Essa amostra nunca é usada como alternativa no workflow de produção. A integração real de Platane/snk deve ser conferida na execução do Actions.
 
