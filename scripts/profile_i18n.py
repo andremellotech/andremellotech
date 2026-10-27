@@ -121,10 +121,10 @@ PROFESSIONAL_ALT = {
 }
 TECHNOLOGY_ALT = {
     DEFAULT: 'Tecnologias e ferramentas: Power BI, Python, Excel, Alteryx, Power Automate e Oracle Cloud; '
-             'SAP, PowerPoint e GitHub; conhecimentos de HTML, CSS, JavaScript e Lua; '
+             'SAP, PowerPoint, Git e GitHub; conhecimentos de HTML, CSS, JavaScript e Lua; '
              'experiência anterior em MySQL para servidores de Tibia e GTA V / FiveM.',
     'en-US': 'Technology and tools: Power BI, Python, Excel, Alteryx, Power Automate and Oracle Cloud; '
-             'SAP, PowerPoint and GitHub; working knowledge of HTML, CSS, JavaScript and Lua; '
+             'SAP, PowerPoint, Git and GitHub; working knowledge of HTML, CSS, JavaScript and Lua; '
              'previous MySQL experience with Tibia and GTA V / FiveM servers.',
 }
 STATUS_ALT = {

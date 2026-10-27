@@ -72,6 +72,12 @@ def _product(root, label, kind, font, palette):
         rect((13,14,36,37), color, 12)
         rect((31,10,40,19), color, 5)
         rect((26,18,32,24), palette['matte'], 3)
+    elif kind == 'git':
+        polygon([(26,8),(42,24),(26,40),(10,24)], '#f05032')
+        line([(21,15),(32,26)], 'white', 2)
+        line([(24,18),(24,32)], 'white', 2)
+        for x,y in [(21,15),(32,26),(24,32)]:
+            rect((x-2,y-2,x+2,y+2), 'white', 2)
     elif kind == 'github':
         source = Image.open(root/'assets/badges/GitHub.webp').convert('RGBA').crop((15,7,37,29))
         alpha = source.convert('L').point(lambda v:max(0,min(255,round((v-32)*255/223))))
@@ -114,7 +120,8 @@ def render_technology(root, font, palette, locale=DEFAULT):
     badges(core, 44, 124, 1156)
 
     card((MARGIN, 230, 588, 422), 'Sistemas e colaboração')
-    badges(products([('SAP','sap'),('PowerPoint','powerpoint'),('GitHub','github')]),44,286,568)
+    badges(products([('SAP','sap'),('PowerPoint','powerpoint')]),44,286,568)
+    badges(products([('Git','git'),('GitHub','github')]),44,346,568)
 
     card((612, 230, 1176, 422), 'Linguagens · conhecimentos')
     badges(products([('HTML','html'),('CSS','css'),('JavaScript','javascript'),('Lua','lua')]),632,286,1156)

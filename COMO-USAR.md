@@ -16,7 +16,7 @@ A ordem é: apresentação curta; contatos; presença no GitHub; atividade e con
 
 Os blocos de resultados de carreira, formação acadêmica e reconhecimentos foram retirados a pedido de André. O LinkedIn permanece acessível pelo botão de contato. O módulo antigo `professional_panel.py` não é executado nem incluído no perfil ou no novo staging do Pages.
 
-Power BI, Python, Excel, Alteryx, SAP, Power Automate, Oracle Cloud, PowerPoint e GitHub refletem o uso informado. HTML, CSS, JavaScript e Lua são conhecimentos; MySQL é experiência anterior em servidores de Tibia e GTA V/FiveM. Nenhum nível de proficiência foi inventado.
+Power BI, Python, Excel, Alteryx, SAP, Power Automate, Oracle Cloud, PowerPoint, Git e GitHub refletem o uso informado. Git e GitHub aparecem lado a lado no cartão Sistemas e colaboração, com o mesmo padrão dos demais badges. HTML, CSS, JavaScript e Lua são conhecimentos; MySQL é experiência anterior em servidores de Tibia e GTA V/FiveM. Nenhum nível de proficiência foi inventado.
 
 `scripts/branding.py` centraliza margens de 24 pixels e a escala tipográfica: nome 40, chamada 32, títulos de seção 26, títulos de cartões 22, corpo 20, apoio 18 e indicadores 36 pixels. As artes têm 1200 pixels de largura e reduzem juntas no README. Todos os badges de tecnologias seguem o mesmo padrão neutro: altura 48, fonte 20, ícone alinhado e borda fina. As cores ficam nos símbolos; as superfícies e os textos acompanham o tema. Os símbolos são desenhados localmente, com GitHub e Alteryx derivados da arte local existente, sem consultas a serviços externos.
 
