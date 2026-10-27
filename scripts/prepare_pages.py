@@ -15,7 +15,7 @@ def prepare(root=ROOT):
             images.append(f'{localized("profile-card",locale)}-{theme}.png')
             images.extend(f'{localized(stem,locale)}-{theme}.{extension}' for stem, extension in
                           [('profile-intro', 'png'), ('profile-intro', 'gif'), ('status', 'png'),
-                           ('activity', 'png'), ('stack', 'png')])
+                           ('activity', 'gif'), ('stack', 'png')])
     for name in images:
         shutil.copy2(root/'assets'/name,dest/'assets'/name)
     shutil.copy2(root/'previa.html',dest/'index.html')

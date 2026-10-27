@@ -143,9 +143,9 @@ STATUS_ALT = {
 }
 ACTIVITY_ALT = {
     DEFAULT: 'Atividade e contribuições: contribuições totais desde a criação da conta, sequência atual e maior sequência, '
-             'com suas datas. A cidade 3D mostra o ano inteiro, nos últimos 12 meses: cada bloco é um dia; '
+             'com suas datas. A cidade 3D animada mostra o ano inteiro, nos últimos 12 meses, com um movimento suave de perspectiva e fundo integrado ao tema: cada bloco é um dia; '
              'cada prédio é um dia com atividade e sua altura é proporcional ao número de contribuições públicas reais de André Mello.',
     'en-US': 'Activity and contributions: total contributions since account creation, current streak and longest streak, '
-             'with their date ranges. The 3D city shows a complete year, covering the last 12 months: each block is one day; '
+             'with their date ranges. The animated 3D city shows a complete year, covering the last 12 months, with gentle camera motion and a theme-matching background: each block is one day; '
              'each building is an active day with height proportional to André Mello’s actual public contributions.',
 }

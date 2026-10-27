@@ -90,7 +90,27 @@ class ThemeRendering(unittest.TestCase):
                     self.assertEqual(city.mode,'RGBA')
                     self.assertEqual(city.getpixel((0,0))[3],0)
                 self.assertLess((root / f'assets/activity-{theme}.png').stat().st_size, 1_000_000)
-                self.assertTrue(any(f'activity-{theme}.png' in s.get('srcset', '') for s in sources))
+                city_animation = root / f'assets/activity-{theme}.gif'
+                self.assertTrue(city_animation.exists(),'The annual city must animate on the profile itself')
+                with Image.open(city_animation) as gif:
+                    self.assertEqual(gif.size,(1200,918))
+                    self.assertGreaterEqual(gif.n_frames,24,'The city needs a smooth visible animation')
+                    self.assertEqual(gif.info.get('loop'),0,'The annual city must repeat')
+                    titles,labels,city_frames=set(),set(),set()
+                    for frame in ImageSequence.Iterator(gif):
+                        rgba=frame.convert('RGBA')
+                        self.assertEqual(rgba.getpixel((0,0))[3],0)
+                        self.assertEqual(rgba.getpixel((70,370))[:3],
+                                         (255,255,255) if theme=='light' else (13,17,23),
+                                         'The city backdrop must match the rest of the profile')
+                        titles.add(hashlib.sha256(rgba.crop((0,0,1200,354)).tobytes()).hexdigest())
+                        labels.add(hashlib.sha256(rgba.crop((44,354,330,918)).tobytes()).hexdigest())
+                        city_frames.add(hashlib.sha256(rgba.crop((340,354,1176,906)).tobytes()).hexdigest())
+                    self.assertEqual(len(titles),1,'Contribution numbers and heading cannot move or flicker')
+                    self.assertEqual(len(labels),1,'The city summary must stay fixed')
+                    self.assertGreater(len(city_frames),12,'The city itself must visibly move')
+                self.assertLess(city_animation.stat().st_size,1_000_000,'Keep the corporate payload below 1 MB')
+                self.assertTrue(any(f'activity-{theme}.gif' in s.get('srcset', '') for s in sources))
             self.assertNotIn('contribution-snake',readme_text)
             self.assertNotIn('cobrinha',readme_text)
             self.assertIn('últimos 12 meses',readme_text)
@@ -137,7 +157,7 @@ class ThemeRendering(unittest.TestCase):
             self.assertNotIn('KPMG', english_readme)
             self.assertNotIn('Tecnologias e formação', english_readme)
             for theme in ['light', 'dark']:
-                for stem in ['profile-intro']:
+                for stem in ['profile-intro','activity']:
                     with Image.open(root/f'assets/{stem}-en-US-{theme}.gif') as gif:
                         self.assertGreater(gif.n_frames, 1)
                         self.assertEqual(gif.info.get('loop'), 0)

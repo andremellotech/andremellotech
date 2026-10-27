@@ -131,7 +131,7 @@ def build_github_layout(root, font, locale=DEFAULT):
              + badge_img(root, 'badge-email', tr(locale, 'E-mail — andremello@outlook.com')) + '</a></p>')
     status = '<p align="center">' + themed_picture(root, localized('status',locale), alt) + '</p>'
     activity = '<p align="center">' + themed_picture(root, localized('activity',locale),
-             ACTIVITY_ALT[locale]) + '</p>'
+             ACTIVITY_ALT[locale], animated=True) + '</p>'
     tools = '<p align="center">' + themed_picture(root, localized('stack',locale), TECHNOLOGY_ALT[locale]) + '</p>'
     top = '\n\n'.join([language_links, intro, links, status, activity, tools])
     readme = preview_body = top
