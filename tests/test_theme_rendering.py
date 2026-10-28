@@ -101,7 +101,12 @@ class ThemeRendering(unittest.TestCase):
                 with Image.open(city_animation) as gif:
                     self.assertEqual(gif.size,(1200,918))
                     self.assertGreaterEqual(gif.n_frames,24,'The city needs a smooth visible animation')
-                    self.assertIsNone(gif.info.get('loop'),'The reference grows once and remains complete')
+                    self.assertEqual(gif.info.get('loop'),0,'The city must restart without reloading the profile')
+                    durations=[frame.info['duration'] for frame in ImageSequence.Iterator(gif)]
+                    self.assertEqual(sum(durations),10000,'A complete construction cycle must last ten seconds')
+                    self.assertEqual(sum(durations[:-1]),3000,'Keep the three-second construction pace')
+                    self.assertEqual(durations[-1],7000,'Keep the completed city visible for seven seconds')
+                    gif.seek(0)
                     titles,labels,city_frames,floor_frames=set(),set(),set(),set()
                     for frame in ImageSequence.Iterator(gif):
                         rgba=frame.convert('RGBA')
@@ -174,8 +179,12 @@ class ThemeRendering(unittest.TestCase):
                 for stem in ['profile-intro','activity']:
                     with Image.open(root/f'assets/{stem}-en-US-{theme}.gif') as gif:
                         self.assertGreater(gif.n_frames, 1)
-                        self.assertEqual(gif.info.get('loop'), 0 if stem=='profile-intro' else None)
+                        self.assertEqual(gif.info.get('loop'),0)
                         self.assertEqual(gif.convert('RGBA').getpixel((0,0))[3], 0)
+                        if stem=='activity':
+                            durations=[frame.info['duration'] for frame in ImageSequence.Iterator(gif)]
+                            self.assertEqual(sum(durations),10000)
+                            self.assertEqual(durations[-1],7000)
                 with Image.open(root/f'assets/activity-en-US-{theme}.png') as city:
                     self.assertEqual(city.size,(1200,918))
                 self.assertIn('last 12 months',english_readme)

@@ -9,6 +9,7 @@ from profile_i18n import DEFAULT, tr, localized
 HEIGHT = 918
 FRAME_COUNT = 31
 FRAME_DURATION = 100
+CYCLE_DURATION = 10_000
 PALETTE_COLORS = 128
 
 
@@ -167,7 +168,7 @@ def _color_mask(rgb, color):
 
 
 def _write_animation(path, frames, matte, palette_source, exact_colors):
-    """Play the reference once, leaving the final city fully constructed."""
+    """Repeat a three-second construction and a seven-second completed city."""
     background=Image.new('RGBA',palette_source.size,matte)
     background.alpha_composite(palette_source)
     shared=background.convert('RGB').quantize(colors=PALETTE_COLORS,dither=Image.Dither.NONE)
@@ -186,7 +187,9 @@ def _write_animation(path, frames, matte, palette_source, exact_colors):
     surface=ImageColor.getrgb(matte)
     region=(340,354,1176,906)
     with path.open('wb') as output:
-        for frame in frames:
+        for frame_index,frame in enumerate(frames):
+            duration=(CYCLE_DURATION-(FRAME_COUNT-1)*FRAME_DURATION
+                      if frame_index==FRAME_COUNT-1 else FRAME_DURATION)
             background=Image.new('RGBA',frame.size,matte)
             background.alpha_composite(frame)
             rgb=background.convert('RGB')
@@ -199,17 +202,17 @@ def _write_animation(path, frames, matte, palette_source, exact_colors):
                     indexed.paste(index,region[:2],_color_mask(city_rgb,color))
             indexed.paste(255,mask=frame.getchannel('A').point(lambda a:255 if a==0 else 0))
             if previous is None:
-                chunks,_=GifImagePlugin.getheader(indexed,info={'transparency':255,'background':255})
+                chunks,_=GifImagePlugin.getheader(indexed,info={'loop':0,'transparency':255,'background':255})
                 output.writelines(chunks)
-                output.writelines(GifImagePlugin.getdata(indexed,duration=FRAME_DURATION,disposal=1,transparency=255))
+                output.writelines(GifImagePlugin.getdata(indexed,duration=duration,disposal=1,transparency=255))
             else:
                 area=ImageChops.difference(indexed,previous).getbbox()
                 if area:
                     output.writelines(GifImagePlugin.getdata(indexed.crop(area),offset=area[:2],
-                                                            duration=FRAME_DURATION,disposal=1,transparency=255))
+                                                            duration=duration,disposal=1,transparency=255))
                 else:
                     output.writelines(GifImagePlugin.getdata(indexed.crop((40,80,41,81)),offset=(40,80),
-                                                            duration=FRAME_DURATION,disposal=1,transparency=255))
+                                                            duration=duration,disposal=1,transparency=255))
             previous=indexed
         output.write(b';')
 
