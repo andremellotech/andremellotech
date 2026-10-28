@@ -1842,12 +1842,12 @@
         },
         {
           "date": "2026-10-28",
-          "count": 14,
-          "level": 3
+          "count": 19,
+          "level": 4
         }
       ],
       "stats": {
-        "total": 149,
+        "total": 154,
         "current_streak": 3,
         "longest_streak": 7,
         "best_day": {
@@ -1867,7 +1867,7 @@
           "2026-07": 0,
           "2026-08": 0,
           "2026-09": 0,
-          "2026-10": 149
+          "2026-10": 154
         },
         "first_contribution": "2026-10-13",
         "current_streak_range": {
@@ -12035,8 +12035,8 @@
         },
         {
           "date": "2026-10-28",
-          "count": 14,
-          "level": 3
+          "count": 19,
+          "level": 4
         }
       ],
       "years": {
@@ -22220,14 +22220,14 @@
             },
             {
               "date": "2026-10-28",
-              "count": 14,
-              "level": 3
+              "count": 19,
+              "level": 4
             }
           ]
         }
       },
       "stats": {
-        "total": 150,
+        "total": 155,
         "current_streak": 3,
         "longest_streak": 7,
         "best_day": {
@@ -22301,7 +22301,7 @@
           "2026-07": 0,
           "2026-08": 0,
           "2026-09": 0,
-          "2026-10": 149
+          "2026-10": 154
         },
         "first_contribution": "2021-04-07",
         "current_streak_range": {
@@ -22331,11 +22331,11 @@
           "name": "mello-charts-desktop",
           "description": "Gráficos executivos editáveis para PowerPoint, com dados do Excel, Gantt, dispersão e bolhas. Windows · C# · .NET Framework.",
           "html_url": "https://github.com/andremellotech/mello-charts-desktop",
-          "language": null,
+          "language": "C#",
           "fork": false,
           "stargazers_count": 0,
           "forks_count": 0,
-          "pushed_at": "2026-10-28T14:02:36Z"
+          "pushed_at": "2026-10-28T19:49:18Z"
         },
         {
           "name": "ja-vem-sp",
@@ -22401,53 +22401,55 @@
       "languages": {
         "HTML": 3512920,
         "TypeScript": 582155,
+        "C#": 421752,
         "Python": 292874,
         "Power Query": 126511,
         "CSS": 58945,
-        "JavaScript": 20943
+        "JavaScript": 20943,
+        "PowerShell": 9581
       },
       "languages_scope": "Até seis repositórios públicos atualizados mais recentemente",
       "stats": {
         "stars": 0,
         "pull_requests": 23,
         "issues": 0,
-        "commits": 112
+        "commits": 116
       },
       "as_of": "2026-10-28"
     }
   },
   "published_sha256": {
     ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "assets/activity-dark.gif": "1054508b60001033a79b68d07fff4031b1b4167811d4c985a258cdaaf52c2121",
-    "assets/activity-en-US-dark.gif": "0d985a5174473e3272780ccd069b62719784684de4baa560d2911f68c3878ba1",
-    "assets/activity-en-US-light.gif": "e769b7419f8746f7eebd328c87b04b2ef23642af615d66cc93b59e4f9adbec76",
-    "assets/activity-light.gif": "7eccc3b22a648a316d7c18b636b3efdb785a1e09e15078edc5942eeef924187f",
-    "assets/badge-email.png": "f10be3370626b1d3cdf8a98ddf59af352bbbb1b16c9999829fd749ec13246faf",
-    "assets/badge-github.png": "703e87f819447e586d5d01434f9b0b6f492ad2c433a837bc701d3c49a2491d7e",
-    "assets/badge-linkedin.png": "684072900a3e5dcf15aba6c41ddbcffd1bcc8a10b76dfd78e2e4c139eb601864",
-    "assets/language-en-US.png": "88d899b5de4795c42dfe1a7b6768f2c3b8febe8e503b950d23bba7f60792ca0a",
-    "assets/language-pt-BR.png": "3e8f6b2302f646e59084afb2ecb20c55d4daf6ce2e5fe5c7562a49b74d85bfd0",
-    "assets/profile-card-dark.png": "c7446f5b76047ca8c80be2f102f9bd8d4bdaaf774cef452981483ece2ed4ab1b",
-    "assets/profile-card-en-US-dark.png": "7b0f9b144762454a2e905da22ff8f7aacd2efc1ee05dfaf8de6cd70858dafdb9",
-    "assets/profile-card-en-US-light.png": "036cd5392bdb8aaf16bc3ec049b5cd713d322e4d1a8da25b95599bb36d51842f",
-    "assets/profile-card-light.png": "cb1590cbe4b735ad95486d72effd7acd45580f1df876505f151ad1839c45486b",
-    "assets/profile-intro-dark.gif": "cb02d771d3ee0446af8ca584f20a94c1662493d8d18f9c72d5ce4838eb8bac22",
-    "assets/profile-intro-dark.png": "09dc048a0728e0a0b40fb73d5916a97fd448e8a7c0dd4bfa6c803628ffd9a8da",
-    "assets/profile-intro-en-US-dark.gif": "76f68ba67dba4c4852d87d8f6f76061e003df31048c21179bcd3b84116a277f5",
-    "assets/profile-intro-en-US-dark.png": "70d643a141afbd523e7c860f263ff70ec78b3379ba35c59ac061c0f072d30c03",
-    "assets/profile-intro-en-US-light.gif": "0bd8c15275ccb90980c498a4a6b8421a45e6bfb76c95c5ddb3dc00d0094bc6d2",
-    "assets/profile-intro-en-US-light.png": "bcba31d904b0baada649c25abf0fc7a6bf74b71a621ac415f3f982f5ae3365f7",
-    "assets/profile-intro-light.gif": "d2e0ecf2a46aeade57d2834e8cbf1710a00121df485c87461ed9176b14049faa",
-    "assets/profile-intro-light.png": "dfeb4c69b746208b5230d20da3a06f1a1afcab685a0c9886fac4d8617525a791",
-    "assets/stack-dark.png": "fd78ff1178b3db78b24b15c37ffb6d17bb406b32c3497d6301e67369fff5a896",
-    "assets/stack-en-US-dark.png": "5d74ebee2de8b8fea8c39c26f0993f4b2f45fb762199712e095e965099d2d7fe",
-    "assets/stack-en-US-light.png": "a84cd1833068ce2fbf139b58ff9a8722fdf87b694259280d518158ddbd13dd5b",
-    "assets/stack-light.png": "a567b6f4872278012aec9c0a1f3aebc0d981b1b6286cfb3e1a6cb13fca85a24d",
-    "assets/status-dark.png": "8fc820cd8e9bd741b90701953abfc00fdfce7cefc3cac721161b9611a04f610d",
-    "assets/status-en-US-dark.png": "863e80d5165c85d77ebc53c642d0f29ca7721226f931b99159515a1167b56e27",
-    "assets/status-en-US-light.png": "819a9260de05eef88dcf5ed4baa9fa439dd62fa2941e8bfb84ab36ee07f41d54",
-    "assets/status-light.png": "9e007a6fd72a1cb58a117a8391d4d60dfee55fbc98deea13278e2f61d10fd51e",
-    "en-US/index.html": "f453d34d49e267e15cb1160f35dc1a99612f4f6bd10647bbfaad022ab5d9aba6",
-    "index.html": "ee058cfc142ffefd4de28c41f433e8481022c75d8355acd851734320269bf63a"
+    "assets/activity-dark.gif": "4a0a7167169394cd6ae8dffa2f1b19b4e37547215255cd1e24975c69d75fdb46",
+    "assets/activity-en-US-dark.gif": "1d5ef3d75830e2f981b61642eb6344c23c872673525498c75c19e69ea8b1afe5",
+    "assets/activity-en-US-light.gif": "8f2eec3f9fdc6444a737738cfe6a2d7ad469624e49e7fff5979b6877bbe02ad2",
+    "assets/activity-light.gif": "c01402bc52273a22380df1eb37e3493725bae9d3d0859a14f55b7ee79e695804",
+    "assets/badge-email.png": "ba531440df1ca1eeec58042fef3423753d121879e4a1ba69284658db198760c0",
+    "assets/badge-github.png": "3e2313af4ad5354d77ea62b30af0a36746e75fda578e764c7bcb703bf3488f71",
+    "assets/badge-linkedin.png": "b4833bfafb9f7aac2968fe4a6ca575a783db732e5183b4718f51606f98fe447c",
+    "assets/language-en-US.png": "34bb6ab2b386e43e9eef9ba4f01dc96ea67f0581e69f1903a46749e0358ea5f9",
+    "assets/language-pt-BR.png": "f43b3a7dd1eb803dcf1f1039caea0c90d02b2324a1d3159dd7070f443cc65f14",
+    "assets/profile-card-dark.png": "d50ef44780adc1fe791e69963fa9be214defb62b03067dde17abc7e3623b1a63",
+    "assets/profile-card-en-US-dark.png": "e8fc462c2546266fe3ffcb91ae889e06cc35c72754414472bf2a1020b8cad146",
+    "assets/profile-card-en-US-light.png": "a97068e0d0d9a467c7d17c80570530558aa3cb74d8bb9c5518518b00e8feb3a5",
+    "assets/profile-card-light.png": "c0817612d10581d53a2fc98079ae59260d21e93e08913b2c839fb9ab7a5af9aa",
+    "assets/profile-intro-dark.gif": "1ff3663b95a406a3eb466293a93241db21428f9e4d61e27dae22723420708f20",
+    "assets/profile-intro-dark.png": "25e80ece968c848dc9bb742e65f81f8bdedfb3314a4d0acb5397af59232b0bc1",
+    "assets/profile-intro-en-US-dark.gif": "13887b46119d02c59bc1ddf1130d3f5016ed3502d62be9aba66f6ebe7eabe602",
+    "assets/profile-intro-en-US-dark.png": "d02c32c79dce27391b8ac870d979a57d954816c70c1020600d86d61fed955742",
+    "assets/profile-intro-en-US-light.gif": "b2bab862e34607043ecf0e1122c733897dcbf426fa171a3fe4dfb973480b2adb",
+    "assets/profile-intro-en-US-light.png": "4a0c60cf5199d93769ce8ef4176b3e3062bdde7c2daa5cd425bbc2d70b366bf5",
+    "assets/profile-intro-light.gif": "d2332daaecaabbe397ccff81e66cc6ae72f02e6df882db1c4269b6ad3b7896a1",
+    "assets/profile-intro-light.png": "c35f4a71c496ca8daaded418e3b774a48b20f72b1c8c8ece7fab5ce2008576f7",
+    "assets/stack-dark.png": "aceb32474f7b13ae0337e5c61ace0bf46c38cd13ce44bb812e6121d6b9e8926f",
+    "assets/stack-en-US-dark.png": "d593a5cb501d5a22dcd232412bce456c35dc30eae028a482316f3bf2de5dd814",
+    "assets/stack-en-US-light.png": "d4ff753a2cd0b7c51f597703b296507607235a5f32efb0a619663a4ff9429865",
+    "assets/stack-light.png": "f03725eee908467a2a06e2739c75554f931dde394009584d04874cf7c5d62901",
+    "assets/status-dark.png": "3179260d182c3be712de9c7bd5dcb15270c8868b5ec029f7d9c40386090e95f1",
+    "assets/status-en-US-dark.png": "9c703366c3f0327782108a3e1cdd8990d0373ba50038af8547637a1b24a76bf4",
+    "assets/status-en-US-light.png": "11050566368b424d9645ee890520fc6a8af5b79b84f760cad4b5ab9cc94be992",
+    "assets/status-light.png": "ce4b73d4a948bca3e009126abd28354abe7217e710099f0c09aa79f926d6c858",
+    "en-US/index.html": "f7277b6e274d5bfe258552dbd24faad472a837cadb7502004d63850a9499e075",
+    "index.html": "0f6609d8009cc8ff9a62167306376425b414c9c0920700cb497e4bfc96f37391"
   }
 }
