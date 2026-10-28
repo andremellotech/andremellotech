@@ -30,6 +30,12 @@ class ThemeRendering(unittest.TestCase):
             for name in ['andre-ascii.png', 'andre-ascii.gif']:
                 shutil.copy2(ROOT / 'assets' / name, root / 'assets' / name)
             calendar = json.loads((root/'data/contributions.json').read_text(encoding='utf-8'))
+            # A controlled annual calendar makes animation/weight checks independent
+            # of André's future activity. Production still renders the real data.
+            for day in calendar['days']:day.update(count=0,level=0)
+            for day,count,level in zip(calendar['days'][-4:],[1,3,8,21],[1,2,3,4]):
+                day.update(count=count,level=level)
+            (root/'data/contributions.json').write_text(json.dumps(calendar),encoding='utf-8')
             (root/'data/contributions-history.json').write_text(json.dumps(calendar), encoding='utf-8')
             subprocess.run([sys.executable, str(root / 'scripts/design.py')], check=True, capture_output=True)
             parsed = Elements((root / 'README.md').read_text(encoding='utf-8'))
@@ -95,8 +101,8 @@ class ThemeRendering(unittest.TestCase):
                 with Image.open(city_animation) as gif:
                     self.assertEqual(gif.size,(1200,918))
                     self.assertGreaterEqual(gif.n_frames,24,'The city needs a smooth visible animation')
-                    self.assertEqual(gif.info.get('loop'),0,'The annual city must repeat')
-                    titles,labels,city_frames=set(),set(),set()
+                    self.assertIsNone(gif.info.get('loop'),'The reference grows once and remains complete')
+                    titles,labels,city_frames,floor_frames=set(),set(),set(),set()
                     for frame in ImageSequence.Iterator(gif):
                         rgba=frame.convert('RGBA')
                         self.assertEqual(rgba.getpixel((0,0))[3],0)
@@ -106,9 +112,17 @@ class ThemeRendering(unittest.TestCase):
                         titles.add(hashlib.sha256(rgba.crop((0,0,1200,354)).tobytes()).hexdigest())
                         labels.add(hashlib.sha256(rgba.crop((44,354,330,918)).tobytes()).hexdigest())
                         city_frames.add(hashlib.sha256(rgba.crop((340,354,1176,906)).tobytes()).hexdigest())
+                        floor_frames.add(hashlib.sha256(rgba.crop((390,430,490,460)).tobytes()).hexdigest())
                     self.assertEqual(len(titles),1,'Contribution numbers and heading cannot move or flicker')
                     self.assertEqual(len(labels),1,'The city summary must stay fixed')
                     self.assertGreater(len(city_frames),12,'The city itself must visibly move')
+                    self.assertEqual(len(floor_frames),1,'The annual floor must not rotate or wobble')
+                    github_colors=(['#aceebb','#4ac26b','#2da44e','#116329'] if theme=='light'
+                                   else ['#033a16','#196c2e','#2ea043','#56d364'])
+                    final_image=rgba.crop((340,354,1176,906)).convert('RGB')
+                    final_colors={color for _,color in final_image.getcolors(maxcolors=final_image.width*final_image.height)}
+                    for color in github_colors:
+                        self.assertIn(tuple(bytes.fromhex(color[1:])),final_colors,'Keep each GitHub level exact')
                 self.assertLess(city_animation.stat().st_size,1_000_000,'Keep the corporate payload below 1 MB')
                 self.assertTrue(any(f'activity-{theme}.gif' in s.get('srcset', '') for s in sources))
             self.assertNotIn('contribution-snake',readme_text)
@@ -160,7 +174,7 @@ class ThemeRendering(unittest.TestCase):
                 for stem in ['profile-intro','activity']:
                     with Image.open(root/f'assets/{stem}-en-US-{theme}.gif') as gif:
                         self.assertGreater(gif.n_frames, 1)
-                        self.assertEqual(gif.info.get('loop'), 0)
+                        self.assertEqual(gif.info.get('loop'), 0 if stem=='profile-intro' else None)
                         self.assertEqual(gif.convert('RGBA').getpixel((0,0))[3], 0)
                 with Image.open(root/f'assets/activity-en-US-{theme}.png') as city:
                     self.assertEqual(city.size,(1200,918))

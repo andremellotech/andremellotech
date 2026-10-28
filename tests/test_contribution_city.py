@@ -16,7 +16,8 @@ class ContributionCity(unittest.TestCase):
         start=date(2025,10,26)
         counts={'2025-10-27':9000,'2025-10-28':2,'2026-09-28':4,'2026-10-27':3,'2026-10-28':8000}
         return {'as_of':'2026-10-27','days':[{'date':(start+timedelta(days=i)).isoformat(),
-                  'count':counts.get((start+timedelta(days=i)).isoformat(),0)} for i in range(368)]}
+                  'count':counts.get((start+timedelta(days=i)).isoformat(),0),
+                  'level':min(4,counts.get((start+timedelta(days=i)).isoformat(),0))} for i in range(368)]}
 
     def test_full_year_includes_older_activity_but_excludes_padding_and_future(self):
         model=self.model(self.calendar())
@@ -26,9 +27,10 @@ class ContributionCity(unittest.TestCase):
 
     def test_annual_window_preserves_leap_day(self):
         start=date(2023,3,2); end=date(2024,3,1)
-        calendar={'as_of':end.isoformat(),'days':[{'date':(start+timedelta(days=i)).isoformat(),'count':0}
+        calendar={'as_of':end.isoformat(),'days':[{'date':(start+timedelta(days=i)).isoformat(),'count':0,'level':0}
                   for i in range((end-start).days+1)]}
         calendar['days'][-2]['count']=7
+        calendar['days'][-2]['level']=4
         model=self.model(calendar)
         self.assertEqual((model['start'],model['end']),('2023-03-02','2024-03-01'))
         self.assertEqual(len(model['days']),366)
@@ -55,10 +57,28 @@ class ContributionCity(unittest.TestCase):
 
     def test_empty_activity_has_no_invented_buildings_or_statistics(self):
         calendar=self.calendar()
-        for item in calendar['days']: item['count']=0
+        for item in calendar['days']: item.update(count=0,level=0)
         model=self.model(calendar)
         self.assertEqual((model['total'],model['active_days'],model['peak']),(0,0,0))
         self.assertTrue(all(item['height']==0 for item in model['days']))
+
+    def test_original_github_color_levels_are_preserved_and_validated(self):
+        model=self.model(self.calendar())
+        self.assertIn('level',model['days'][0],'Keep the actual GitHub intensity for each day')
+        self.assertEqual(model['days'][0]['level'],2)
+        for invalid in [None,True,-1,5]:
+            calendar=self.calendar();calendar['days'][2]['level']=invalid
+            with self.subTest(level=invalid),self.assertRaises(ValueError):self.model(calendar)
+
+    def test_buildings_grow_to_real_height_without_moving_the_floor(self):
+        city=importlib.import_module('contribution_city')
+        self.assertTrue(callable(getattr(city,'growth_height',None)),
+                        'The reference grows buildings instead of rotating the camera')
+        for height in [0,.2,5,110]:
+            steps=[city.growth_height(height,i/30) for i in range(31)]
+            self.assertEqual(steps[-1],height)
+            self.assertTrue(all(0<=a<=b<=height for a,b in zip(steps,steps[1:])))
+        self.assertLess(city.growth_height(110,0),city.growth_height(110,1))
 
 
 if __name__=='__main__': unittest.main()
