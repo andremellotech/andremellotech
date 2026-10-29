@@ -1847,13 +1847,13 @@
         },
         {
           "date": "2026-10-29",
-          "count": 0,
-          "level": 0
+          "count": 2,
+          "level": 1
         }
       ],
       "stats": {
-        "total": 154,
-        "current_streak": 3,
+        "total": 156,
+        "current_streak": 4,
         "longest_streak": 7,
         "best_day": {
           "date": "2026-10-19",
@@ -1872,12 +1872,12 @@
           "2026-07": 0,
           "2026-08": 0,
           "2026-09": 0,
-          "2026-10": 154
+          "2026-10": 156
         },
         "first_contribution": "2026-10-13",
         "current_streak_range": {
           "start": "2026-10-26",
-          "end": "2026-10-28"
+          "end": "2026-10-29"
         },
         "longest_streak_range": {
           "start": "2026-10-17",
@@ -12045,8 +12045,8 @@
         },
         {
           "date": "2026-10-29",
-          "count": 0,
-          "level": 0
+          "count": 2,
+          "level": 1
         }
       ],
       "years": {
@@ -22235,15 +22235,15 @@
             },
             {
               "date": "2026-10-29",
-              "count": 0,
-              "level": 0
+              "count": 2,
+              "level": 1
             }
           ]
         }
       },
       "stats": {
-        "total": 155,
-        "current_streak": 3,
+        "total": 157,
+        "current_streak": 4,
         "longest_streak": 7,
         "best_day": {
           "date": "2026-10-19",
@@ -22316,12 +22316,12 @@
           "2026-07": 0,
           "2026-08": 0,
           "2026-09": 0,
-          "2026-10": 154
+          "2026-10": 156
         },
         "first_contribution": "2021-04-07",
         "current_streak_range": {
           "start": "2026-10-26",
-          "end": "2026-10-28"
+          "end": "2026-10-29"
         },
         "longest_streak_range": {
           "start": "2026-10-17",
@@ -22335,13 +22335,23 @@
         "login": "andremellotech",
         "name": "André Mello",
         "bio": "Dados, automação e engenharia | Python · Power BI · SAP | Projetos, integrações e ferramentas em código.",
-        "public_repos": 7,
+        "public_repos": 8,
         "followers": 1,
         "following": 1,
         "created_at": "2021-04-07T20:02:16Z",
         "html_url": "https://github.com/andremellotech"
       },
       "repositories": [
+        {
+          "name": "latam-cargo-projects-infrastructure",
+          "description": null,
+          "html_url": "https://github.com/andremellotech/latam-cargo-projects-infrastructure",
+          "language": "JavaScript",
+          "fork": false,
+          "stargazers_count": 0,
+          "forks_count": 0,
+          "pushed_at": "2026-10-29T20:24:08Z"
+        },
         {
           "name": "mello-charts-desktop",
           "description": "Gráficos executivos editáveis para PowerPoint, com dados do Excel, Gantt, dispersão e bolhas. Windows · C# · .NET Framework.",
@@ -22414,13 +22424,13 @@
         }
       ],
       "languages": {
-        "HTML": 3512920,
+        "HTML": 3384095,
         "TypeScript": 582155,
         "C#": 421752,
-        "Python": 292874,
+        "Python": 261763,
         "Power Query": 126511,
         "CSS": 58945,
-        "JavaScript": 20943,
+        "JavaScript": 58021,
         "PowerShell": 9581
       },
       "languages_scope": "Até seis repositórios públicos atualizados mais recentemente",
@@ -22428,26 +22438,26 @@
         "stars": 0,
         "pull_requests": 23,
         "issues": 0,
-        "commits": 117
+        "commits": 118
       },
       "as_of": "2026-10-29"
     }
   },
   "published_sha256": {
     ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "assets/activity-dark.gif": "7b13d24ee535b3287df0d53c3cf026620b30fd5565c665393192f227ae3b7860",
-    "assets/activity-en-US-dark.gif": "2a19096216f29d41b686eee6a75712ec9e6fabc4784bc89404bc3699bb937c2e",
-    "assets/activity-en-US-light.gif": "4dbe5847d7c6d56f169f69a6dca981b236450ca49cb5acddb9d4312378f80f50",
-    "assets/activity-light.gif": "1b310e3c560ec51540f98c9ad52e56d8cfda4a40bafd4177b0cbc4f14545df78",
+    "assets/activity-dark.gif": "a1555e8b42d0933fcdb4773fb9c9c8b2659adf3203b07d786b4514dc0416abe3",
+    "assets/activity-en-US-dark.gif": "4589907d40a6a96a99a86c44daa3d313774ae4780acae748f76a05138cb1977e",
+    "assets/activity-en-US-light.gif": "cdba640aa5433ea66f992091b968be850da8f42708d1101c3df416f118a5bcbb",
+    "assets/activity-light.gif": "fee3526396d8ba2602707991e5c913ed50d4198b4b83470e81d0fcf83d82bde6",
     "assets/badge-email.png": "ba531440df1ca1eeec58042fef3423753d121879e4a1ba69284658db198760c0",
     "assets/badge-github.png": "3e2313af4ad5354d77ea62b30af0a36746e75fda578e764c7bcb703bf3488f71",
     "assets/badge-linkedin.png": "b4833bfafb9f7aac2968fe4a6ca575a783db732e5183b4718f51606f98fe447c",
     "assets/language-en-US.png": "34bb6ab2b386e43e9eef9ba4f01dc96ea67f0581e69f1903a46749e0358ea5f9",
     "assets/language-pt-BR.png": "f43b3a7dd1eb803dcf1f1039caea0c90d02b2324a1d3159dd7070f443cc65f14",
-    "assets/profile-card-dark.png": "343b81cfd1f28b59bb84a896e0b92e536125c72f05ba185516d5b320b082653c",
-    "assets/profile-card-en-US-dark.png": "235b88faa395d880f8d27f944685a24ea465beb9c82e3e898fa66052526120aa",
-    "assets/profile-card-en-US-light.png": "82549a53ce351e2a9f4bbc85c2de01a7ab2253aa3743dab799dd00ebcc21c33a",
-    "assets/profile-card-light.png": "06a87e17e9ec30650eb5b68975bedb873141c1ed86645f0a578a36364270027f",
+    "assets/profile-card-dark.png": "e01f680b4f2aa0874d0a9ef425c628fd0710ff7c8f92c1cbb59e9f74b680f1f7",
+    "assets/profile-card-en-US-dark.png": "9f5f80c38c0a78d23abde65cc615b7176a00689c8953ea4c09e689eac86a8e72",
+    "assets/profile-card-en-US-light.png": "49d8c56afde042aeff9ead30143ddaf4751091f8f5c7936a60552a1c044fcc7c",
+    "assets/profile-card-light.png": "bbc160841f76ecdc343cbaf9a53b730522e1ca787785b283660cf1385aecb1ce",
     "assets/profile-intro-dark.gif": "1ff3663b95a406a3eb466293a93241db21428f9e4d61e27dae22723420708f20",
     "assets/profile-intro-dark.png": "25e80ece968c848dc9bb742e65f81f8bdedfb3314a4d0acb5397af59232b0bc1",
     "assets/profile-intro-en-US-dark.gif": "13887b46119d02c59bc1ddf1130d3f5016ed3502d62be9aba66f6ebe7eabe602",
@@ -22460,11 +22470,11 @@
     "assets/stack-en-US-dark.png": "d593a5cb501d5a22dcd232412bce456c35dc30eae028a482316f3bf2de5dd814",
     "assets/stack-en-US-light.png": "d4ff753a2cd0b7c51f597703b296507607235a5f32efb0a619663a4ff9429865",
     "assets/stack-light.png": "f03725eee908467a2a06e2739c75554f931dde394009584d04874cf7c5d62901",
-    "assets/status-dark.png": "2f8149fff2801c9688ef255100ea99d28771194b81a89b8e2a38d15f96f1f22f",
-    "assets/status-en-US-dark.png": "79a94fbd36199ea0c35ebf582e8f8106c36fb22ec1288f96d4ef6254f73e4470",
-    "assets/status-en-US-light.png": "96d4be7cd35d587fbb0002b9aedf2a991f34f4800feacd42296b3be50028ff85",
-    "assets/status-light.png": "f970575bbb5e67b151b395696068157205abf37e9a559e36e4a6926b66c92b3b",
-    "en-US/index.html": "fccede3aeb4dec4cfb82608f98875dac18bb7dcad9c2df90911b57d1ca65dd7b",
-    "index.html": "62c3f0ba156c4e84b809c8ad82584217ba2ba64fdefca8887fc746b2ff5e33ae"
+    "assets/status-dark.png": "dc4e356674b1b9051d5cd7e6e1c305bbb664a7f6fc8c4ead17a53c141073e299",
+    "assets/status-en-US-dark.png": "eb57c7c3327475b807b6bd672fb26bb746d33ab90ab0a9996728857ff6a220aa",
+    "assets/status-en-US-light.png": "a6479b961f4f54273e55f23aeed42fe7e4feaac5cccc37743bab94bd652c9974",
+    "assets/status-light.png": "a39656c5d00e6e87a3fac892bf5c68028dfc320b5601673ab2a4544d168360bb",
+    "en-US/index.html": "da5690f9bd1a698c330421e108f41ac4ffd0ad1fe79c0a153c4265627d3a938c",
+    "index.html": "5d336c0d36d51f60ed64433b36bc6e4138ff68adf25e442e2980bef76c76c928"
   }
 }
