@@ -1291,6 +1291,9 @@ EN = {
     'Dados e automação na prática.': 'Data and automation in practice.',
     'Projetos de análise de dados, integrações e engenharia.': 'Data analytics, integration and engineering projects.',
     'Tecnologias e ferramentas': 'Technology and tools',
+    'Microsoft 365 · produtividade e colaboração': 'Microsoft 365 · productivity and collaboration',
+    'Engenharia e geoprocessamento': 'Engineering and geospatial tools',
+    'Desenvolvimento e versionamento': 'Development and version control',
     'Sistemas e colaboração': 'Systems and collaboration',
     'Linguagens · conhecimentos': 'Languages · working knowledge',
     'CONSULTORIA · ENGENHARIA · DADOS': 'CONSULTING · ENGINEERING · DATA',
@@ -1403,11 +1406,17 @@ PROFESSIONAL_ALT = {
              'engineering and contracts with CAPEX up to BRL 125 million, data analytics and automation.',
 }
 TECHNOLOGY_ALT = {
-    DEFAULT: 'Tecnologias e ferramentas: Power BI, Python, Excel, Alteryx, Power Automate e Oracle Cloud; '
-             'SAP, PowerPoint, Git e GitHub; conhecimentos de HTML, CSS, JavaScript e Lua; '
+    DEFAULT: 'Tecnologias e ferramentas: Power BI, Python, Alteryx, Power Automate, Power Apps, Oracle Cloud e SAP; '
+             'Microsoft 365: Word, Excel, PowerPoint, Outlook, OneNote, Teams, OneDrive, SharePoint, Access, '
+             'Forms, Lists, Planner, To Do, Loop, Whiteboard, Bookings, Stream, Sway, Visio, Project e Copilot; '
+             'engenharia e geoprocessamento: AutoCAD, Revit, QGIS e Google Earth; '
+             'desenvolvimento e versionamento: Visual Studio, Git e GitHub; conhecimentos de HTML, CSS, JavaScript e Lua; '
              'experiência anterior em MySQL para servidores de Tibia e GTA V / FiveM.',
-    'en-US': 'Technology and tools: Power BI, Python, Excel, Alteryx, Power Automate and Oracle Cloud; '
-             'SAP, PowerPoint, Git and GitHub; working knowledge of HTML, CSS, JavaScript and Lua; '
+    'en-US': 'Technology and tools: Power BI, Python, Alteryx, Power Automate, Power Apps, Oracle Cloud and SAP; '
+             'Microsoft 365: Word, Excel, PowerPoint, Outlook, OneNote, Teams, OneDrive, SharePoint, Access, '
+             'Forms, Lists, Planner, To Do, Loop, Whiteboard, Bookings, Stream, Sway, Visio, Project and Copilot; '
+             'engineering and geospatial tools: AutoCAD, Revit, QGIS and Google Earth; '
+             'development and version control: Visual Studio, Git and GitHub; working knowledge of HTML, CSS, JavaScript and Lua; '
              'previous MySQL experience with Tibia and GTA V / FiveM servers.',
 }
 STATUS_ALT = {
@@ -1757,10 +1766,18 @@ def render_status(root, font, palette, locale=DEFAULT):
     'scripts/technology_panel.py': '''"""A compact technical stack with one neutral badge system."""
 from PIL import Image, ImageDraw, ImageChops
 from themes import TRANSPARENT
-from branding import TYPE, MARGIN, section_heading
+from branding import TYPE, MARGIN, section_heading, wrapped_text
 from profile_i18n import DEFAULT, tr, localized
 
-HEIGHT = 568
+MICROSOFT_365 = [
+    ('Word', 'word'), ('Excel', 'excel'), ('PowerPoint', 'powerpoint'),
+    ('Outlook', 'outlook'), ('OneNote', 'onenote'), ('Teams', 'teams'), ('Copilot', 'copilot'),
+    ('OneDrive', 'onedrive'), ('SharePoint', 'sharepoint'), ('Access', 'access'),
+    ('Forms', 'forms'), ('Lists', 'lists'), ('Planner', 'planner'),
+    ('To Do', 'todo'), ('Loop', 'loop'), ('Whiteboard', 'whiteboard'),
+    ('Bookings', 'bookings'), ('Stream', 'stream'), ('Sway', 'sway'),
+    ('Visio', 'visio'), ('Project', 'project'),
+]
 
 
 def _product(root, label, kind, font, palette):
@@ -1797,13 +1814,104 @@ def _product(root, label, kind, font, palette):
         rect((29,16,41,31), '#ffd343', 4)
         rect((21,13,23,15), 'white', 1)
         rect((30,33,32,35), '#3776ab', 1)
-    elif kind in ['excel','powerpoint']:
-        color, pale, letter = ('#107c41','#21a366','X') if kind=='excel' else ('#c43e1c','#e98262','P')
+    elif kind in ['excel', 'powerpoint', 'word', 'onenote', 'access', 'visio', 'project']:
+        color, pale, letter = {
+            'excel': ('#107c41', '#21a366', 'X'),
+            'powerpoint': ('#c43e1c', '#e98262', 'P'),
+            'word': ('#185abd', '#41a5ee', 'W'),
+            'onenote': ('#7719aa', '#b46add', 'N'),
+            'access': ('#a4373a', '#d26b6f', 'A'),
+            'visio': ('#3955a3', '#7899e3', 'V'),
+            'project': ('#217346', '#46a86b', 'P'),
+        }[kind]
         rect((20,11,39,37), pale, 3)
         line([(24,20),(36,20)], color, 1)
         line([(24,28),(36,28)], color, 1)
         rect((12,16,30,34), color, 2)
         symbol(letter,21,25,16)
+    elif kind == 'outlook':
+        rect((21, 12, 40, 36), '#28a8ea', 3)
+        polygon([(21, 24), (31, 31), (41, 24), (41, 37), (21, 37)], '#0078d4')
+        rect((11, 17, 29, 35), '#106ebe', 2)
+        symbol('O', 20, 26, 15)
+    elif kind == 'teams':
+        rect((28, 10, 36, 18), '#7b83eb', 4)
+        rect((25, 20, 41, 35), '#7b83eb', 5)
+        rect((10, 17, 29, 36), '#5059c9', 2)
+        symbol('T', 19, 27, 15)
+    elif kind == 'onedrive':
+        for box, color in [((12, 21, 28, 36), '#0364b8'), ((20, 13, 38, 34), '#0078d4'),
+                           ((28, 22, 42, 36), '#28a8ea')]:
+            rect(box, color, 12)
+        rect((18, 27, 38, 36), '#0078d4', 3)
+    elif kind == 'sharepoint':
+        rect((22, 10, 42, 30), '#038387', 12)
+        rect((26, 22, 41, 38), '#37c6d0', 9)
+        rect((10, 17, 29, 36), '#007c80', 2)
+        symbol('S', 20, 27, 15)
+    elif kind == 'forms':
+        rect((21, 11, 40, 37), '#37c6d0', 3)
+        for y in (18, 25, 32):
+            line([(31, y), (36, y)], '#008272', 2)
+        rect((10, 17, 28, 35), '#008272', 2)
+        symbol('F', 19, 26, 15)
+    elif kind == 'lists':
+        for y, color in [(12, '#d767bc'), (22, '#b74e9c'), (32, '#7b3f95')]:
+            rect((12, y, 20, y + 6), color, 2)
+            rect((23, y, 40, y + 6), color, 2)
+    elif kind == 'planner':
+        rect((13, 11, 40, 38), '#107c41', 5)
+        rect((18, 19, 23, 33), '#7fd68d', 1)
+        rect((27, 15, 34, 26), '#b9eabd', 1)
+    elif kind == 'todo':
+        line([(12, 25), (22, 35), (40, 15)], '#2564cf', 5)
+        line([(12, 25), (17, 30)], '#65a2fa', 5)
+    elif kind == 'loop':
+        rect((12, 11, 39, 37), '#8b5cf6', 12)
+        rect((20, 17, 33, 31), palette['matte'], 7)
+        rect((30, 27, 41, 38), '#bca1ff', 6)
+    elif kind == 'whiteboard':
+        rect((12, 12, 40, 37), None, 4, '#0875d1', 2)
+        line([(18, 29), (25, 20), (31, 26), (36, 19)], '#0875d1', 2)
+    elif kind == 'bookings':
+        rect((13, 12, 40, 37), '#008575', 4)
+        line([(17, 18), (36, 18)], '#99e0d5', 2)
+        symbol('B', 26, 28, 17)
+    elif kind == 'stream':
+        polygon([(14, 11), (40, 24), (14, 38)], '#c43b73')
+        polygon([(23, 19), (32, 24), (23, 29)], 'white')
+    elif kind == 'sway':
+        rect((22, 12, 40, 37), '#37af8c', 3)
+        rect((11, 17, 29, 35), '#008272', 2)
+        symbol('S', 20, 26, 15)
+    elif kind == 'copilot':
+        for box, color in [((12, 12, 29, 29), '#6554c0'), ((23, 12, 40, 29), '#29a8c7'),
+                           ((23, 22, 40, 38), '#e6a63e'), ((12, 22, 29, 38), '#c35da2')]:
+            rect(box, color, 7)
+        rect((22, 20, 30, 30), palette['matte'], 3)
+    elif kind == 'powerapps':
+        polygon([(12, 24), (25, 11), (39, 24), (25, 37)], '#742774')
+        polygon([(19, 24), (29, 14), (40, 24), (29, 34)], '#c886ca')
+    elif kind == 'autocad':
+        polygon([(25, 9), (41, 38), (31, 34), (25, 20), (19, 34), (10, 38)], '#d32f42')
+        line([(20, 29), (31, 29)], '#f5808a', 3)
+    elif kind == 'revit':
+        polygon([(13, 11), (33, 11), (41, 18), (34, 25), (41, 38), (29, 38),
+                 (22, 26), (22, 38), (13, 38)], '#1866af')
+        rect((22, 17, 30, 22), palette['matte'], 1)
+    elif kind == 'qgis':
+        rect((12, 10, 40, 38), '#589632', 14)
+        rect((19, 17, 33, 31), palette['matte'], 7)
+        polygon([(25, 24), (38, 25), (42, 39), (29, 33)], '#eeb246')
+    elif kind == 'googleearth':
+        rect((12, 10, 40, 38), '#4285f4', 14)
+        line([(14, 20), (23, 17), (37, 24)], '#c2dcff', 3)
+        line([(13, 28), (22, 25), (38, 32)], '#8bb9fa', 3)
+        line([(17, 35), (26, 33), (34, 36)], '#c2dcff', 2)
+    elif kind == 'visualstudio':
+        polygon([(12, 19), (19, 13), (29, 20), (39, 10), (42, 12), (42, 37),
+                 (38, 39), (29, 29), (19, 36), (12, 30), (21, 24)], '#9b5de5')
+        polygon([(31, 22), (37, 17), (37, 32), (31, 27)], palette['matte'])
     elif kind == 'alteryx':
         color = '#0085b2' if palette['name']=='light' else '#4dc1e7'
         # The small wordmark retains the existing local brand artwork.
@@ -1852,41 +1960,75 @@ def _product(root, label, kind, font, palette):
 
 
 def render_technology(root, font, palette, locale=DEFAULT):
-    image = Image.new('RGBA', (1200, HEIGHT), TRANSPARENT)
+    # Measure the real font before allocating cards, including Linux CI fonts.
+    # Every product uses the same 48px pill; card height follows wrapped rows.
+    measure = ImageDraw.Draw(Image.new('RGBA', (1, 1)))
+    groups = []
+    def group(title, items, x, y, width, note=None):
+        placements, px, py = [], 20, 56
+        for item in items:
+            if item is None:
+                px, py = 20, py + 60
+                continue
+            label, kind = item
+            badge = _product(root, label, kind, font, palette)
+            if badge.width > width - 40:
+                raise ValueError('Tool label is wider than its card: ' + label)
+            if px + badge.width > width - 20:
+                px, py = 20, py + 60
+            placements.append((badge, px, py))
+            px += badge.width + 10
+        height = py + 48 + 20
+        if measure.textlength(tr(locale, title), font=font(TYPE['card'], True)) > width - 40:
+            raise ValueError('Tool heading is wider than its card: ' + title)
+        if note:
+            # Measure the translated note with the same helper used for drawing.
+            note_y = py + 48 + 12
+            note_height = wrapped_text(measure, (0, 0), tr(locale, note),
+                                       font(TYPE['body']), 'white', width - 40)
+            height = note_y + note_height + 20
+        groups.append((x, y, width, height, title, placements, note, py + 60))
+        return height
+
+    y = 72
+    y += group('Dados, sistemas e automação', [
+        ('Power BI', 'powerbi'), ('Python', 'python'), ('Alteryx', 'alteryx'), ('SAP', 'sap'), None,
+        ('Power Automate', 'automate'), ('Power Apps', 'powerapps'),
+        ('Oracle Cloud', 'oracle')], MARGIN, y, 1152) + 24
+    y += group('Microsoft 365 · produtividade e colaboração', MICROSOFT_365,
+               MARGIN, y, 1152) + 24
+    engineering = group('Engenharia e geoprocessamento', [
+        ('AutoCAD', 'autocad'), ('Revit', 'revit'), ('QGIS', 'qgis'),
+        ('Google Earth', 'googleearth')], MARGIN, y, 564)
+    development = group('Desenvolvimento e versionamento', [
+        ('Visual Studio', 'visualstudio'), ('Git', 'git'), ('GitHub', 'github')], 612, y, 564)
+    # Sibling cards share their baseline even if one has an extra wrapped row.
+    row_height = max(engineering, development)
+    groups[-2] = groups[-2][:3] + (row_height,) + groups[-2][4:]
+    groups[-1] = groups[-1][:3] + (row_height,) + groups[-1][4:]
+    y += row_height + 24
+    languages = group('Linguagens · conhecimentos', [
+        ('HTML', 'html'), ('CSS', 'css'), ('JavaScript', 'javascript'), ('Lua', 'lua')],
+        MARGIN, y, 564)
+    database = group('Banco de dados · experiência anterior', [('MySQL', 'mysql')],
+                     612, y, 564, 'MySQL em servidores de Tibia e GTA V / FiveM.')
+    row_height = max(languages, database)
+    groups[-2] = groups[-2][:3] + (row_height,) + groups[-2][4:]
+    groups[-1] = groups[-1][:3] + (row_height,) + groups[-1][4:]
+
+    image = Image.new('RGBA', (1200, y + row_height + 18), TRANSPARENT)
     draw = ImageDraw.Draw(image)
     section_heading(draw, palette, font, tr(locale, 'Tecnologias e ferramentas'), 12)
-    def text(xy, value, **kwargs):
-        draw.text(xy, tr(locale, value), **kwargs)
-    def card(box, title):
-        draw.rounded_rectangle(box, radius=12, fill=palette['surface'], outline=palette['line'])
-        text((box[0]+20, box[1]+17), title, font=font(TYPE['card'], True), fill=palette['accent'])
-    def badges(items, x, y, limit):
-        start = x
-        for badge in items:
-            if x + badge.width > limit:
-                x, y = start, y + 60
-            image.alpha_composite(badge, (x, y))
-            x += badge.width + 10
-
-    def products(items):
-        return [_product(root,label,kind,font,palette) for label,kind in items]
-    card((MARGIN, 72, 1176, 206), 'Dados, sistemas e automação')
-    core = products([('Power BI','powerbi'),('Python','python'),('Excel','excel'),('Alteryx','alteryx'),
-                     ('Power Automate','automate'),('Oracle Cloud','oracle')])
-    badges(core, 44, 124, 1156)
-
-    card((MARGIN, 230, 588, 422), 'Sistemas e colaboração')
-    badges(products([('SAP','sap'),('PowerPoint','powerpoint')]),44,286,568)
-    badges(products([('Git','git'),('GitHub','github')]),44,346,568)
-
-    card((612, 230, 1176, 422), 'Linguagens · conhecimentos')
-    badges(products([('HTML','html'),('CSS','css'),('JavaScript','javascript'),('Lua','lua')]),632,286,1156)
-
-    card((MARGIN, 446, 1176, 550), 'Banco de dados · experiência anterior')
-    database = _product(root,'MySQL','mysql',font,palette)
-    image.alpha_composite(database, (44, 492))
-    text((44+database.width+24, 503), 'MySQL em servidores de Tibia e GTA V / FiveM.',
-              font=font(TYPE['body']), fill=palette['muted'])
+    for x, y, width, height, title, placements, note, note_y in groups:
+        draw.rounded_rectangle((x, y, x + width, y + height), radius=12,
+                               fill=palette['surface'], outline=palette['line'])
+        draw.text((x + 20, y + 17), tr(locale, title),
+                  font=font(TYPE['card'], True), fill=palette['accent'])
+        for badge, px, py in placements:
+            image.alpha_composite(badge, (x + px, y + py))
+        if note:
+            wrapped_text(draw, (x + 20, y + note_y), tr(locale, note),
+                         font(TYPE['body']), palette['muted'], width - 40)
     image.save(root/'assets'/f'{localized("stack", locale)}-{palette["name"]}.png')
 ''',
 
@@ -2457,7 +2599,8 @@ class ThemeRendering(unittest.TestCase):
             for theme in ['light', 'dark']:
                 with Image.open(root / f'assets/stack-{theme}.png') as im:
                     self.assertEqual(im.mode, 'RGBA')
-                    self.assertEqual(im.size, (1200, 568), 'The stack excludes the academic resume')
+                    self.assertEqual(im.width, 1200)
+                    self.assertLessEqual(im.height, 1100, 'The expanded stack stays compact and excludes the academic resume')
                     self.assertEqual(im.getpixel((0, 0))[3], 0)
             subprocess.run([sys.executable, str(root / 'scripts/prepare_pages.py')], check=True, capture_output=True)
             english = Elements((root/'README.en-US.md').read_text(encoding='utf-8'))
