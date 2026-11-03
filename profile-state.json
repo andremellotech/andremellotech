@@ -1753,7 +1753,7 @@
         {
           "date": "2026-10-17",
           "count": 13,
-          "level": 3
+          "level": 2
         },
         {
           "date": "2026-10-18",
@@ -1763,7 +1763,7 @@
         {
           "date": "2026-10-19",
           "count": 21,
-          "level": 4
+          "level": 3
         },
         {
           "date": "2026-10-20",
@@ -1773,17 +1773,17 @@
         {
           "date": "2026-10-21",
           "count": 19,
-          "level": 4
+          "level": 3
         },
         {
           "date": "2026-10-22",
           "count": 12,
-          "level": 3
+          "level": 2
         },
         {
           "date": "2026-10-23",
           "count": 20,
-          "level": 4
+          "level": 3
         },
         {
           "date": "2026-10-24",
@@ -1798,17 +1798,17 @@
         {
           "date": "2026-10-26",
           "count": 19,
-          "level": 4
+          "level": 3
         },
         {
           "date": "2026-10-27",
           "count": 8,
-          "level": 2
+          "level": 1
         },
         {
           "date": "2026-10-28",
           "count": 19,
-          "level": 4
+          "level": 3
         },
         {
           "date": "2026-10-29",
@@ -1837,17 +1837,17 @@
         },
         {
           "date": "2026-11-03",
-          "count": 9,
-          "level": 2
+          "count": 35,
+          "level": 4
         }
       ],
       "stats": {
-        "total": 180,
+        "total": 206,
         "current_streak": 2,
         "longest_streak": 7,
         "best_day": {
-          "date": "2026-10-19",
-          "count": 21
+          "date": "2026-11-03",
+          "count": 35
         },
         "monthly_totals": {
           "2025-11": 0,
@@ -1862,7 +1862,7 @@
           "2026-08": 0,
           "2026-09": 0,
           "2026-10": 170,
-          "2026-11": 10
+          "2026-11": 36
         },
         "first_contribution": "2026-10-13",
         "current_streak_range": {
@@ -11976,7 +11976,7 @@
         {
           "date": "2026-10-17",
           "count": 13,
-          "level": 3
+          "level": 2
         },
         {
           "date": "2026-10-18",
@@ -11986,7 +11986,7 @@
         {
           "date": "2026-10-19",
           "count": 21,
-          "level": 4
+          "level": 3
         },
         {
           "date": "2026-10-20",
@@ -11996,17 +11996,17 @@
         {
           "date": "2026-10-21",
           "count": 19,
-          "level": 4
+          "level": 3
         },
         {
           "date": "2026-10-22",
           "count": 12,
-          "level": 3
+          "level": 2
         },
         {
           "date": "2026-10-23",
           "count": 20,
-          "level": 4
+          "level": 3
         },
         {
           "date": "2026-10-24",
@@ -12021,17 +12021,17 @@
         {
           "date": "2026-10-26",
           "count": 19,
-          "level": 4
+          "level": 3
         },
         {
           "date": "2026-10-27",
           "count": 8,
-          "level": 2
+          "level": 1
         },
         {
           "date": "2026-10-28",
           "count": 19,
-          "level": 4
+          "level": 3
         },
         {
           "date": "2026-10-29",
@@ -12060,8 +12060,8 @@
         },
         {
           "date": "2026-11-03",
-          "count": 9,
-          "level": 2
+          "count": 35,
+          "level": 4
         }
       ],
       "years": {
@@ -22191,7 +22191,7 @@
             {
               "date": "2026-10-17",
               "count": 13,
-              "level": 3
+              "level": 2
             },
             {
               "date": "2026-10-18",
@@ -22201,7 +22201,7 @@
             {
               "date": "2026-10-19",
               "count": 21,
-              "level": 4
+              "level": 3
             },
             {
               "date": "2026-10-20",
@@ -22211,17 +22211,17 @@
             {
               "date": "2026-10-21",
               "count": 19,
-              "level": 4
+              "level": 3
             },
             {
               "date": "2026-10-22",
               "count": 12,
-              "level": 3
+              "level": 2
             },
             {
               "date": "2026-10-23",
               "count": 20,
-              "level": 4
+              "level": 3
             },
             {
               "date": "2026-10-24",
@@ -22236,17 +22236,17 @@
             {
               "date": "2026-10-26",
               "count": 19,
-              "level": 4
+              "level": 3
             },
             {
               "date": "2026-10-27",
               "count": 8,
-              "level": 2
+              "level": 1
             },
             {
               "date": "2026-10-28",
               "count": 19,
-              "level": 4
+              "level": 3
             },
             {
               "date": "2026-10-29",
@@ -22275,19 +22275,19 @@
             },
             {
               "date": "2026-11-03",
-              "count": 9,
-              "level": 2
+              "count": 35,
+              "level": 4
             }
           ]
         }
       },
       "stats": {
-        "total": 181,
+        "total": 207,
         "current_streak": 2,
         "longest_streak": 7,
         "best_day": {
-          "date": "2026-10-19",
-          "count": 21
+          "date": "2026-11-03",
+          "count": 35
         },
         "monthly_totals": {
           "2021-04": 1,
@@ -22357,7 +22357,7 @@
           "2026-08": 0,
           "2026-09": 0,
           "2026-10": 170,
-          "2026-11": 10
+          "2026-11": 36
         },
         "first_contribution": "2021-04-07",
         "current_streak_range": {
@@ -22476,28 +22476,28 @@
       "languages_scope": "Até seis repositórios públicos atualizados mais recentemente",
       "stats": {
         "stars": 0,
-        "pull_requests": 25,
+        "pull_requests": 31,
         "issues": 0,
-        "commits": 140
+        "commits": 160
       },
       "as_of": "2026-11-03"
     }
   },
   "published_sha256": {
     ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "assets/activity-dark.gif": "a75e40a883837fc192e3c73fbcc811224ef89aac0399e1adca74b0276fc8065d",
-    "assets/activity-en-US-dark.gif": "cf14e6f3ef24a1b61eac148c8b20cb56f41edfc7b8549324f996ddd20c772f56",
-    "assets/activity-en-US-light.gif": "71d0cbd014d7001dd6fea6590f555729dcff5681a7e4dcc645c7fd0d0627597e",
-    "assets/activity-light.gif": "9408b2075df82c9d6006a781e84d151372bb5d637a44eb6d738d2fd792434341",
+    "assets/activity-dark.gif": "3e41461704d6a637b1d8e234dcdcbf51c33199c182a933a8adfe7d7035a7df6f",
+    "assets/activity-en-US-dark.gif": "1a4d29afed8af9d8435431a320b346ef092e8642a5c0b4e5cecd8232b4713978",
+    "assets/activity-en-US-light.gif": "cb9f9df671124e4d913246225c67e5e92f5698626c9bab351c6c205194c6fea2",
+    "assets/activity-light.gif": "8c80e0ed9be23cbc381c4bfa214b2f35ef3ac4ae1c3502a6dadcbb952565b629",
     "assets/badge-email.png": "ba531440df1ca1eeec58042fef3423753d121879e4a1ba69284658db198760c0",
     "assets/badge-github.png": "3e2313af4ad5354d77ea62b30af0a36746e75fda578e764c7bcb703bf3488f71",
     "assets/badge-linkedin.png": "b4833bfafb9f7aac2968fe4a6ca575a783db732e5183b4718f51606f98fe447c",
     "assets/language-en-US.png": "34bb6ab2b386e43e9eef9ba4f01dc96ea67f0581e69f1903a46749e0358ea5f9",
     "assets/language-pt-BR.png": "f43b3a7dd1eb803dcf1f1039caea0c90d02b2324a1d3159dd7070f443cc65f14",
-    "assets/profile-card-dark.png": "33dec74a21d6f1c0a638845701cea0dd9a2afb8c541e7a8d330e0ffde698411e",
-    "assets/profile-card-en-US-dark.png": "429ac6824394a8cd704b57be3089cfc6120d882d4ecb035e88e3e92d0ee0eb1c",
-    "assets/profile-card-en-US-light.png": "dfeaefd8f532db69f1356937955bb46c0a441d34215a4c71086e3f3c79283b91",
-    "assets/profile-card-light.png": "3cc5707971137ff6c078f6bdbfea9584f0ec517054ae0429594b04954f3c9ff4",
+    "assets/profile-card-dark.png": "8c02844657c201d22cc6e4c42e174c477cb8e32043762a15768b68d9e5bbe0e8",
+    "assets/profile-card-en-US-dark.png": "880da8027b04b1e1fc0f98804bbefa27ec84d3de436a35237a2cec9e129f84b3",
+    "assets/profile-card-en-US-light.png": "c93463f22ffdcf42830ca525fa4f10bcfa13c89db0f71d419077cd7de675dcad",
+    "assets/profile-card-light.png": "76b05a4683007461e952d31e59bc8339873d27f526b41ba0a6925b830ac378bf",
     "assets/profile-intro-dark.gif": "1ff3663b95a406a3eb466293a93241db21428f9e4d61e27dae22723420708f20",
     "assets/profile-intro-dark.png": "25e80ece968c848dc9bb742e65f81f8bdedfb3314a4d0acb5397af59232b0bc1",
     "assets/profile-intro-en-US-dark.gif": "13887b46119d02c59bc1ddf1130d3f5016ed3502d62be9aba66f6ebe7eabe602",
@@ -22510,11 +22510,11 @@
     "assets/stack-en-US-dark.png": "748473cdf75a5074f81ab0081a39bdf1c20e59837e0e4a24e41ecd984f427d2a",
     "assets/stack-en-US-light.png": "fc37f19c3185e3f259dfb168f7e1a47b1692532a39d0f838760e3f50f64c07ba",
     "assets/stack-light.png": "69387ee560adcfe7eb070be30248bae621265a029fa7df5e8139f693bae35c31",
-    "assets/status-dark.png": "99f599a31f605cb50862274dd347e3eba98d315ad084628779f1f87eba7ae31a",
-    "assets/status-en-US-dark.png": "90310641a0489ed41c369567516046089b7f2cd76d01ad469d1aad9ea56c04ef",
-    "assets/status-en-US-light.png": "6fa613d7529c2bbdc254883020916661d7e76950580450a67dee0cf6c94dbfb4",
-    "assets/status-light.png": "a60d00c2183f11cc29ec386724ecff6752ada8dfcf7f1769422410a1657054db",
-    "en-US/index.html": "84ffb835836e2390a715f5945a3f5155d87195b7d463a680bad1ac8210fd9a17",
-    "index.html": "997ff7d16069efd9bb61dedd696d47aaf8e55caac899e733974ee50f1941054a"
+    "assets/status-dark.png": "5a00ef10e9c46ffa844f485ad977256ae9f960cad6773e53bdcc6908cff74990",
+    "assets/status-en-US-dark.png": "711919e311daf4b09408e71b259f48b59061554f5cd9ae02d64ab0a2445cd850",
+    "assets/status-en-US-light.png": "976494f619c8e089dc658340c88013f74c00e73ded77911e59c65a508e5e3796",
+    "assets/status-light.png": "011e0cff9c54d4a6f4a752c16dabf7497c0487a05026fdc5e48477acbeb06b25",
+    "en-US/index.html": "a3edb420c10879edcfef07c17032f1d4de7664c6b60f2037f39e1a4c971b60a2",
+    "index.html": "1947445eedaeb8c6effbf228ca53bb3f7251f8030d07c0cf3f38efb7b2635005"
   }
 }
