@@ -1837,12 +1837,12 @@
         },
         {
           "date": "2026-11-03",
-          "count": 2,
-          "level": 1
+          "count": 9,
+          "level": 2
         }
       ],
       "stats": {
-        "total": 173,
+        "total": 180,
         "current_streak": 2,
         "longest_streak": 7,
         "best_day": {
@@ -1862,7 +1862,7 @@
           "2026-08": 0,
           "2026-09": 0,
           "2026-10": 170,
-          "2026-11": 3
+          "2026-11": 10
         },
         "first_contribution": "2026-10-13",
         "current_streak_range": {
@@ -12060,8 +12060,8 @@
         },
         {
           "date": "2026-11-03",
-          "count": 2,
-          "level": 1
+          "count": 9,
+          "level": 2
         }
       ],
       "years": {
@@ -22275,14 +22275,14 @@
             },
             {
               "date": "2026-11-03",
-              "count": 2,
-              "level": 1
+              "count": 9,
+              "level": 2
             }
           ]
         }
       },
       "stats": {
-        "total": 174,
+        "total": 181,
         "current_streak": 2,
         "longest_streak": 7,
         "best_day": {
@@ -22357,7 +22357,7 @@
           "2026-08": 0,
           "2026-09": 0,
           "2026-10": 170,
-          "2026-11": 3
+          "2026-11": 10
         },
         "first_contribution": "2021-04-07",
         "current_streak_range": {
@@ -22384,14 +22384,14 @@
       },
       "repositories": [
         {
-          "name": "latam-cargo-projects-infrastructure",
+          "name": "ja-vem-sp",
           "description": null,
-          "html_url": "https://github.com/andremellotech/latam-cargo-projects-infrastructure",
-          "language": "JavaScript",
+          "html_url": "https://github.com/andremellotech/ja-vem-sp",
+          "language": "HTML",
           "fork": false,
           "stargazers_count": 0,
           "forks_count": 0,
-          "pushed_at": "2026-11-03T05:34:30Z"
+          "pushed_at": "2026-11-03T09:37:42Z"
         },
         {
           "name": "mello-charts-desktop",
@@ -22401,27 +22401,7 @@
           "fork": false,
           "stargazers_count": 0,
           "forks_count": 0,
-          "pushed_at": "2026-10-28T19:49:18Z"
-        },
-        {
-          "name": "ja-vem-sp",
-          "description": null,
-          "html_url": "https://github.com/andremellotech/ja-vem-sp",
-          "language": "HTML",
-          "fork": false,
-          "stargazers_count": 0,
-          "forks_count": 0,
-          "pushed_at": "2026-10-24T00:19:39Z"
-        },
-        {
-          "name": "financial-performance-analytics",
-          "description": "Caso de análise financeira com dados fictícios: orçado × realizado, build-up, motivadores e projeção de fechamento (EAC) em Power BI, Excel e Python, com prévia navegável.",
-          "html_url": "https://github.com/andremellotech/financial-performance-analytics",
-          "language": "HTML",
-          "fork": false,
-          "stargazers_count": 0,
-          "forks_count": 0,
-          "pushed_at": "2026-10-18T16:56:45Z"
+          "pushed_at": "2026-11-03T09:29:22Z"
         },
         {
           "name": "finance-close-automation",
@@ -22431,27 +22411,47 @@
           "fork": false,
           "stargazers_count": 0,
           "forks_count": 0,
-          "pushed_at": "2026-10-18T15:29:03Z"
+          "pushed_at": "2026-11-03T09:21:25Z"
         },
         {
           "name": "sap-project-financial-control-tower",
           "description": "Painel de controle financeiro de projetos SAP por elemento PEP, com rastreabilidade do indicador ao documento de origem. Dados fictícios.",
           "html_url": "https://github.com/andremellotech/sap-project-financial-control-tower",
-          "language": "HTML",
+          "language": "Python",
           "fork": false,
           "stargazers_count": 0,
           "forks_count": 0,
-          "pushed_at": "2026-10-17T13:19:26Z"
+          "pushed_at": "2026-11-03T09:21:18Z"
         },
         {
           "name": "sap-procurement-control-tower",
           "description": "Painel de compras SAP para acompanhar requisições, pedidos, saldos a entregar e atrasos, com rastreabilidade por item. Python, SQL e JavaScript. Em desenvolvimento, com dados fictícios.",
           "html_url": "https://github.com/andremellotech/sap-procurement-control-tower",
+          "language": "Python",
+          "fork": false,
+          "stargazers_count": 0,
+          "forks_count": 0,
+          "pushed_at": "2026-11-03T09:21:17Z"
+        },
+        {
+          "name": "financial-performance-analytics",
+          "description": "Caso de análise financeira com dados fictícios: orçado × realizado, build-up, motivadores e projeção de fechamento (EAC) em Power BI, Excel e Python, com prévia navegável.",
+          "html_url": "https://github.com/andremellotech/financial-performance-analytics",
           "language": "HTML",
           "fork": false,
           "stargazers_count": 0,
           "forks_count": 0,
-          "pushed_at": "2026-10-17T12:28:56Z"
+          "pushed_at": "2026-11-03T09:21:13Z"
+        },
+        {
+          "name": "latam-cargo-projects-infrastructure",
+          "description": null,
+          "html_url": "https://github.com/andremellotech/latam-cargo-projects-infrastructure",
+          "language": "Python",
+          "fork": false,
+          "stargazers_count": 0,
+          "forks_count": 0,
+          "pushed_at": "2026-11-03T08:33:19Z"
         },
         {
           "name": "andremellotech",
@@ -22465,41 +22465,39 @@
         }
       ],
       "languages": {
-        "HTML": 3388801,
+        "HTML": 2374444,
         "TypeScript": 582155,
         "C#": 421752,
-        "Python": 412959,
-        "JavaScript": 262161,
-        "CSS": 151504,
-        "Power Query": 129359,
-        "PowerShell": 9581,
-        "Dockerfile": 1332
+        "Python": 330043,
+        "CSS": 58945,
+        "JavaScript": 30990,
+        "PowerShell": 18124
       },
       "languages_scope": "Até seis repositórios públicos atualizados mais recentemente",
       "stats": {
         "stars": 0,
         "pull_requests": 25,
         "issues": 0,
-        "commits": 133
+        "commits": 140
       },
       "as_of": "2026-11-03"
     }
   },
   "published_sha256": {
     ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "assets/activity-dark.gif": "92a7f2c32ec81aa969680d91d19f20c1718a21459fabf27987e6ec2365765c2d",
-    "assets/activity-en-US-dark.gif": "60c36e16e43a679ee69348c1e59e53c762c220b34be8149cee2cd1ef279605ac",
-    "assets/activity-en-US-light.gif": "f93382a4a0c36d78a21d9e968de683aa3ae40f39d6bae86e7b1b9e47fef9e515",
-    "assets/activity-light.gif": "8465549de0b5383b568b05a34b6ac62a7e42ade493b3b2f6af2ef33556468ade",
+    "assets/activity-dark.gif": "a75e40a883837fc192e3c73fbcc811224ef89aac0399e1adca74b0276fc8065d",
+    "assets/activity-en-US-dark.gif": "cf14e6f3ef24a1b61eac148c8b20cb56f41edfc7b8549324f996ddd20c772f56",
+    "assets/activity-en-US-light.gif": "71d0cbd014d7001dd6fea6590f555729dcff5681a7e4dcc645c7fd0d0627597e",
+    "assets/activity-light.gif": "9408b2075df82c9d6006a781e84d151372bb5d637a44eb6d738d2fd792434341",
     "assets/badge-email.png": "ba531440df1ca1eeec58042fef3423753d121879e4a1ba69284658db198760c0",
     "assets/badge-github.png": "3e2313af4ad5354d77ea62b30af0a36746e75fda578e764c7bcb703bf3488f71",
     "assets/badge-linkedin.png": "b4833bfafb9f7aac2968fe4a6ca575a783db732e5183b4718f51606f98fe447c",
     "assets/language-en-US.png": "34bb6ab2b386e43e9eef9ba4f01dc96ea67f0581e69f1903a46749e0358ea5f9",
     "assets/language-pt-BR.png": "f43b3a7dd1eb803dcf1f1039caea0c90d02b2324a1d3159dd7070f443cc65f14",
-    "assets/profile-card-dark.png": "d560a78e7e693840a4719bdb71cd05a0a185ebb44e870a9324bab737ecc1b0a5",
-    "assets/profile-card-en-US-dark.png": "7131e583d5fd2c7750a5c2093cec0bdaa8825ddd9d5cbf391592866df8ae79c8",
-    "assets/profile-card-en-US-light.png": "53172b9c1ca5446a9f5fbf2f4e96c36e02ee83eb9063d05ad7d729a93bd7f75d",
-    "assets/profile-card-light.png": "187ffaac251241f5225ecba5128584be9b97fe4510ac54983da43f19fee60e0f",
+    "assets/profile-card-dark.png": "33dec74a21d6f1c0a638845701cea0dd9a2afb8c541e7a8d330e0ffde698411e",
+    "assets/profile-card-en-US-dark.png": "429ac6824394a8cd704b57be3089cfc6120d882d4ecb035e88e3e92d0ee0eb1c",
+    "assets/profile-card-en-US-light.png": "dfeaefd8f532db69f1356937955bb46c0a441d34215a4c71086e3f3c79283b91",
+    "assets/profile-card-light.png": "3cc5707971137ff6c078f6bdbfea9584f0ec517054ae0429594b04954f3c9ff4",
     "assets/profile-intro-dark.gif": "1ff3663b95a406a3eb466293a93241db21428f9e4d61e27dae22723420708f20",
     "assets/profile-intro-dark.png": "25e80ece968c848dc9bb742e65f81f8bdedfb3314a4d0acb5397af59232b0bc1",
     "assets/profile-intro-en-US-dark.gif": "13887b46119d02c59bc1ddf1130d3f5016ed3502d62be9aba66f6ebe7eabe602",
@@ -22512,11 +22510,11 @@
     "assets/stack-en-US-dark.png": "748473cdf75a5074f81ab0081a39bdf1c20e59837e0e4a24e41ecd984f427d2a",
     "assets/stack-en-US-light.png": "fc37f19c3185e3f259dfb168f7e1a47b1692532a39d0f838760e3f50f64c07ba",
     "assets/stack-light.png": "69387ee560adcfe7eb070be30248bae621265a029fa7df5e8139f693bae35c31",
-    "assets/status-dark.png": "40fc363834c3a29ad03fac93f63cc7aba78b5c2115948a69b5c1a97b07dd60bb",
-    "assets/status-en-US-dark.png": "43100cc7287f0f33a194c4856cf3b9d9dd1317e8ecd823ef60b9a16efb8df950",
-    "assets/status-en-US-light.png": "853fbeaaec01396f3525b2d1951fcc951b850640aade23f7c9ccc4d410670080",
-    "assets/status-light.png": "f0131569cb2968cae1633066c246cfce6adf24cc6de8816f8c6555e55ee5f390",
-    "en-US/index.html": "6395bad72123aab9c6798a7696a71d6db59bbd92ac4ab9093488a977b46a4f91",
-    "index.html": "1174671781507773dd32d3180a458489f543ab8dacea909418509329acd947a1"
+    "assets/status-dark.png": "99f599a31f605cb50862274dd347e3eba98d315ad084628779f1f87eba7ae31a",
+    "assets/status-en-US-dark.png": "90310641a0489ed41c369567516046089b7f2cd76d01ad469d1aad9ea56c04ef",
+    "assets/status-en-US-light.png": "6fa613d7529c2bbdc254883020916661d7e76950580450a67dee0cf6c94dbfb4",
+    "assets/status-light.png": "a60d00c2183f11cc29ec386724ecff6752ada8dfcf7f1769422410a1657054db",
+    "en-US/index.html": "84ffb835836e2390a715f5945a3f5155d87195b7d463a680bad1ac8210fd9a17",
+    "index.html": "997ff7d16069efd9bb61dedd696d47aaf8e55caac899e733974ee50f1941054a"
   }
 }
