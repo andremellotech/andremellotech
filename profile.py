@@ -1121,27 +1121,14 @@ def render_intro(font, palette, scale=2, locale=DEFAULT):
         d.line([(x*s, y*s) for x, y in points], fill=color, width=width*s, joint='curve')
 
     # Type, whitespace and one blue accent carry the identity across both themes.
-    # Identidade
-text(MARGIN, 18, '@ANDREMELLOTECH', TYPE['meta'], palette['muted'], mono=True, raw=True)
+    text(MARGIN, 18, '@ANDREMELLOTECH', TYPE['meta'], palette['muted'], mono=True, raw=True)
+    text(MARGIN-2, 49, 'André Mello', TYPE['name'], palette['text'], True, raw=True)
+    line([(MARGIN, 120), (80, 120)], palette['brand'], 3)
+    text(96, 108, 'DADOS · AUTOMAÇÃO · ENGENHARIA', TYPE['meta'], palette['brand'], True)
+    text(MARGIN, 157, 'Dados e automação na prática.', TYPE['hero'], palette['text'], True)
+    text(MARGIN, 213, 'Projetos de análise de dados, integrações e engenharia.', TYPE['body'], palette['muted'])
+    line([(MARGIN, 270), (740, 270)], palette['line'])
 
-# Nome
-text(MARGIN-2, 49, 'André Mello', TYPE['name'], palette['text'], True, raw=True)
-
-# Posicionamento profissional, sem traço inicial
-text(MARGIN, 108, 'DADOS · AUTOMAÇÃO · ENGENHARIA',
-     TYPE['meta'], palette['brand'], True)
-
-# Headline
-text(MARGIN, 157, 'Dados e automação na prática.',
-     TYPE['hero'], palette['text'], True)
-
-# Descrição
-text(MARGIN, 213,
-     'Análise de dados, automação e engenharia aplicadas a desafios reais.',
-     TYPE['body'], palette['muted'])
-
-# Divisor
-line([(MARGIN, 270), (740, 270)], palette['line'])
     # The gridded portrait is an illustration, not a fabricated performance chart.
     panel = [(906, 10), (1170, 10), (1170, 270), (1142, 298), (878, 298), (878, 38)]
     d.polygon([(x*s, y*s) for x, y in panel], fill=palette['surface'])
