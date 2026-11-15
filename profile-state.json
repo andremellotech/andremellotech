@@ -22481,7 +22481,7 @@
         "name": "André Mello",
         "bio": "Dados, automação e engenharia | Python · Power BI · SAP | Projetos, integrações e ferramentas em código.",
         "public_repos": 7,
-        "followers": 2,
+        "followers": 1,
         "following": 1,
         "created_at": "2021-04-07T20:02:16Z",
         "html_url": "https://github.com/andremellotech"
@@ -22588,10 +22588,10 @@
     "assets/badge-linkedin.png": "b4833bfafb9f7aac2968fe4a6ca575a783db732e5183b4718f51606f98fe447c",
     "assets/language-en-US.png": "34bb6ab2b386e43e9eef9ba4f01dc96ea67f0581e69f1903a46749e0358ea5f9",
     "assets/language-pt-BR.png": "f43b3a7dd1eb803dcf1f1039caea0c90d02b2324a1d3159dd7070f443cc65f14",
-    "assets/profile-card-dark.png": "9d75f2d2fd3b6876eefba9ea3e7cf195b82866762eba357b4035b6fa4e8ff280",
-    "assets/profile-card-en-US-dark.png": "153c188588eb8f25adc243426eefc37e46030645ac7238ffb79030cf9476ecaa",
-    "assets/profile-card-en-US-light.png": "f42791d802d931b354a85a4417170908bc91d43b0ed9c2db06f7259d7ba8571c",
-    "assets/profile-card-light.png": "61cfbd1941d3368fbcc9ea787ea3074a0e965440a1b83a064356f0b0bf1ee6f2",
+    "assets/profile-card-dark.png": "3ed2d485cde431738f9c25c60555e3abdce79393ad91c5d075b41fc4c5769d28",
+    "assets/profile-card-en-US-dark.png": "9a5c1dc2acb351e31a8240a811f23cc045fabbeba7ce19c8ecc43e141c2304a1",
+    "assets/profile-card-en-US-light.png": "12d49a611a0df70c6401a272994bbe284b0b17bc03f377faa6756bf0c0c4df42",
+    "assets/profile-card-light.png": "5c0af13f6a56fb4f71ec82b45ff4d6bca7f97342b96f73000dbdaa88f37af8ec",
     "assets/profile-intro-dark.gif": "1ff3663b95a406a3eb466293a93241db21428f9e4d61e27dae22723420708f20",
     "assets/profile-intro-dark.png": "25e80ece968c848dc9bb742e65f81f8bdedfb3314a4d0acb5397af59232b0bc1",
     "assets/profile-intro-en-US-dark.gif": "13887b46119d02c59bc1ddf1130d3f5016ed3502d62be9aba66f6ebe7eabe602",
@@ -22604,11 +22604,11 @@
     "assets/stack-en-US-dark.png": "748473cdf75a5074f81ab0081a39bdf1c20e59837e0e4a24e41ecd984f427d2a",
     "assets/stack-en-US-light.png": "fc37f19c3185e3f259dfb168f7e1a47b1692532a39d0f838760e3f50f64c07ba",
     "assets/stack-light.png": "69387ee560adcfe7eb070be30248bae621265a029fa7df5e8139f693bae35c31",
-    "assets/status-dark.png": "45fc2a8b0d8a640031b6581f5d7ed5629ecb58e549ef1a708facd752bb9394a5",
-    "assets/status-en-US-dark.png": "b3095e1c08e35b01c18f2b0c69ccc8027b53c7d1204bd142bd903349e5937326",
-    "assets/status-en-US-light.png": "48a3f78bde8111c6636fde82580c99917289d4d46b0baf0821d3a168a3dab95b",
-    "assets/status-light.png": "ca051db7e49cc34b470dc21935d65d23df89ba066132c33ba18c41ef366ba644",
-    "en-US/index.html": "82a7b10d1d1e10250057a99687d54148110241095b383985ef19ad1220698371",
-    "index.html": "3a9e7664acb184388cb659c0e3ac0920a0e98a117a2fc6b1df60147593616da7"
+    "assets/status-dark.png": "9ca79ee8d2c5ff9254b9fdb8c5b41dc786018e22203d428e307f2c92f9288a83",
+    "assets/status-en-US-dark.png": "3632995853c7d6f1334b73f97ab511eaf30e1ef1ae8508b8674dbb491a8aa055",
+    "assets/status-en-US-light.png": "cf8c87f98a9c6a51a91b0d41ac3ef390c70e690321088b4dad4249b28052b517",
+    "assets/status-light.png": "af64ce330bf31e7ea0233828b693d50f029bc64852a0c63be1acd1bf3d37fba3",
+    "en-US/index.html": "218721e0485c6827b7d669e755b150f333869aa0784b171dd84905ab9c88085b",
+    "index.html": "5eb5d5c5c209537a116597af85db43b0b5a859e7a986c7c20f2048810d8637dd"
   }
 }
